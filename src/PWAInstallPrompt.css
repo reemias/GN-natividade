@@ -1,0 +1,55 @@
+.PWAInstallPrompt-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(0 0 0 / 45%);
+}
+
+.PWAInstallPrompt-dialog {
+  position: relative;
+  width: min(100%, 24rem);
+  padding: 2rem;
+  border-radius: 1rem;
+  background: #fff;
+  color: #213547;
+  text-align: left;
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 20%);
+}
+
+.PWAInstallPrompt-dialog h2 {
+  margin: 0 2rem 0.75rem 0;
+  font-size: 1.4rem;
+}
+
+.PWAInstallPrompt-dialog p {
+  margin: 0 0 1.5rem;
+}
+
+.PWAInstallPrompt-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 1.5rem;
+}
+
+.PWAInstallPrompt-install {
+  width: 100%;
+  border: 0;
+  background: #1d4ed8;
+  color: #fff;
+}
+
+.PWAInstallPrompt-install:hover {
+  background: #1e40af;
+}
+
+.PWAInstallPrompt-error {
+  color: #b91c1c;
+}
