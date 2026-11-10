@@ -1,89 +1,321 @@
 # Galeria Natividade
 
-Aplicação web instalável para descobrir comércios locais, consultar produtos e encaminhar pedidos ao WhatsApp da loja. A V1 usa React, TypeScript, Vite e um catálogo local; não há backend nem processamento de pagamentos.
+Aplicação web em React + TypeScript + Vite para catálogo de comércios locais, com ranking por localização, histórico de pedidos e fluxo de compra via WhatsApp. A base de dados não é dinâmica: ela fica em um arquivo Markdown, é validada em build e convertida para `public/db.json`.
 
-## Estado da V1
+O projeto está em formato de MVP funcional, mas ainda depende de dados reais da cidade e de ajustes finais de UX, conteúdo e branding.
 
-O fluxo da aplicação está implementado: catálogo Markdown validado no build, carregamento do catálogo, filtros e ranking por cidade/distância/histórico, detalhes da loja e produtos com adicionais, carrinho de uma loja por pedido, cálculo de valores e montagem do pedido para WhatsApp. O histórico de intenções fica no `localStorage` do dispositivo e sincroniza abas abertas.
+## 1) O que é este projeto
 
-O catálogo inicial contém um cadastro de demonstração do Rock Burger, com 54 produtos, transcrito de [`passo.md`](./passo.md). Confirme com a loja os dados de contato, endereço, horários, preços e coordenadas antes de divulgar. As imagens ainda não foram adicionadas; os campos vazios são aceitos e a interface mantém áreas neutras até que as fotos sejam incluídas. As coordenadas atuais são valores de referência e devem ser substituídas pelas reais antes de usar o fallback de localização.
+Este app funciona como uma "galeria local" de negócios:
 
-## Requisitos
+- lista lojas ativas;
+- ordena o feed por proximidade, cidade, histórico e popularidade;
+- mostra produtos com opções extras e promoções;
+- mantém um carrinho de uma única loja por vez;
+- gera mensagem de pedido pronta para WhatsApp;
+- salva histórico do usuário no navegador para melhorar o ranking.
 
-- Node.js 20.19+ ou 22.12+ e npm.
-- HTTPS em produção para service worker, instalação e geolocalização. `localhost` é permitido para desenvolvimento.
+Ele foi pensado para funcionar sem backend e sem banco de dados em produção. Em vez disso, o conteúdo é editado em `data/db.md` e gerado em JSON no build.
 
-## Instalação e execução
+## 2) Stack e estrutura
 
-```sh
+Tecnologias principais:
+
+- React 19
+- TypeScript
+- Vite
+- PWA (`vite-plugin-pwa`)
+- YAML Parser (`yaml`)
+- Zod para validação do catálogo
+
+Estrutura relevante:
+
+- `data/db.md`: fonte do catálogo em Markdown
+- `scripts/build-db.js`: valida e gera `public/db.json`
+- `public/db.json`: JSON final consumido pela aplicação
+- `src/lib`: regras de ranking, carrinho, histórico, geolocalização e WhatsApp
+- `src/context`: providers de catálogo, carrinho e galeria
+- `src/pages`: Home, loja, carrinho
+
+## 3) Como a aplicação funciona
+
+### 3.1 Carregamento do catálogo
+
+No início do app, `App.tsx` executa `loadCatalog()`, que lê `/db.json`.
+
+Fluxo:
+
+1. `scripts/build-db.js` valida o YAML em `data/db.md`
+2. gera `public/db.json`
+3. `loadCatalog()` busca esse arquivo
+4. `CatalogProvider` distribui o catálogo para toda a app
+
+O app também tenta atualizar o catálogo em segundo plano ao ganhar foco ou a cada 30 minutos. Se falhar, continua com a versão já em memória.
+
+### 3.2 Como a home funciona
+
+A página inicial usa `useRankedFeed()` e a história do usuário para montar categorias e ordenação das lojas.
+
+A lógica central está em `src/lib/ranking.ts`:
+
+- `haversineKm()` calcula distância em quilômetros entre duas coordenadas
+- `bucketize()` separa lojas em `city`, `nearby`, `far` e `outside`
+- `scoreStore()` calcula o ranking da loja
+- `scoreProduct()` calcula a relevância do produto
+
+Os fatores usados são:
+
+- quantas vezes o usuário já pediu a loja ou o produto
+- distância da localização do usuário
+- cidade equivalente / região
+- popularidade base da loja/produto
+- se está aberta agora
+
+### 3.3 Histórico do usuário
+
+O histórico fica em `localStorage` com a chave:
+
+- `galeria:user:v1`
+
+Esse valor guarda:
+
+- `itemCounts`: quantas vezes cada produto foi pedido
+- `storeOrderCounts`: quantas vezes cada loja foi escolhida
+- `geo`: localização salva, se houver
+
+O hook `useUserHistory()` usa `useSyncExternalStore` para reagir em tempo real às mudanças e sincronizar abas abertas do navegador.
+
+### 3.4 Geolocalização
+
+Em `src/lib/geo.ts`:
+
+- `requestGeo()` pede a geolocalização do navegador
+- `defaultGeo(config)` usa o centro configurado da cidade como fallback
+- se não houver permissão, o app prefere a cidade configurada
+
+Não há consulta a backend de geolocalização. O app calcula tudo localmente via lat/lng.
+
+### 3.5 Carrinho
+
+O carrinho está em `src/context/CartProvider.tsx` e usa regras simples:
+
+- só pode ter itens de uma loja por vez
+- cada item pode ter opções selecionadas
+- o total é calculado por `unitCents * qty`
+- `updateCheckout` controla forma de entrega, pagamento, nome e endereço
+
+Os dados do carrinho ficam em memória e são perdidos ao recarregar a página.
+
+### 3.6 Como o pedido vai para o WhatsApp
+
+No `Carrinho`, ao confirmar:
+
+1. valida entrega/retirada, nome, endereço, pagamento e mínimo de entrega
+2. salva o histórico local do pedido
+3. monta a mensagem com `buildWhatsAppUrl()`
+4. abre `wa.me` com a mensagem pronta
+
+A mensagem é construída a partir do template em `config.whatsapp.message_template`, definido em `data/db.md`.
+
+Esse fluxo não é confirmação de venda: a pessoa precisa revisar e enviar a mensagem manualmente para a loja.
+
+## 4) Como o banco de dados funciona
+
+### 4.1 Arquivo principal
+
+`data/db.md` é a fonte da verdade.
+
+Ele precisa seguir essa estrutura:
+
+- `## config`
+- `## categories`
+- `## stores`
+- `## products`
+- `## promos`
+
+Cada bloco deve conter um YAML válido. O script lê o primeiro bloco `yaml` de cada seção.
+
+### 4.2 Como editar
+
+Edite os campos diretamente em `data/db.md`.
+
+Exemplo de fluxo real:
+
+1. ajuste `config.city`, `config.geo.default_center`, timezone e ranking
+2. cadastre categorias
+3. cadastre lojas com endereço, horários, coordenas e formas de pagamento
+4. cadastre produtos com opções e promoções
+5. rode o build para validar
+
+### 4.3 Rebuild do banco
+
+Comandos úteis:
+
+```bash
+npm install
+npm run db:build
+```
+
+ou, para validar tudo e gerar a build final:
+
+```bash
+npm run build
+```
+
+O script faz isso:
+
+- lê `data/db.md`
+- valida estrutura e tipos com Zod
+- verifica duplicados de IDs e ordens
+- valida horários, coordenadas, imagens, promoções e formas de pagamento
+- gera `public/db.json`
+
+Se algo estiver inválido, o build trava com erro explícito.
+
+### 4.4 O que o validador cobre
+
+O validador em `scripts/build-db.js` verifica, entre outras coisas:
+
+- presença de todas as seções obrigatórias
+- YAML válido
+- IDs duplicados
+- ordens duplicadas
+- horários válidos
+- geolocalização válida
+- campos de loja e produto obrigatórios
+- promoções com data final maior que inicial
+- imagens existentes em `public/images/`
+- tamanho de imagem (warn se > 500 KB)
+- WhatsApp com formato esperado
+
+## 5) Como rodar o projeto
+
+Requisitos:
+
+- Node.js 20.19+ ou 22.12+
+- npm
+
+### Ambiente de desenvolvimento
+
+```bash
 npm install
 npm run dev
 ```
 
-O service worker fica desabilitado durante o desenvolvimento. Para validar o catálogo e testar o PWA em produção:
+### Verificação de produção
 
-```sh
+```bash
 npm run build
 npm run preview
 ```
 
-O build executa primeiro `npm run db:build`, que valida `data/db.md` e gera `public/db.json`; depois verifica os tipos e gera o site em `dist/`. Se um campo, referência ou imagem estiver inválido, o build para com uma mensagem de erro. `npm run lint` executa o ESLint.
+### Lint
 
-## Cadastro do catálogo
+```bash
+npm run lint
+```
 
-`data/db.md` é a fonte de verdade. Mantenha os cinco headings `config`, `categories`, `stores`, `products` e `promos`, cada um com um bloco cercado `yaml` (o parser lê o primeiro bloco de cada seção). Para não publicar conteúdo inventado, as coleções de lojas, produtos e promoções começam vazias.
+Observação: PWA, geolocalização e service worker funcionam melhor em ambiente HTTPS real ou `localhost`.
 
-1. Atualize `config.geo.default_center` para o centro real da cidade e confirme cidade/fuso.
-2. Cadastre categorias, lojas reais e seus dados de contato, horários, formas de pagamento e modalidades de atendimento.
-3. Quando tiver imagens, adicione-as em `public/images/` e informe caminhos absolutos minúsculos como `/images/stores/loja/logo.webp`. Campos de imagem vazios são aceitos enquanto as fotos não estiverem disponíveis; para caminhos preenchidos, o build confirma existência, extensão e tamanho. Imagens acima de 500 KB geram aviso.
-4. Cadastre produtos com preços inteiros em centavos e, se necessário, grupos de opções. Use `null` para `promo_price_cents` sem promoção.
-5. Execute `npm run db:build` para validar e gerar `public/db.json`, ou `npm run build` para validar e compilar tudo.
+## 6) Lógica interna em poucas camadas
 
-O validador verifica estrutura, tipos, IDs e ordens duplicadas, horários, coordenadas, referências, formas de pagamento, grupos de opções, promoções e arquivos de imagem. Dados de WhatsApp devem ter apenas DDI+DDD+número, de 12 ou 13 dígitos. Não use dados de demonstração em produção.
+### Camada de dados
 
-Para trocar uma imagem mantendo cache confiável, renomeie o arquivo (por exemplo, `foto-v2.webp`) e atualize o caminho no Markdown.
+- `data/db.md` → fonte de verdade
+- `build-db.js` → valida e converte para JSON
+- `public/db.json` → arquivo consumido pela interface
 
-## Fluxos da aplicação
+### Camada de domínio
 
-- `/`: busca por loja, filtro por categoria, promoções ativas, seções geográficas e produtos pedidos anteriormente.
-- `/loja/:storeId`: informações da loja, horário de funcionamento, produtos disponíveis e filtro por subcategoria.
-- `/carrinho`: adicionais obrigatórios/opcionais, quantidade, remoção, entrega/retirada, endereço, pagamento, observações, subtotal e total.
-- **Pedir pelo WhatsApp** grava a intenção local antes de abrir `wa.me` com a mensagem formatada. Se o navegador bloquear o armazenamento local, o app avisa que o histórico não foi salvo, mas ainda permite abrir o pedido. A pessoa precisa revisar e enviar a mensagem; a confirmação é feita diretamente pela loja.
+- `src/lib/catalog.ts`: tipos do catálogo
+- `src/lib/ranking.ts`: score e distância
+- `src/lib/cart.ts`: tipos do carrinho
+- `src/lib/userHistory.ts`: histórico e geolocalização do usuário
+- `src/lib/whatsapp.ts`: mensagem final do pedido
 
-Um carrinho contém itens de uma única loja. Entrega respeita taxa e pedido mínimo cadastrados; retirada não cobra taxa. Os dados do carrinho permanecem em memória durante a navegação e são perdidos ao recarregar ou fechar a página. O pedido/histórico não é uma confirmação de venda.
+### Camada de UI
 
-## Histórico e localização
+- `Home`: feed, filtros, pesquisas, promoções
+- `DetalhesLoja`: catálogo da loja e produtos
+- `Carrinho`: resumo, checkout e envio via WhatsApp
 
-O histórico é armazenado localmente na chave `galeria:user:v1` e não é enviado para um servidor. Contadores e lojas mais pedidas afetam o ranking do feed.
+## 7) O que já foi finalizado
 
-A localização é solicitada apenas após a ação **Usar minha localização**. As coordenadas são salvas localmente e usadas para calcular distância até as lojas. Sem localização, o app usa `config.geo.default_center`. Não há consulta a serviço externo de IP ou geocodificação; sem permissão de GPS, a classificação usa o centro e a cidade configurados.
+O projeto já possui base funcional para o MVP:
 
-## PWA, cache e atualização
+- estrutura Vite + React + TypeScript
+- catálogo centralizado em Markdown + build validation
+- export para `public/db.json`
+- feed de lojas com ranking por localização e comportamento do usuário
+- filtros por categoria e busca
+- página de loja
+- página de produto com opções extras
+- carrinho com regras de loja única
+- cálculo de subtotal e total
+- envio de pedido por WhatsApp
+- histórico local do usuário em `localStorage`
+- geolocalização com fallback para cidade configurada
+- PWA com cache e instalação
 
-`vite-plugin-pwa` gera o manifesto, ícones e service worker. Nome e cidade do manifesto vêm do catálogo validado em `public/db.json`; o app usa `display: standalone`, `start_url` e `scope` na raiz. O navegador só oferece instalação quando seus próprios critérios são atendidos; navegadores sem `beforeinstallprompt` exigem a opção de instalação do navegador.
+## 8) O que ainda falta para terminar
 
-Quando um navegador compatível emite `beforeinstallprompt`, o app mostra o aviso de instalação e o botão **Instalar** chama o diálogo nativo a partir do clique da pessoa. O aviso não aparece em navegadores que não oferecem esse evento (como Safari no iOS); nesse caso, use a opção **Adicionar à Tela de Início** do próprio navegador.
+A parte funcional principal está pronta, mas ainda faltam itens de acabamento e dados reais para deixar o projeto pronto para uso público.
 
-O service worker:
+### Necessário antes de lançar
 
-- mantém `skipWaiting`, `clientsClaim` e `registerType: 'autoUpdate'`;
-- busca o catálogo com `StaleWhileRevalidate` e expiração de 24 horas; a aplicação também atualiza o catálogo online ao recuperar o foco e a cada 30 minutos, mantendo a versão já carregada se a atualização falhar;
-- armazena imagens locais com `CacheFirst` por até 30 dias (limite de 300);
-- usa `NetworkFirst` para navegação e fallback offline para o shell;
-- verifica atualizações ao voltar o foco à janela e a cada 30 minutos, quando online.
+- substituir dados de demonstração por dados reais da cidade
+- preencher coordenadas geográficas reais
+- completar imagens das lojas e produtos
+- revisar horários reais de funcionamento
+- validar preços, formas de pagamento e entregas com a loja de verdade
+- configurar o nome e cidade da aplicação com dados definitivos
+- revisar textos e placeholders visuais ainda incompletos
 
-O plugin executa a recarga após a ativação do novo worker; não há um segundo listener manual de `controllerchange`. A atualização imediata pode descartar estado em memória, incluindo carrinho e formulário ainda não enviado. Teste instalação e navegação offline com `npm run build` e `npm run preview`; o navegador precisa já ter aberto o app online para armazenar o shell e o catálogo.
+### Desejável para próxima etapa
 
-## Scripts
+- painel administrativo para lojistas
+- backend para cadastro e edição remota do catálogo
+- autenticação e permissões
+- gestão de estoque e disponibilidade em tempo real
+- histórico de pedidos persistido em servidor
+- analytics e relatórios
+- integração com pagamentos ou pedidos mais robustos
+- fluxo de avaliação de lojas e comentários
+- carregamento de imagens via CDN ou servidor dedicado
 
-| Comando | Descrição |
-|---|---|
-| `npm run dev` | Servidor de desenvolvimento Vite |
-| `npm run db:build` | Validar `data/db.md` e gerar `public/db.json` |
-| `npm run build` | Validar catálogo, tipos e gerar produção |
-| `npm run preview` | Servir a versão de produção localmente |
-| `npm run lint` | Executar ESLint |
+## 9) Passe final de revisão
 
-## Fora do escopo da V1
+O projeto já está bem estruturado como MVP e segue um desenho que permite evoluir sem quebrar a base. A parte mais forte é a arquitetura local do catálogo, a lógica de ranking e o fluxo de pedido via WhatsApp.
 
-Painel de lojista, API/backend, login, pagamento online, estoque, cupons, avaliações, rastreio e sincronização entre dispositivos. O catálogo é editado manualmente no repositório e os pedidos são concluídos entre cliente e loja no WhatsApp.
+A parte mais frágil, hoje, é o conteúdo real: os dados ainda são de prova e ainda não refletem um uso real da cidade. Também há elementos visuais placeholder e ausência de imagens que precisam ser resolvidos para fechar o produto.
+
+Em resumo:
+
+- funcional: sim
+- pronto para produção real: ainda não
+- boa base para evoluir: sim
+
+## 10) Checklist final
+
+### Finalizado
+
+- app em React + Vite + TypeScript
+- catálogo em Markdown validado no build
+- geração de `public/db.json`
+- ranking por cidade/distância/histórico
+- loja, cardápio e carrinho
+- WhatsApp com pedido montado
+- histórico local do usuário
+- PWA básico com cache e instalação
+
+### Desejável / pendente
+
+- dados reais de lojas, produtos e coordenas
+- imagens reais e layout final
+- painel administrativo
+- backend e persistência real
+- login/segurança
+- pagamentos e gestão operacional
+- validação final com usuários reais
+
+Se quiser, o próximo passo ideal é: limpar o conteúdo da demonstração, preencher os dados reais de Natividade e rodar a aplicação em produção com a base do catálogo finalizada.
