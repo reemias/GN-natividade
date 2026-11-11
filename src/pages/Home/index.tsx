@@ -1,11 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  MapPin,
-  Newspaper,
-  Store as StoreIcon,
-} from "lucide-react";
+import { ArrowRight, Newspaper, Store as StoreIcon } from "lucide-react";
 import { useCatalog } from "../../hooks/useCatalog";
 import { useRankedFeed } from "../../hooks/useRankedFeed";
 import { formatMoney } from "../../lib/format";
@@ -129,36 +124,14 @@ export default function Home() {
               NOTÍCIAS
             </Link>
           </div>
-          <div className={styles.heroLocation}>
-            <MapPin size={16} aria-hidden="true" />
-            <span>Descubra o que tem pertinho de você</span>
-          </div>
-        </div>
-
-        <div className={styles.heroVisual} aria-hidden="true">
-          <span className={styles.heroGlow} />
-          <div className={styles.heroCard}>
-            <span className={styles.heroCardIcon}>
-              <StoreIcon size={28} strokeWidth={1.8} />
-            </span>
-            <span className={styles.heroCardLabel}>FEITO AQUI, PERTO DE VOCÊ</span>
-            <strong>
-              Mais que lojas.
-              <br />
-              Gente da nossa terra.
-            </strong>
-            <span className={styles.heroCardPlace}>
-              <MapPin size={14} />
-              Natividade e região
-            </span>
-          </div>
-          <span className={styles.heroSticker}>♡ Apoie o comércio local</span>
         </div>
       </section>
 
       <section className={styles.content} id="explorar">
         <div className={styles.sectionHeading}>
           <div>
+            <br />
+            <br />
             <span className={styles.eyebrow}>DESCUBRA</span>
             <h2>Explore a galeria</h2>
           </div>
@@ -269,28 +242,30 @@ export default function Home() {
             </div>
 
             <div className={styles.repeatList}>
-              {feed.repeatProducts.slice(0, 6).map(({ product, count, store }) => (
-                <Link
-                  to={`/loja/${store.id}`}
-                  className={styles.repeatCard}
-                  key={product.id}
-                >
-                  {product.image && (
-                    <img src={product.image} alt="" loading="lazy" />
-                  )}
-                  <span>
-                    <strong>{product.name}</strong>
-                    <small>
-                      {store.name} · você pediu {count}x
-                    </small>
-                  </span>
-                  <b>
-                    {formatMoney(
-                      product.promo_price_cents ?? product.price_cents,
+              {feed.repeatProducts
+                .slice(0, 6)
+                .map(({ product, count, store }) => (
+                  <Link
+                    to={`/loja/${store.id}`}
+                    className={styles.repeatCard}
+                    key={product.id}
+                  >
+                    {product.image && (
+                      <img src={product.image} alt="" loading="lazy" />
                     )}
-                  </b>
-                </Link>
-              ))}
+                    <span>
+                      <strong>{product.name}</strong>
+                      <small>
+                        {store.name} · você pediu {count}x
+                      </small>
+                    </span>
+                    <b>
+                      {formatMoney(
+                        product.promo_price_cents ?? product.price_cents,
+                      )}
+                    </b>
+                  </Link>
+                ))}
             </div>
           </section>
         )}

@@ -45,10 +45,9 @@
   align-items: center;
   grid-template-columns: minmax(0, 1.15fr) minmax(270px, 0.85fr);
   overflow: hidden;
-  border-radius: 30px;
   background:
     radial-gradient(ellipse at 82% 18%, rgb(255 199 98 / 28%), transparent 32%),
-    linear-gradient(115deg, #b93424 0%, #e34b2e 54%, #f16a3d 100%);
+    linear-gradient(115deg, #1f1f1f 0%, #666362 54%, #9b918d 100%);
   color: #fff;
   box-shadow: 0 20px 50px rgb(152 48 30 / 18%);
 }
