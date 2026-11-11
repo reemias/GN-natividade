@@ -6,8 +6,105 @@
   padding-inline: 7px;
 }
 
+/* ===========================
+   SECTION HERO (container pai)
+   =========================== */
 .hero {
-  display: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* espaço entre slide e botões */
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+/* ===========================
+   ÁREA DOS BOTÕES (abaixo do slide)
+   =========================== */
+.DebaixoSlide {
+  width: 100%;
+  display: flex;
+  gap: 12px; /* espaço entre os dois botões */
+}
+
+/* Cada lado ocupa metade */
+.DireitoNoticias,
+.EsquerdoLanches {
+  flex: 1; /* 50% / 50% */
+  display: flex;
+}
+
+/* ===========================
+   BOTÕES
+   =========================== */
+.DireitoNoticias button,
+.EsquerdoLanches button {
+  width: 100%;
+  padding: 14px 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+
+  color: #ffffff;
+  background-color: #1e1e1e;
+
+  transition:
+    transform 0.15s ease,
+    background-color 0.2s ease;
+}
+
+/* Cores diferentes para diferenciar */
+.DireitoNoticias button {
+  background-color: #e63946; /* vermelho — notícias */
+}
+
+.EsquerdoLanches button {
+  background-color: #f4a261; /* laranja — lanches */
+}
+
+/* Feedback ao toque (mobile) */
+.DireitoNoticias button:active,
+.EsquerdoLanches button:active {
+  transform: scale(0.97);
+  filter: brightness(0.9);
+}
+
+/* Hover apenas em dispositivos com mouse */
+@media (hover: hover) {
+  .DireitoNoticias button:hover {
+    background-color: #c92f3c;
+  }
+  .EsquerdoLanches button:hover {
+    background-color: #e08c4a;
+  }
+}
+
+/* ===========================
+   TELAS MAIORES (opcional)
+   =========================== */
+@media (min-width: 768px) {
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+    gap: 16px;
+  }
+
+  .DebaixoSlide {
+    gap: 16px;
+  }
+
+  .DireitoNoticias button,
+  .EsquerdoLanches button {
+    height: auto;
+    padding: 18px;
+    font-size: 1.1rem;
+  }
 }
 
 .eyebrow {

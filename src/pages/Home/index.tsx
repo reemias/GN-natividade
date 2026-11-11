@@ -7,6 +7,7 @@ import { formatMoney } from "../../lib/format";
 import { useGallery } from "../../hooks/useGallery";
 import StoreCard from "../../components/StoreCard";
 import styles from "./Style.module.css";
+import Slide from "../../components/slide";
 
 const sections = [
   {
@@ -93,16 +94,13 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <section className={styles.hero}>
-        <div className={styles.heroContent}>
-          <span className={styles.eyebrow}>Notícias Natividade</span>
-        </div>
-        <div className={styles.NoticiasCard}>
-          <div className={styles.NoticiaImagem}></div>
-          <div className={styles.NoticiaInfo}>
-            <div className={styles.NoticiaTituo}></div>
-            <div className={styles.NoticiaData}></div>
-            <div className={styles.NoticiaHora}></div>
-            <div className={styles.NoticiaNome}></div>
+        <Slide />
+        <div className={styles.DebaixoSlide}>
+          <div className={styles.DireitoNoticias}>
+            <button>NOTÍCIAS</button>
+          </div>
+          <div className={styles.EsquerdoLanches}>
+            <button>LANCHES</button>
           </div>
         </div>
       </section>

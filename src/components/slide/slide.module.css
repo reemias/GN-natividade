@@ -1,0 +1,32 @@
+.slideContent {
+  position: relative;
+  width: 100%;
+  height: 130px;
+  aspect-ratio: 4 / 3; /* mantém proporção — não distorce */
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: #f0f0f0; /* fundo neutro caso a imagem não preencha */
+}
+
+.slideImagem {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slideImagem.ativo {
+  opacity: 1;
+  z-index: 1;
+}
+
+.slideImagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* preenche sem distorcer */
+  object-position: center;
+  display: block;
+}
