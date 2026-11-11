@@ -1,13 +1,18 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Store as StoreIcon } from "lucide-react";
+import {
+  ArrowRight,
+  MapPin,
+  Newspaper,
+  Sparkles,
+  Store as StoreIcon,
+} from "lucide-react";
 import { useCatalog } from "../../hooks/useCatalog";
 import { useRankedFeed } from "../../hooks/useRankedFeed";
 import { formatMoney } from "../../lib/format";
 import { useGallery } from "../../hooks/useGallery";
 import StoreCard from "../../components/StoreCard";
 import styles from "./Style.module.css";
-import Slide from "../../components/slide";
 
 const sections = [
   {
@@ -36,6 +41,12 @@ export default function Home() {
   const catalog = useCatalog();
   const feed = useRankedFeed(catalog);
   const { searchQuery, categoryId, setCategoryId } = useGallery();
+
+  // Volta ao topo ao montar a Home
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, []);
+
   const activePromos = useMemo(() => {
     const now = Date.now();
     return catalog.promos.filter(
@@ -48,13 +59,15 @@ export default function Home() {
         ),
     );
   }, [catalog.promos, catalog.stores]);
+
   const search = searchQuery.trim().toLocaleLowerCase("pt-BR");
   const hasSearch = search.length > 0;
 
-  function filterStores(items: typeof feed.buckets.city) {
-    return items.filter(({ store }) => {
+  const filterStores = (items: typeof feed.buckets.city) =>
+    items.filter(({ store }) => {
       const matchesCategory =
         categoryId === "all" || store.category_ids.includes(categoryId);
+
       const categoryNames = store.category_ids
         .map(
           (id) =>
@@ -62,14 +75,15 @@ export default function Home() {
             "",
         )
         .join(" ");
+
       const matchesSearch =
         !search ||
         `${store.name} ${store.description} ${categoryNames} ${store.tags.join(" ")}`
           .toLocaleLowerCase("pt-BR")
           .includes(search);
+
       return matchesCategory && matchesSearch;
     });
-  }
 
   const matchedProducts = hasSearch
     ? catalog.products
@@ -77,35 +91,74 @@ export default function Home() {
           const store = catalog.stores.find(
             (item) => item.id === product.store_id && item.status === "active",
           );
+
           const matchesCategory =
             categoryId === "all" || store?.category_ids.includes(categoryId);
+
           const productText =
             `${product.name} ${product.description} ${product.category} ${product.tags.join(" ")}`.toLocaleLowerCase(
               "pt-BR",
             );
+
           return (
             product.available && matchesCategory && productText.includes(search)
           );
         })
         .sort((a, b) => a.order - b.order)
     : [];
+
   const matchedStores = filterStores(Object.values(feed.buckets).flat());
 
   return (
     <main className={styles.main}>
-      <section className={styles.hero}>
-        <Slide />
-        <div className={styles.DebaixoSlide}>
-          <div className={styles.DireitoNoticias}>
-            <Link to="/noticias">NOTÍCIAS</Link>
+      <section className={styles.hero} aria-labelledby="home-hero-title">
+        <div className={styles.heroCopy}>
+          
+          <h1 id="home-hero-title">
+            Seu próximo favorito está <span>por aqui.</span>
+          </h1>
+          <p>
+            Explore sabores, serviços e lojas incríveis da sua região. Valorize
+            quem faz parte da sua comunidade.
+          </p>
+          <div className={styles.heroActions}>
+            <a className={styles.primaryAction} href="#explorar">
+              Explorar lojas
+              <ArrowRight size={18} aria-hidden="true" />
+            </a>
+            <Link className={styles.secondaryAction} to="/noticias">
+              <Newspaper size={17} aria-hidden="true" />
+              NOTÍCIAS
+            </Link>
           </div>
-          <div className={styles.EsquerdoLanches}>
-            <a href="#lanches">LANCHES</a>
+          <div className={styles.heroLocation}>
+            <MapPin size={16} aria-hidden="true" />
+            <span>Descubra o que tem pertinho de você</span>
           </div>
+        </div>
+
+        <div className={styles.heroVisual} aria-hidden="true">
+          <span className={styles.heroGlow} />
+          <div className={styles.heroCard}>
+            <span className={styles.heroCardIcon}>
+              <StoreIcon size={28} strokeWidth={1.8} />
+            </span>
+            <span className={styles.heroCardLabel}>FEITO AQUI, PERTO DE VOCÊ</span>
+            <strong>
+              Mais que lojas.
+              <br />
+              Gente da nossa terra.
+            </strong>
+            <span className={styles.heroCardPlace}>
+              <MapPin size={14} />
+              Natividade e região
+            </span>
+          </div>
+          <span className={styles.heroSticker}>♡ Apoie o comércio local</span>
         </div>
       </section>
 
-      <section className={styles.content}>
+      <section className={styles.content} id="explorar">
         <div className={styles.sectionHeading}>
           <div>
             <span className={styles.eyebrow}>DESCUBRA</span>
@@ -126,6 +179,7 @@ export default function Home() {
             >
               Tudo
             </button>
+
             {[...catalog.categories]
               .sort((a, b) => a.order - b.order)
               .map((category) => (
@@ -154,12 +208,14 @@ export default function Home() {
                 {matchedProducts.length} produtos
               </span>
             </div>
+
             <div className={styles.repeatList}>
               {matchedProducts.map((product) => {
                 const store = catalog.stores.find(
                   ({ id }) => id === product.store_id,
                 );
                 if (!store) return null;
+
                 return (
                   <Link
                     to={`/loja/${store.id}`}
@@ -213,31 +269,30 @@ export default function Home() {
                 <h2>Seus pedidos de sempre</h2>
               </div>
             </div>
+
             <div className={styles.repeatList}>
-              {feed.repeatProducts
-                .slice(0, 6)
-                .map(({ product, count, store }) => (
-                  <Link
-                    to={`/loja/${store.id}`}
-                    className={styles.repeatCard}
-                    key={product.id}
-                  >
-                    {product.image && (
-                      <img src={product.image} alt="" loading="lazy" />
+              {feed.repeatProducts.slice(0, 6).map(({ product, count, store }) => (
+                <Link
+                  to={`/loja/${store.id}`}
+                  className={styles.repeatCard}
+                  key={product.id}
+                >
+                  {product.image && (
+                    <img src={product.image} alt="" loading="lazy" />
+                  )}
+                  <span>
+                    <strong>{product.name}</strong>
+                    <small>
+                      {store.name} · você pediu {count}x
+                    </small>
+                  </span>
+                  <b>
+                    {formatMoney(
+                      product.promo_price_cents ?? product.price_cents,
                     )}
-                    <span>
-                      <strong>{product.name}</strong>
-                      <small>
-                        {store.name} · você pediu {count}x
-                      </small>
-                    </span>
-                    <b>
-                      {formatMoney(
-                        product.promo_price_cents ?? product.price_cents,
-                      )}
-                    </b>
-                  </Link>
-                ))}
+                  </b>
+                </Link>
+              ))}
             </div>
           </section>
         )}
@@ -245,6 +300,7 @@ export default function Home() {
         {sections.map((section) => {
           const stores = filterStores(feed.buckets[section.key]);
           if (stores.length === 0) return null;
+
           if (section.key === "outside") {
             return (
               <details className={styles.outside} key={section.key}>
@@ -265,6 +321,7 @@ export default function Home() {
               </details>
             );
           }
+
           return (
             <section className={styles.storeSection} key={section.key}>
               <div className={styles.sectionHeading}>
@@ -273,6 +330,7 @@ export default function Home() {
                   <h2>{section.title}</h2>
                 </div>
               </div>
+
               <div className={styles.storeGrid}>
                 {stores.map(({ store }) => (
                   <StoreCard

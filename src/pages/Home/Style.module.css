@@ -35,73 +35,234 @@
    HERO
    =========================== */
 .hero {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  width: 100%;
-  padding: var(--space-3) 0;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  width: min(1120px, 100%);
+  min-height: 390px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  align-items: center;
+  grid-template-columns: minmax(0, 1.15fr) minmax(270px, 0.85fr);
+  overflow: hidden;
+  border-radius: 30px;
+  background:
+    radial-gradient(ellipse at 82% 18%, rgb(255 199 98 / 28%), transparent 32%),
+    linear-gradient(115deg, #b93424 0%, #e34b2e 54%, #f16a3d 100%);
+  color: #fff;
+  box-shadow: 0 20px 50px rgb(152 48 30 / 18%);
 }
 
-.DebaixoSlide {
-  display: flex;
-  gap: var(--space-2);
-  width: 100%;
+.hero::before,
+.hero::after {
+  position: absolute;
+  z-index: -1;
+  border: 1px solid rgb(255 255 255 / 13%);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
 }
 
-.DireitoNoticias,
-.EsquerdoLanches {
-  flex: 1;
-  display: flex;
+.hero::before {
+  top: -190px;
+  right: 8%;
+  width: 470px;
+  aspect-ratio: 1;
 }
 
-/* ===========================
-   BOTÕES DO HERO
-   =========================== */
-.DireitoNoticias button,
-.EsquerdoLanches button {
-  width: 100%;
-  min-height: 52px;
-  padding: 0.85rem 1rem;
-  border: none;
-  border-radius: var(--radius-md);
-  font: inherit;
+.hero::after {
+  right: -110px;
+  bottom: -260px;
+  width: 570px;
+  aspect-ratio: 1;
+}
+
+.heroCopy {
+  position: relative;
+  z-index: 1;
+  max-width: 610px;
+}
+
+.heroEyebrow {
+  display: inline-flex;
+  padding: 0.5rem 0.75rem;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgb(113 30 20 / 20%);
+  color: #fff3d4;
+  font-size: 0.74rem;
+  font-weight: 750;
+  letter-spacing: 0.045em;
+}
+
+.heroCopy h1 {
+  max-width: 650px;
+  margin: 1.2rem 0 0.9rem;
+  font-size: clamp(2.35rem, 5vw, 4.2rem);
+  font-weight: 850;
+  letter-spacing: -0.055em;
+  line-height: 1.02;
+}
+
+.heroCopy h1 span {
+  color: #ffda7c;
+}
+
+.heroCopy p {
+  max-width: 490px;
+  margin: 0;
+  color: rgb(255 255 255 / 86%);
+  font-size: clamp(0.95rem, 1.6vw, 1.08rem);
+  line-height: 1.65;
+}
+
+.heroActions {
+  display: flex;
+  margin-top: 1.65rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.primaryAction,
+.secondaryAction {
+  display: inline-flex;
+  min-height: 48px;
+  padding: 0.8rem 1.1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 12px;
   font-size: 0.9rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
+  font-weight: 750;
+  text-decoration: none;
   transition:
-    transform 0.15s ease,
-    filter 0.2s ease,
-    box-shadow 0.2s ease;
-  box-shadow: 0 4px 14px rgb(0 0 0 / 8%);
+    transform 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
-.DireitoNoticias button {
+.primaryAction {
+  background: #fff;
+  color: #a93625;
+  box-shadow: 0 8px 20px rgb(91 28 19 / 18%);
+}
+
+.secondaryAction {
+  border: 1px solid rgb(255 255 255 / 30%);
+  background: rgb(255 255 255 / 8%);
   color: #fff;
-  background: linear-gradient(135deg, #e63946, #c1121f);
 }
 
-.EsquerdoLanches button {
-  color: #fff;
-  background: linear-gradient(135deg, #f4a261, #e76f51);
-}
-
-.DireitoNoticias button:active,
-.EsquerdoLanches button:active {
-  transform: scale(0.97);
-  filter: brightness(0.95);
-  box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+.primaryAction:active,
+.secondaryAction:active {
+  transform: translateY(1px) scale(0.98);
 }
 
 @media (hover: hover) {
-  .DireitoNoticias button:hover,
-  .EsquerdoLanches button:hover {
-    filter: brightness(1.06);
-    box-shadow: 0 6px 18px rgb(0 0 0 / 12%);
+  .primaryAction:hover {
+    transform: translateY(-2px);
+    background: #fff4e8;
+    box-shadow: 0 12px 24px rgb(91 28 19 / 24%);
   }
+
+  .secondaryAction:hover {
+    transform: translateY(-2px);
+    background: rgb(255 255 255 / 16%);
+  }
+}
+
+.heroLocation {
+  display: flex;
+  margin-top: 1.35rem;
+  align-items: center;
+  gap: 0.45rem;
+  color: rgb(255 255 255 / 76%);
+  font-size: 0.8rem;
+  font-weight: 550;
+}
+
+.heroVisual {
+  position: relative;
+  display: grid;
+  min-height: 300px;
+  place-items: center;
+}
+
+.heroGlow {
+  position: absolute;
+  width: min(88%, 330px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgb(255 197 94 / 21%);
+  filter: blur(1px);
+}
+
+.heroCard {
+  position: relative;
+  display: grid;
+  width: min(100%, 300px);
+  min-height: 255px;
+  padding: 1.45rem;
+  align-content: start;
+  gap: 0.9rem;
+  border: 1px solid rgb(255 255 255 / 70%);
+  border-radius: 24px;
+  background: linear-gradient(145deg, #fffdf8, #fff3df);
+  color: #29271f;
+  box-shadow: 0 24px 55px rgb(94 27 17 / 25%);
+  transform: rotate(3deg);
+}
+
+.heroCardIcon {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  border-radius: 17px;
+  background: #fce4c4;
+  color: #c94b2c;
+}
+
+.heroCardLabel {
+  color: #b94a2e;
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+}
+
+.heroCard strong {
+  font-size: 1.45rem;
+  letter-spacing: -0.045em;
+  line-height: 1.12;
+}
+
+.heroCardPlace {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.42rem 0.6rem;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 999px;
+  background: #f3eadc;
+  color: #635b4c;
+  font-size: 0.7rem;
+  font-weight: 650;
+}
+
+.heroSticker {
+  position: absolute;
+  right: 0;
+  bottom: 17%;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid rgb(255 255 255 / 55%);
+  border-radius: 12px;
+  background: #fff;
+  color: #a93625;
+  font-size: 0.73rem;
+  font-weight: 800;
+  box-shadow: 0 8px 24px rgb(91 28 19 / 18%);
+  transform: rotate(-5deg);
 }
 
 /* ===========================
@@ -361,7 +522,40 @@
    =========================== */
 @media (max-width: 620px) {
   .hero {
-    padding-top: var(--space-2);
+    min-height: 0;
+    padding: 1.6rem 1.3rem 1.1rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .heroCopy h1 {
+    margin-top: 1rem;
+    font-size: clamp(2.25rem, 10vw, 3.2rem);
+  }
+
+  .heroVisual {
+    min-height: 245px;
+  }
+
+  .heroCard {
+    width: min(78%, 280px);
+    min-height: 220px;
+    padding: 1.2rem;
+    gap: 0.7rem;
+  }
+
+  .heroCardIcon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .heroCard strong {
+    font-size: 1.3rem;
+  }
+
+  .heroSticker {
+    right: 1%;
+    bottom: 13%;
+    font-size: 0.67rem;
   }
 }
 
@@ -382,20 +576,8 @@
 }
 
 @media (min-width: 768px) {
-  .hero {
-    max-width: 900px;
+  .content {
+    max-width: 1120px;
     margin: 0 auto;
-    gap: var(--space-3);
-    padding: var(--space-4) 0;
-  }
-
-  .DebaixoSlide {
-    gap: var(--space-3);
-  }
-
-  .DireitoNoticias button,
-  .EsquerdoLanches button {
-    font-size: 1rem;
-    min-height: 56px;
   }
 }
