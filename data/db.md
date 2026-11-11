@@ -4,6 +4,7 @@
 > O app não lê este arquivo diretamente: o build gera `db.json`.
 
 ## config
+
 ```yaml
 schema_version: 2
 app_name: "Galeria de Natividade"
@@ -40,15 +41,60 @@ whatsapp:
 ```
 
 ## categories
+
 ```yaml
-- { id: "lanches",  name: "Lanches",       icon: "burger",   order: 1 }
-- { id: "porcoes",  name: "Porções",       icon: "fries",    order: 2 }
-- { id: "doces",    name: "Açaí & Doces",  icon: "icecream", order: 3 }
-- { id: "bebidas",  name: "Bebidas",       icon: "cup",      order: 4 }
+- { id: "lanches", name: "Lanches", icon: "burger", order: 1 }
+- { id: "porcoes", name: "Porções", icon: "fries", order: 2 }
+- { id: "doces", name: "Açaí & Doces", icon: "icecream", order: 3 }
+- { id: "bebidas", name: "Bebidas", icon: "cup", order: 4 }
+- { id: "restaurantes", name: "Restaurantes", icon: "store", order: 5 }
 ```
 
 ## stores
+
 ```yaml
+- id: "marlene-restaurante"
+  name: "Marlene Restaurante"
+  description: "Restaurante de comida brasileira, peixes, moquecas e carnes."
+  category_ids: ["restaurantes"]
+  status: "active"
+  order: 2
+  base_popularity: 0
+  whatsapp: "552238413138"
+  logo: ""
+  cover: ""
+  location_image: ""
+  geo:
+    lat: -21.123456
+    lng: -41.654321
+    city: "Natividade"
+    state: "RJ"
+  address:
+    street: "Av. Mauro Alves Ribeiro Junior"
+    number: "882"
+    neighborhood: "Natividade"
+    reference: "Natividade-RJ"
+  hours:
+    mon: [{ open: "10:00", close: "14:50" }]
+    tue: [{ open: "10:20", close: "14:40" }, { open: "17:30", close: "21:40" }]
+    wed: [{ open: "10:30", close: "14:40" }, { open: "17:30", close: "21:40" }]
+    thu: [{ open: "10:30", close: "15:00" }, { open: "17:30", close: "21:40" }]
+    fri: [{ open: "08:00", close: "14:40" }, { open: "17:00", close: "21:55" }]
+    sat: [{ open: "09:30", close: "14:40" }, { open: "17:30", close: "21:55" }]
+    sun: [{ open: "10:30", close: "14:40" }]
+  hours_exceptions: []
+  payment_methods: ["pix", "cash", "debit", "credit"]
+  delivery:
+    enabled: true
+    fee_cents: 0
+    min_order_cents: 0
+    eta_min: 60
+    radius_km: 5
+  pickup:
+    enabled: true
+    eta_min: 40
+  tags: ["restaurante", "comida-brasileira", "peixes", "moquecas", "carnes"]
+
 - id: "rock-burger"
   name: "Rock Burger"
   description: "Hambúrgueres artesanais, porções e açaí. Comece com atitude!"
@@ -60,19 +106,19 @@ whatsapp:
   logo: "/images/logo-rock-burger.png"
   cover: "/images/local-rock-burger.jpg"
   location_image: ""
-  
+
   geo:
     lat: -21.123456
     lng: -41.654321
     city: "Natividade"
     state: "RJ"
-    
+
   address:
     street: "Delivery via WhatsApp"
     number: "S/N"
     neighborhood: "Centro"
     reference: "Natividade-RJ"
-    
+
   hours:
     mon: [{ open: "18:00", close: "23:59" }]
     tue: [{ open: "18:00", close: "23:59" }]
@@ -81,10 +127,10 @@ whatsapp:
     fri: [{ open: "18:00", close: "23:59" }]
     sat: [{ open: "18:00", close: "23:59" }]
     sun: [{ open: "18:00", close: "23:59" }]
-    
+
   hours_exceptions: []
   payment_methods: ["pix", "cash", "debit", "credit"]
-  
+
   delivery:
     enabled: true
     fee_cents: 200
@@ -94,11 +140,12 @@ whatsapp:
   pickup:
     enabled: true
     eta_min: 20
-    
+
   tags: ["hamburguer", "acai", "porcao", "salgadinho", "combo", "rock"]
 ```
 
 ## products
+
 ```yaml
 # ==========================================
 # MINI SALGADINHOS
@@ -122,8 +169,12 @@ whatsapp:
       min: 1
       max: 1
       options:
-        - { id: "congelado", name: "Congelado (R$ 25,00)", price_delta_cents: 0 }
-        - { id: "frito",     name: "Frito (R$ 30,00)",     price_delta_cents: 500 }
+        - {
+            id: "congelado",
+            name: "Congelado (R$ 25,00)",
+            price_delta_cents: 0,
+          }
+        - { id: "frito", name: "Frito (R$ 30,00)", price_delta_cents: 500 }
     - id: "sabores"
       name: "Sabores (escolha até 6)"
       required: true
@@ -131,11 +182,19 @@ whatsapp:
       max: 6
       options:
         - { id: "coxinha", name: "Coxinha de frango", price_delta_cents: 0 }
-        - { id: "presunto-queijo", name: "Presunto e queijo", price_delta_cents: 0 }
+        - {
+            id: "presunto-queijo",
+            name: "Presunto e queijo",
+            price_delta_cents: 0,
+          }
         - { id: "balao", name: "Balão de calabresa", price_delta_cents: 0 }
         - { id: "bolinha", name: "Bolinha de queijo", price_delta_cents: 0 }
         - { id: "medalhao", name: "Medalhão de salsicha", price_delta_cents: 0 }
-        - { id: "churros", name: "Mini churros (doce de leite)", price_delta_cents: 0 }
+        - {
+            id: "churros",
+            name: "Mini churros (doce de leite)",
+            price_delta_cents: 0,
+          }
 
 - id: "rock-burger-mini-salgadinhos-50"
   store_id: "rock-burger"
@@ -156,8 +215,12 @@ whatsapp:
       min: 1
       max: 1
       options:
-        - { id: "congelado", name: "Congelado (R$ 45,00)", price_delta_cents: 0 }
-        - { id: "frito",     name: "Frito (R$ 50,00)",     price_delta_cents: 500 }
+        - {
+            id: "congelado",
+            name: "Congelado (R$ 45,00)",
+            price_delta_cents: 0,
+          }
+        - { id: "frito", name: "Frito (R$ 50,00)", price_delta_cents: 500 }
     - id: "sabores"
       name: "Sabores (escolha até 6)"
       required: true
@@ -165,11 +228,19 @@ whatsapp:
       max: 6
       options:
         - { id: "coxinha", name: "Coxinha de frango", price_delta_cents: 0 }
-        - { id: "presunto-queijo", name: "Presunto e queijo", price_delta_cents: 0 }
+        - {
+            id: "presunto-queijo",
+            name: "Presunto e queijo",
+            price_delta_cents: 0,
+          }
         - { id: "balao", name: "Balão de calabresa", price_delta_cents: 0 }
         - { id: "bolinha", name: "Bolinha de queijo", price_delta_cents: 0 }
         - { id: "medalhao", name: "Medalhão de salsicha", price_delta_cents: 0 }
-        - { id: "churros", name: "Mini churros (doce de leite)", price_delta_cents: 0 }
+        - {
+            id: "churros",
+            name: "Mini churros (doce de leite)",
+            price_delta_cents: 0,
+          }
 
 # ==========================================
 # TRADICIONAIS DE BOI
@@ -193,12 +264,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-x-burguer"
@@ -220,12 +303,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-bacon-burguer"
@@ -247,12 +342,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-x-salada"
@@ -274,12 +381,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-x-bacon"
@@ -301,12 +420,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-x-salada-bacon"
@@ -328,12 +459,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-eggs-x-salada"
@@ -355,12 +498,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-eggs-x-bacon"
@@ -382,12 +537,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-x-tudo"
@@ -409,12 +576,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-americano"
@@ -436,12 +615,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-misto-quente"
@@ -463,12 +654,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 # ==========================================
@@ -493,12 +696,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-galis-bacon-burger"
@@ -520,12 +735,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-galis-eggs-burger"
@@ -547,12 +774,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-galis-x-burguer"
@@ -574,12 +813,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-galis-x-bacon"
@@ -601,12 +852,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-galis-x-salada"
@@ -628,12 +891,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-galis-x-salada-bacon"
@@ -655,12 +930,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-galis-eggs-x-salada"
@@ -682,12 +969,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-galis-eggs-x-bacon"
@@ -709,12 +1008,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-galis-x-tudo"
@@ -736,12 +1047,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 # ==========================================
@@ -766,12 +1089,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-pearl-jam"
@@ -793,12 +1128,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-pink-floyd"
@@ -820,12 +1167,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-rock-burger"
@@ -847,12 +1206,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-red-hot"
@@ -874,12 +1245,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 - id: "rock-burger-duplo-carne"
@@ -901,12 +1284,24 @@ whatsapp:
       min: 0
       max: 7
       options:
-        - { id: "bife-frango", name: "Bife de frango (R$ 7,00)", price_delta_cents: 700 }
-        - { id: "bife-boi", name: "Bife de boi (R$ 6,00)", price_delta_cents: 600 }
+        - {
+            id: "bife-frango",
+            name: "Bife de frango (R$ 7,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bife-boi",
+            name: "Bife de boi (R$ 6,00)",
+            price_delta_cents: 600,
+          }
         - { id: "bacon", name: "Bacon (R$ 5,00)", price_delta_cents: 500 }
         - { id: "banana", name: "Banana (R$ 4,00)", price_delta_cents: 400 }
         - { id: "cheddar", name: "Cheddar (R$ 4,00)", price_delta_cents: 400 }
-        - { id: "cebola", name: "Cebola roxa (R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "cebola",
+            name: "Cebola roxa (R$ 4,00)",
+            price_delta_cents: 400,
+          }
         - { id: "queijo", name: "Queijo (R$ 4,00)", price_delta_cents: 400 }
 
 # ==========================================
@@ -932,15 +1327,27 @@ whatsapp:
       max: 1
       options:
         - { id: "simples", name: "Simples (R$ 15,00)", price_delta_cents: 0 }
-        - { id: "bacon-cheddar", name: "Bacon c/ cheddar (R$ 22,00)", price_delta_cents: 700 }
-        - { id: "bacon-mussarela", name: "Bacon c/ mussarela (R$ 22,00)", price_delta_cents: 700 }
+        - {
+            id: "bacon-cheddar",
+            name: "Bacon c/ cheddar (R$ 22,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bacon-mussarela",
+            name: "Bacon c/ mussarela (R$ 22,00)",
+            price_delta_cents: 700,
+          }
     - id: "extra-queijo"
       name: "Muito mais queijo!"
       required: false
       min: 0
       max: 1
       options:
-        - { id: "sim", name: "Adicionar queijo extra (+ R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "sim",
+            name: "Adicionar queijo extra (+ R$ 4,00)",
+            price_delta_cents: 400,
+          }
 
 - id: "rock-burger-batata-500g"
   store_id: "rock-burger"
@@ -962,15 +1369,27 @@ whatsapp:
       max: 1
       options:
         - { id: "simples", name: "Simples (R$ 28,00)", price_delta_cents: 0 }
-        - { id: "bacon-cheddar", name: "Bacon c/ cheddar (R$ 35,00)", price_delta_cents: 700 }
-        - { id: "bacon-mussarela", name: "Bacon c/ mussarela (R$ 35,00)", price_delta_cents: 700 }
+        - {
+            id: "bacon-cheddar",
+            name: "Bacon c/ cheddar (R$ 35,00)",
+            price_delta_cents: 700,
+          }
+        - {
+            id: "bacon-mussarela",
+            name: "Bacon c/ mussarela (R$ 35,00)",
+            price_delta_cents: 700,
+          }
     - id: "extra-queijo"
       name: "Muito mais queijo!"
       required: false
       min: 0
       max: 1
       options:
-        - { id: "sim", name: "Adicionar queijo extra (+ R$ 4,00)", price_delta_cents: 400 }
+        - {
+            id: "sim",
+            name: "Adicionar queijo extra (+ R$ 4,00)",
+            price_delta_cents: 400,
+          }
 
 # ==========================================
 # AÇAÍ
@@ -1470,8 +1889,16 @@ whatsapp:
       max: 1
       options:
         - { id: "brahma", name: "Brahma (R$ 8,00)", price_delta_cents: 0 }
-        - { id: "antarctica", name: "Antarctica (R$ 8,00)", price_delta_cents: 0 }
-        - { id: "heineken", name: "Heineken (R$ 10,00)", price_delta_cents: 200 }
+        - {
+            id: "antarctica",
+            name: "Antarctica (R$ 8,00)",
+            price_delta_cents: 0,
+          }
+        - {
+            id: "heineken",
+            name: "Heineken (R$ 10,00)",
+            price_delta_cents: 200,
+          }
 
 - id: "rock-burger-cerveja-600ml"
   store_id: "rock-burger"
@@ -1495,9 +1922,2921 @@ whatsapp:
         - { id: "brahma", name: "Brahma", price_delta_cents: 0 }
         - { id: "antarctica", name: "Antarctica", price_delta_cents: 0 }
         - { id: "heineken", name: "Heineken", price_delta_cents: 0 }
+
+# MARLENE RESTAURANTE
+# ENTRADAS
+- {
+    id: "marlene-batata-frita",
+    store_id: "marlene-restaurante",
+    name: "Batata Frita",
+    description: "Porção de entrada.",
+    category: "Entradas",
+    price_cents: 4300,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 1,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meia-batata-frita",
+    store_id: "marlene-restaurante",
+    name: "Meia Batata Frita",
+    description: "Meia porção de entrada.",
+    category: "Entradas",
+    price_cents: 3200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 2,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-batata-mussarela",
+    store_id: "marlene-restaurante",
+    name: "Batata com Mussarela",
+    description: "Porção de batata com mussarela.",
+    category: "Entradas",
+    price_cents: 5000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 3,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meia-batata-mussarela",
+    store_id: "marlene-restaurante",
+    name: "Meia Batata com Mussarela",
+    description: "Meia porção de batata com mussarela.",
+    category: "Entradas",
+    price_cents: 3900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 4,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-torresmo-traira",
+    store_id: "marlene-restaurante",
+    name: "Torresmo de Traíra",
+    description: "Porção de entrada.",
+    category: "Entradas",
+    price_cents: 6200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 5,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-torresmo-traira",
+    store_id: "marlene-restaurante",
+    name: "Meio Torresmo de Traíra",
+    description: "Meia porção de entrada.",
+    category: "Entradas",
+    price_cents: 4900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 6,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-camarao",
+    store_id: "marlene-restaurante",
+    name: "Camarão",
+    description: "Porção de entrada.",
+    category: "Entradas",
+    price_cents: 8500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 7,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-camarao",
+    store_id: "marlene-restaurante",
+    name: "Meio Camarão",
+    description: "Meia porção de entrada.",
+    category: "Entradas",
+    price_cents: 6400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 8,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-torresmo-tilapia",
+    store_id: "marlene-restaurante",
+    name: "Torresmo de Tilápia Inteiro",
+    description: "Porção de entrada.",
+    category: "Entradas",
+    price_cents: 6400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 9,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-torresmo-tilapia",
+    store_id: "marlene-restaurante",
+    name: "Meio Torresmo de Tilápia",
+    description: "Meia porção de entrada.",
+    category: "Entradas",
+    price_cents: 5000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 10,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-file-fritas",
+    store_id: "marlene-restaurante",
+    name: "Filé com Fritas Porção de Carne 145",
+    description: "Porção de entrada.",
+    category: "Entradas",
+    price_cents: 8900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 11,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meia-file-fritas",
+    store_id: "marlene-restaurante",
+    name: "Meia Porção Filé com Fritas",
+    description: "Meia porção de entrada.",
+    category: "Entradas",
+    price_cents: 6150,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 12,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-tirinha-file-madeira",
+    store_id: "marlene-restaurante",
+    name: "Tirinha de Filé ao Molho Madeira",
+    description: "Porção de entrada.",
+    category: "Entradas",
+    price_cents: 9000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 13,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meia-tirinha-file-madeira",
+    store_id: "marlene-restaurante",
+    name: "Meia Tirinha de Filé ao Molho Madeira",
+    description: "Meia porção de entrada.",
+    category: "Entradas",
+    price_cents: 6900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 14,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-palmito-azeitona",
+    store_id: "marlene-restaurante",
+    name: "Palmito com Azeitona",
+    description: "Porção de entrada.",
+    category: "Entradas",
+    price_cents: 4900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 15,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-salaminho",
+    store_id: "marlene-restaurante",
+    name: "Salaminho",
+    description: "Porção de entrada.",
+    category: "Entradas",
+    price_cents: 3600,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 16,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-mandioca",
+    store_id: "marlene-restaurante",
+    name: "Porção de Mandioca",
+    description: "Porção de entrada.",
+    category: "Entradas",
+    price_cents: 3500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 17,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-bolinho-bacalhau",
+    store_id: "marlene-restaurante",
+    name: "Bolinho de Bacalhau 10un",
+    description: "Porção com 10 unidades.",
+    category: "Entradas",
+    price_cents: 4900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 18,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-pastel-frito",
+    store_id: "marlene-restaurante",
+    name: "Pastel Frito 10un",
+    description: "Porção com 10 unidades.",
+    category: "Entradas",
+    price_cents: 4400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 19,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-isca-frango",
+    store_id: "marlene-restaurante",
+    name: "Isca de Frango Empanado",
+    description: "Porção de entrada.",
+    category: "Entradas",
+    price_cents: 4300,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 20,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-pedra-mista",
+    store_id: "marlene-restaurante",
+    name: "Pedra Mista (Boi, Calabresa, Aipim)",
+    description: "Porção de boi, calabresa e aipim.",
+    category: "Entradas",
+    price_cents: 5900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 21,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-tabua-frios",
+    store_id: "marlene-restaurante",
+    name: "Tábua de Frios",
+    description: "Palmito, azeitona, salaminho e queijo.",
+    category: "Entradas",
+    price_cents: 6000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 22,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-mussarela-200g",
+    store_id: "marlene-restaurante",
+    name: "Mussarela 200g",
+    description: "Porção de entrada.",
+    category: "Entradas",
+    price_cents: 1800,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 23,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-mussarela-100g",
+    store_id: "marlene-restaurante",
+    name: "Mussarela 100g",
+    description: "Porção de entrada.",
+    category: "Entradas",
+    price_cents: 1200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 24,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-torresmo-cacao",
+    store_id: "marlene-restaurante",
+    name: "Torresmo Cação",
+    description: "Porção de entrada.",
+    category: "Entradas",
+    price_cents: 6200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 25,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meia-torresmo-cacao",
+    store_id: "marlene-restaurante",
+    name: "Meia Torresmo Cação",
+    description: "Meia porção de entrada.",
+    category: "Entradas",
+    price_cents: 4900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 26,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-torresmo-cascudo",
+    store_id: "marlene-restaurante",
+    name: "Torresmo de Cascudo",
+    description: "Porção de entrada.",
+    category: "Entradas",
+    price_cents: 6200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 27,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+
+# PEIXES
+- {
+    id: "marlene-file-moda-2",
+    store_id: "marlene-restaurante",
+    name: "Filé à Moda (serve 2 pessoas)",
+    description: "Opção de arroz de camarão; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 6100,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 28,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-file-moda",
+    store_id: "marlene-restaurante",
+    name: "Meio Filé à Moda (serve 1 pessoa)",
+    description: "Opção de arroz de camarão; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 5200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 29,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-file-simples-2",
+    store_id: "marlene-restaurante",
+    name: "Filé Simples (serve 2 pessoas)",
+    description: "Informe as guarnições desejadas ao fazer o pedido.",
+    category: "Peixes",
+    price_cents: 6500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 30,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-file-simples",
+    store_id: "marlene-restaurante",
+    name: "Meio Filé Simples (serve 1 pessoa)",
+    description: "Informe as guarnições desejadas ao fazer o pedido.",
+    category: "Peixes",
+    price_cents: 5000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 31,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-file-mussarela-camarao",
+    store_id: "marlene-restaurante",
+    name: "Filé ao Molho Mussarela e Camarão",
+    description: "Serve até 3 pessoas; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 14300,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 32,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-file-mussarela-camarao",
+    store_id: "marlene-restaurante",
+    name: "Meio Filé ao Molho Mussarela e Camarão",
+    description: "Serve 1 pessoa; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 11700,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 33,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-file-catupiry-camarao",
+    store_id: "marlene-restaurante",
+    name: "Filé ao Molho Catupiry e Camarão",
+    description: "Serve até 3 pessoas; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 14300,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 34,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-file-catupiry-camarao",
+    store_id: "marlene-restaurante",
+    name: "Meio Filé ao Molho Catupiry e Camarão",
+    description: "Serve 1 pessoa; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 11700,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 35,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-file-catupiry",
+    store_id: "marlene-restaurante",
+    name: "Filé ao Molho Catupiry",
+    description: "Serve 2 pessoas; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 10500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 36,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-file-catupiry",
+    store_id: "marlene-restaurante",
+    name: "Meio Filé ao Molho Catupiry",
+    description: "Serve 1 pessoa; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 8200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 37,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-file-mussarela",
+    store_id: "marlene-restaurante",
+    name: "Filé ao Molho Mussarela",
+    description: "Serve 2 pessoas; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 10500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 38,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-file-mussarela",
+    store_id: "marlene-restaurante",
+    name: "Meio Filé ao Molho Mussarela",
+    description: "Serve 1 pessoa; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 8200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 39,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-file-camarao",
+    store_id: "marlene-restaurante",
+    name: "Filé ao Molho de Camarão",
+    description: "Serve 2 pessoas; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 11700,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 40,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-file-camarao",
+    store_id: "marlene-restaurante",
+    name: "Meio Filé ao Molho de Camarão",
+    description: "Serve 1 pessoa; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 9300,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 41,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-file-cacao-camarao",
+    store_id: "marlene-restaurante",
+    name: "Filé de Cação ao Molho de Camarão",
+    description: "Serve 2 pessoas; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 12600,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 42,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-file-cacao-camarao",
+    store_id: "marlene-restaurante",
+    name: "Meio Filé de Cação ao Molho de Camarão",
+    description: "Serve 1 pessoa; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 9700,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 43,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-tilapia-grelhada",
+    store_id: "marlene-restaurante",
+    name: "Tilápia Grelhada Simples",
+    description: "Serve 2 pessoas; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 10100,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 44,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-cascudo-frito",
+    store_id: "marlene-restaurante",
+    name: "Cascudo Frito Simples",
+    description: "Informe as guarnições desejadas ao fazer o pedido.",
+    category: "Peixes",
+    price_cents: 6500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 45,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-salmao-alcaparras",
+    store_id: "marlene-restaurante",
+    name: "Salmão ao Molho de Alcaparras",
+    description: "Serve 2 pessoas; informe as guarnições desejadas.",
+    category: "Peixes",
+    price_cents: 14500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 46,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+
+# MOQUECAS
+- {
+    id: "marlene-moqueca-cacao-1",
+    store_id: "marlene-restaurante",
+    name: "Moqueca de Cação (1 pessoa)",
+    description: "Versão simples; informe as guarnições desejadas.",
+    category: "Moquecas",
+    price_cents: 8100,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 47,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-moqueca-cacao-2",
+    store_id: "marlene-restaurante",
+    name: "Moqueca de Cação (2 pessoas)",
+    description: "Versão simples; informe as guarnições desejadas.",
+    category: "Moquecas",
+    price_cents: 12300,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 48,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-moqueca-cascudo-1",
+    store_id: "marlene-restaurante",
+    name: "Moqueca de Cascudo (1 pessoa)",
+    description: "Versão simples; informe as guarnições desejadas.",
+    category: "Moquecas",
+    price_cents: 7600,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 49,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-moqueca-cascudo-2",
+    store_id: "marlene-restaurante",
+    name: "Moqueca de Cascudo (2 pessoas)",
+    description: "Versão simples; informe as guarnições desejadas.",
+    category: "Moquecas",
+    price_cents: 11700,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 50,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-moqueca-dourado-1",
+    store_id: "marlene-restaurante",
+    name: "Moqueca de Dourado (1 pessoa)",
+    description: "Versão simples; informe as guarnições desejadas.",
+    category: "Moquecas",
+    price_cents: 10200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 51,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-moqueca-dourado-2",
+    store_id: "marlene-restaurante",
+    name: "Moqueca de Dourado (2 pessoas)",
+    description: "Versão simples; informe as guarnições desejadas.",
+    category: "Moquecas",
+    price_cents: 13000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 52,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-moqueca-robalo-1",
+    store_id: "marlene-restaurante",
+    name: "Moqueca de Robalo (1 pessoa)",
+    description: "Versão simples; informe as guarnições desejadas.",
+    category: "Moquecas",
+    price_cents: 12500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 53,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-moqueca-robalo-2",
+    store_id: "marlene-restaurante",
+    name: "Moqueca de Robalo (2 pessoas)",
+    description: "Arroz e pirão.",
+    category: "Moquecas",
+    price_cents: 16690,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 54,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-moqueca-badejo-1",
+    store_id: "marlene-restaurante",
+    name: "Moqueca de Badejo (1 pessoa)",
+    description: "Arroz e pirão.",
+    category: "Moquecas",
+    price_cents: 15600,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 55,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-moqueca-badejo-2",
+    store_id: "marlene-restaurante",
+    name: "Moqueca de Badejo (2 pessoas)",
+    description: "Arroz e pirão.",
+    category: "Moquecas",
+    price_cents: 19600,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 56,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-molho-camarao",
+    store_id: "marlene-restaurante",
+    name: "Molho de Camarão",
+    description: "Acompanhamento.",
+    category: "Moquecas",
+    price_cents: 3800,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 57,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+
+# CARNES
+- {
+    id: "marlene-picanha-500-completa",
+    store_id: "marlene-restaurante",
+    name: "Picanha 500g Completa",
+    description: "Serve 2 pessoas; informe as guarnições desejadas.",
+    category: "Carnes",
+    price_cents: 11800,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 58,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meia-picanha-500",
+    store_id: "marlene-restaurante",
+    name: "Meia Picanha 500g Completa",
+    description: "Serve 1 pessoa; informe as guarnições desejadas.",
+    category: "Carnes",
+    price_cents: 9400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 59,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-picanha-familia-1kg",
+    store_id: "marlene-restaurante",
+    name: "Picanha Família 1kg",
+    description: "Serve até 4 pessoas; informe as guarnições desejadas.",
+    category: "Carnes",
+    price_cents: 20300,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 60,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meia-picanha-familia",
+    store_id: "marlene-restaurante",
+    name: "Meia Picanha Família 1kg (500g)",
+    description: "Serve 2 pessoas; informe as guarnições desejadas.",
+    category: "Carnes",
+    price_cents: 14300,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 61,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-contra-file-500",
+    store_id: "marlene-restaurante",
+    name: "Contra Filé 500g Completo",
+    description: "Serve 2 pessoas; informe as guarnições desejadas.",
+    category: "Carnes",
+    price_cents: 8600,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 62,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-contra-file",
+    store_id: "marlene-restaurante",
+    name: "Meio Contra Filé 500g",
+    description: "Porção de 300g, serve 1 pessoa.",
+    category: "Carnes",
+    price_cents: 7500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 63,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-lombinho-500",
+    store_id: "marlene-restaurante",
+    name: "Lombinho de Porco 500g",
+    description: "Serve até 3 pessoas.",
+    category: "Carnes",
+    price_cents: 5500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 64,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-lombinho",
+    store_id: "marlene-restaurante",
+    name: "Meio Lombinho de Porco 300g",
+    description: "Serve 1 pessoa.",
+    category: "Carnes",
+    price_cents: 4300,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 65,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-chapa-mista-1kg",
+    store_id: "marlene-restaurante",
+    name: "Chapa Mista 1kg",
+    description: "Serve 4 pessoas; informe as guarnições desejadas.",
+    category: "Carnes",
+    price_cents: 14800,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 66,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meia-chapa-mista",
+    store_id: "marlene-restaurante",
+    name: "Meia Chapa Mista 500g",
+    description: "Serve até 3 pessoas; informe as guarnições desejadas.",
+    category: "Carnes",
+    price_cents: 10200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 67,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-parmegiana-file-mignon",
+    store_id: "marlene-restaurante",
+    name: "Bife à Parmegiana (Filé Mignon)",
+    description: "Serve 2 pessoas; informe as guarnições desejadas.",
+    category: "Carnes",
+    price_cents: 9700,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 68,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-parmegiana",
+    store_id: "marlene-restaurante",
+    name: "Meio Bife à Parmegiana (Filé Mignon)",
+    description: "Serve 1 pessoa; informe as guarnições desejadas.",
+    category: "Carnes",
+    price_cents: 7300,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 69,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-medalhao-file",
+    store_id: "marlene-restaurante",
+    name: "Medalhão (Filé Mignon)",
+    description: "Serve 2 pessoas; informe as guarnições desejadas.",
+    category: "Carnes",
+    price_cents: 9500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 70,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-medalhao",
+    store_id: "marlene-restaurante",
+    name: "Meio Medalhão (Filé Mignon)",
+    description: "Serve 1 pessoa; informe as guarnições desejadas.",
+    category: "Carnes",
+    price_cents: 6900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 71,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-estrogonofe-frango",
+    store_id: "marlene-restaurante",
+    name: "Estrogonofe de Frango",
+    description: "Serve 2 pessoas; informe as guarnições desejadas.",
+    category: "Carnes",
+    price_cents: 4000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 72,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-estrogonofe-frango",
+    store_id: "marlene-restaurante",
+    name: "Meio Estrogonofe de Frango",
+    description: "Serve 1 pessoa.",
+    category: "Carnes",
+    price_cents: 3400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 73,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-estrogonofe-file",
+    store_id: "marlene-restaurante",
+    name: "Estrogonofe de Filé Mignon",
+    description: "Acompanha arroz e batata frita.",
+    category: "Carnes",
+    price_cents: 9700,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 74,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-estrogonofe-file",
+    store_id: "marlene-restaurante",
+    name: "Meio Estrogonofe de Filé Mignon",
+    description: "Acompanha arroz e batata frita.",
+    category: "Carnes",
+    price_cents: 6900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 75,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-refeicao-2-pessoas",
+    store_id: "marlene-restaurante",
+    name: "Refeição para 2 Pessoas",
+    description: "Contra filé grelhado, arroz, feijão, batata frita e salada.",
+    category: "Carnes",
+    price_cents: 9900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 76,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-picanha-simples-300g",
+    store_id: "marlene-restaurante",
+    name: "Picanha Simples 300g",
+    description: "Porção de carne.",
+    category: "Carnes",
+    price_cents: 6400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 77,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-picanha-simples-500g",
+    store_id: "marlene-restaurante",
+    name: "Picanha Simples 500g",
+    description: "Porção de carne.",
+    category: "Carnes",
+    price_cents: 10000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 78,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-picanha-simples-1kg",
+    store_id: "marlene-restaurante",
+    name: "Picanha Simples 1kg",
+    description: "Porção de carne.",
+    category: "Carnes",
+    price_cents: 19900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 79,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+
+# GUARNIÇÕES
+- {
+    id: "marlene-arroz-camarao",
+    store_id: "marlene-restaurante",
+    name: "Arroz de Camarão",
+    description: "Guarnição.",
+    category: "Guarnições",
+    price_cents: 6600,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 80,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-arroz-camarao",
+    store_id: "marlene-restaurante",
+    name: "Meio Arroz de Camarão",
+    description: "Meia porção de guarnição.",
+    category: "Guarnições",
+    price_cents: 4800,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 81,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-arroz",
+    store_id: "marlene-restaurante",
+    name: "Porção de Arroz",
+    description: "Guarnição.",
+    category: "Guarnições",
+    price_cents: 2000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 82,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meia-arroz",
+    store_id: "marlene-restaurante",
+    name: "Meia Porção de Arroz",
+    description: "Meia porção de guarnição.",
+    category: "Guarnições",
+    price_cents: 1400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 83,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-arroz-piamontese",
+    store_id: "marlene-restaurante",
+    name: "Arroz Piamontese",
+    description: "Guarnição.",
+    category: "Guarnições",
+    price_cents: 5500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 84,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-arroz-piamontese",
+    store_id: "marlene-restaurante",
+    name: "Meio Arroz Piamontese",
+    description: "Meia porção de guarnição.",
+    category: "Guarnições",
+    price_cents: 3900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 85,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-pure-batata",
+    store_id: "marlene-restaurante",
+    name: "Purê de Batata",
+    description: "Guarnição.",
+    category: "Guarnições",
+    price_cents: 4500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 86,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-pure-batata",
+    store_id: "marlene-restaurante",
+    name: "Meio Purê de Batata",
+    description: "Meia porção de guarnição.",
+    category: "Guarnições",
+    price_cents: 3700,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 87,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-pirao",
+    store_id: "marlene-restaurante",
+    name: "Pirão",
+    description: "Guarnição.",
+    category: "Guarnições",
+    price_cents: 4300,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 88,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-pirao",
+    store_id: "marlene-restaurante",
+    name: "Meio Pirão",
+    description: "Meia porção de guarnição.",
+    category: "Guarnições",
+    price_cents: 3200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 89,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-feijao-tropeiro",
+    store_id: "marlene-restaurante",
+    name: "Feijão Tropeiro",
+    description: "Guarnição.",
+    category: "Guarnições",
+    price_cents: 5400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 90,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-feijao-tropeiro",
+    store_id: "marlene-restaurante",
+    name: "Meio Feijão Tropeiro",
+    description: "Meia porção de guarnição.",
+    category: "Guarnições",
+    price_cents: 4100,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 91,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-feijao-comum",
+    store_id: "marlene-restaurante",
+    name: "Feijão Comum",
+    description: "Guarnição.",
+    category: "Guarnições",
+    price_cents: 1990,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 92,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-feijao-comum",
+    store_id: "marlene-restaurante",
+    name: "Meio Feijão Comum",
+    description: "Meia porção de guarnição.",
+    category: "Guarnições",
+    price_cents: 1400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 93,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-farofa",
+    store_id: "marlene-restaurante",
+    name: "Farofa",
+    description: "Guarnição.",
+    category: "Guarnições",
+    price_cents: 2500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 94,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meia-farofa",
+    store_id: "marlene-restaurante",
+    name: "Meia Farofa",
+    description: "Meia porção de guarnição.",
+    category: "Guarnições",
+    price_cents: 1650,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 95,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-farofa-bacon",
+    store_id: "marlene-restaurante",
+    name: "Farofa com Bacon",
+    description: "Guarnição.",
+    category: "Guarnições",
+    price_cents: 3100,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 96,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meia-farofa-bacon",
+    store_id: "marlene-restaurante",
+    name: "Meia Farofa com Bacon",
+    description: "Meia porção de guarnição.",
+    category: "Guarnições",
+    price_cents: 2200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 97,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-vinagrete",
+    store_id: "marlene-restaurante",
+    name: "Vinagrete",
+    description: "Guarnição.",
+    category: "Guarnições",
+    price_cents: 1200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 98,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-salada-tomate",
+    store_id: "marlene-restaurante",
+    name: "Salada Tomate Simples",
+    description: "Alface, tomate e cebola.",
+    category: "Guarnições",
+    price_cents: 1900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 99,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meia-salada-tomate",
+    store_id: "marlene-restaurante",
+    name: "Meia Salada de Tomate Simples",
+    description: "Alface, tomate e cebola.",
+    category: "Guarnições",
+    price_cents: 1400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 100,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-salada-palmito-champignon",
+    store_id: "marlene-restaurante",
+    name: "Salada com Palmito",
+    description: "Alface, tomate, palmito e champignon.",
+    category: "Guarnições",
+    price_cents: 4900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 101,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meia-salada-palmito-champignon",
+    store_id: "marlene-restaurante",
+    name: "Meia Salada com Palmito",
+    description: "Alface, tomate, palmito e champignon.",
+    category: "Guarnições",
+    price_cents: 3300,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 102,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-salada-palmito",
+    store_id: "marlene-restaurante",
+    name: "Salada de Palmito",
+    description: "Palmito, champignon e azeitona.",
+    category: "Guarnições",
+    price_cents: 5500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 103,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meia-salada-palmito",
+    store_id: "marlene-restaurante",
+    name: "Meia Salada de Palmito",
+    description: "Palmito, champignon e azeitona.",
+    category: "Guarnições",
+    price_cents: 4300,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 104,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+
+# QUENTINHAS
+- {
+    id: "marlene-quentinha-traira",
+    store_id: "marlene-restaurante",
+    name: "Quentinha Traíra",
+    description: "Filé de traíra, arroz, pirão e batata frita. Pode substituir o pirão por feijão; informe no pedido.",
+    category: "Quentinha",
+    price_cents: 3200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 105,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-quentinha-tilapia",
+    store_id: "marlene-restaurante",
+    name: "Quentinha Tilápia",
+    description: "Filé de tilápia, arroz, pirão e batata frita. Pode substituir o pirão por feijão; informe no pedido.",
+    category: "Quentinha",
+    price_cents: 3600,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 106,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-quentinha-boi",
+    store_id: "marlene-restaurante",
+    name: "Quentinha Boi",
+    description: "Bife de miolo da alcatra, arroz, feijão e batata frita.",
+    category: "Quentinha",
+    price_cents: 3000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 107,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-quentinha-frango",
+    store_id: "marlene-restaurante",
+    name: "Quentinha Frango",
+    description: "Filé de frango, arroz, feijão e batata frita.",
+    category: "Quentinha",
+    price_cents: 2800,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 108,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-quentinha-porco",
+    store_id: "marlene-restaurante",
+    name: "Quentinha Porco",
+    description: "Lombo de porco, arroz, feijão e batata frita.",
+    category: "Quentinha",
+    price_cents: 2800,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 109,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-quentinha-contra-file",
+    store_id: "marlene-restaurante",
+    name: "Quentinha Contra Filé",
+    description: "Contra filé, arroz, feijão e batata frita.",
+    category: "Quentinha",
+    price_cents: 3950,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 110,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-file-tilapia-180g",
+    store_id: "marlene-restaurante",
+    name: "Filé Tilápia à Parte 180g",
+    description: "Filé unitário com peso médio de 180g.",
+    category: "Quentinha",
+    price_cents: 2400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 111,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+
+# PRATO FEITO
+- {
+    id: "marlene-pf-frango",
+    store_id: "marlene-restaurante",
+    name: "PF de Frango",
+    description: "Bife, arroz, feijão, batata frita e salada.",
+    category: "Prato Feito",
+    price_cents: 3600,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 112,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-pf-porco",
+    store_id: "marlene-restaurante",
+    name: "PF de Porco",
+    description: "Bife, arroz, feijão, batata frita e salada.",
+    category: "Prato Feito",
+    price_cents: 3600,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 113,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+
+# SOBREMESA
+- {
+    id: "marlene-bandeja-canudo-10",
+    store_id: "marlene-restaurante",
+    name: "Bandeja com 10 Canudos Doces Valtinho",
+    description: "Sobremesa.",
+    category: "Sobremesa",
+    price_cents: 3500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 114,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-canudo-doce-valtinho",
+    store_id: "marlene-restaurante",
+    name: "Canudo Doce do Valtinho (unidade)",
+    description: "Sobremesa.",
+    category: "Sobremesa",
+    price_cents: 400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 115,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-bandeja-canudo-15",
+    store_id: "marlene-restaurante",
+    name: "Bandeja com 15 Canudos Doces Valtinho",
+    description: "Sobremesa.",
+    category: "Sobremesa",
+    price_cents: 5250,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 116,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+
+# MOLHOS
+- {
+    id: "marlene-molho-alcaparras",
+    store_id: "marlene-restaurante",
+    name: "Molho de Alcaparras",
+    description: "Molho para acompanhamento.",
+    category: "Molhos",
+    price_cents: 2200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 117,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-meio-molho-camarao",
+    store_id: "marlene-restaurante",
+    name: "Meio Molho de Camarão",
+    description: "Meia porção de molho.",
+    category: "Molhos",
+    price_cents: 2800,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 118,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+
+# BEBIDAS
+- {
+    id: "marlene-sol-zero",
+    store_id: "marlene-restaurante",
+    name: "Long Neck Sol Zero",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 1150,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 119,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-heineken-zero",
+    store_id: "marlene-restaurante",
+    name: "Long Neck Heineken Zero",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 1500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 120,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-agua-sem-gas",
+    store_id: "marlene-restaurante",
+    name: "Água sem Gás",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 360,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 121,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-agua-com-gas",
+    store_id: "marlene-restaurante",
+    name: "Água com Gás",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 122,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-agua-carbo",
+    store_id: "marlene-restaurante",
+    name: "Água Carbo",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 123,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-tonica",
+    store_id: "marlene-restaurante",
+    name: "Tônica Lata",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 124,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-tonica-zero",
+    store_id: "marlene-restaurante",
+    name: "Tônica Zero Lata",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 125,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-h2o-limao",
+    store_id: "marlene-restaurante",
+    name: "H2O Limão",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 1100,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 126,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-coca-zero-lata",
+    store_id: "marlene-restaurante",
+    name: "Coca-Cola Zero Lata",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 127,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-coca-lata",
+    store_id: "marlene-restaurante",
+    name: "Coca-Cola Lata Tradicional",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 950,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 128,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-coca-600ml",
+    store_id: "marlene-restaurante",
+    name: "Coca-Cola 600ml",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 1150,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 129,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-coca-2l",
+    store_id: "marlene-restaurante",
+    name: "Coca-Cola 2L",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 1700,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 130,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-guarana-lata",
+    store_id: "marlene-restaurante",
+    name: "Guaraná Lata",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 950,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 131,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-guarana-zero",
+    store_id: "marlene-restaurante",
+    name: "Guaraná Zero Lata",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 950,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 132,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-suco-abacaxi",
+    store_id: "marlene-restaurante",
+    name: "Suco de Abacaxi (copo)",
+    description: "Suco.",
+    category: "Bebidas",
+    price_cents: 1350,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 133,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-suco-morango",
+    store_id: "marlene-restaurante",
+    name: "Suco de Morango Natural 300ml",
+    description: "Suco natural.",
+    category: "Bebidas",
+    price_cents: 1350,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 134,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-suco-laranja",
+    store_id: "marlene-restaurante",
+    name: "Suco de Laranja (copo)",
+    description: "Suco.",
+    category: "Bebidas",
+    price_cents: 1100,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 135,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-suco-limao",
+    store_id: "marlene-restaurante",
+    name: "Suco de Limão Natural 300ml",
+    description: "Suco natural.",
+    category: "Bebidas",
+    price_cents: 1100,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 136,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-suco-uva-lata",
+    store_id: "marlene-restaurante",
+    name: "Suco de Uva Lata",
+    description: "Suco.",
+    category: "Bebidas",
+    price_cents: 1150,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 137,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-suco-pessego-lata",
+    store_id: "marlene-restaurante",
+    name: "Suco de Pêssego Lata",
+    description: "Suco.",
+    category: "Bebidas",
+    price_cents: 900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 138,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-fanta-uva",
+    store_id: "marlene-restaurante",
+    name: "Fanta Uva Lata",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 139,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-fanta-laranja",
+    store_id: "marlene-restaurante",
+    name: "Fanta Laranja Lata",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 140,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-guaravita",
+    store_id: "marlene-restaurante",
+    name: "Guaravita",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 360,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 141,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-eisenbahn-long-neck",
+    store_id: "marlene-restaurante",
+    name: "Long Neck Eisenbahn 355ml",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 1100,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 142,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-guarana-fyz",
+    store_id: "marlene-restaurante",
+    name: "Guaraná Lata Fyz",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 950,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 143,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-amstel-ultra",
+    store_id: "marlene-restaurante",
+    name: "Long Neck Amstel Ultra",
+    description: "Sem glúten.",
+    category: "Bebidas",
+    price_cents: 1000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 144,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-amstel",
+    store_id: "marlene-restaurante",
+    name: "Long Neck Amstel Tradicional",
+    description: "Bebida.",
+    category: "Bebidas",
+    price_cents: 1000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 145,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+
+# DRINKS
+- {
+    id: "marlene-caipsake",
+    store_id: "marlene-restaurante",
+    name: "Caipsake",
+    description: "Escolha entre limão, abacaxi, kiwi ou morango.",
+    category: "Drinks",
+    price_cents: 3000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 146,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-caipirinha",
+    store_id: "marlene-restaurante",
+    name: "Caipirinha",
+    description: "Escolha entre limão, abacaxi, kiwi ou morango.",
+    category: "Drinks",
+    price_cents: 2500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 147,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-caipfruta-sem-alcool",
+    store_id: "marlene-restaurante",
+    name: "Caipfruta sem Álcool",
+    description: "Escolha entre limão, abacaxi, kiwi ou morango.",
+    category: "Drinks",
+    price_cents: 2700,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 148,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-frozen-rose",
+    store_id: "marlene-restaurante",
+    name: "Frozen Rosé",
+    description: "Vinho rosé, morango e limão.",
+    category: "Drinks",
+    price_cents: 3600,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 149,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+
+# VINHOS TINTOS
+- {
+    id: "marlene-vinho-concha-y-toro-merlot",
+    store_id: "marlene-restaurante",
+    name: "Vinho Reservado Concha y Toro Merlot 750ml",
+    description: "Origem: Chile.",
+    category: "Vinhos Tintos",
+    price_cents: 4900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 150,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-terrazas-cabernet",
+    store_id: "marlene-restaurante",
+    name: "Terrazas Cabernet Sauvignon 750ml",
+    description: "Origem indicada no cardápio: Portugal/Brasil.",
+    category: "Vinhos Tintos",
+    price_cents: 17000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 151,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-casillero-cabernet",
+    store_id: "marlene-restaurante",
+    name: "Casillero del Diablo Cabernet",
+    description: "Origem: Chile.",
+    category: "Vinhos Tintos",
+    price_cents: 7400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 152,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-santa-helena-merlon",
+    store_id: "marlene-restaurante",
+    name: "Vinho Santa Helena Merlon 750ml",
+    description: "Origem: Brasil.",
+    category: "Vinhos Tintos",
+    price_cents: 5600,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 153,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-reservado-cabernet",
+    store_id: "marlene-restaurante",
+    name: "Reservado Cabernet Sauvignon Concha y Toro 750ml",
+    description: "Origem: Chile.",
+    category: "Vinhos Tintos",
+    price_cents: 4900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 154,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-reserva-samana",
+    store_id: "marlene-restaurante",
+    name: "Reserva Samana Cabernet 750ml",
+    description: "Origem: Chile.",
+    category: "Vinhos Tintos",
+    price_cents: 7400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 155,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-quinta-morgado",
+    store_id: "marlene-restaurante",
+    name: "Quinta do Morgado 750ml",
+    description: "Origem: Brasil.",
+    category: "Vinhos Tintos",
+    price_cents: 2500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 156,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-julia-florista",
+    store_id: "marlene-restaurante",
+    name: "Júlia Florista 750ml",
+    description: "Origem: Portugal.",
+    category: "Vinhos Tintos",
+    price_cents: 5200,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 157,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-vinho-quinta-morgado",
+    store_id: "marlene-restaurante",
+    name: "Vinho Quinta do Morgado 750ml",
+    description: "Origem: Brasil.",
+    category: "Vinhos Tintos",
+    price_cents: 2500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 158,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-cosecha-cabernet",
+    store_id: "marlene-restaurante",
+    name: "Vinho Cosecha Cabernet 750ml",
+    description: "Origem: Chile.",
+    category: "Vinhos Tintos",
+    price_cents: 5000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 159,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-latitud-33-cabernet",
+    store_id: "marlene-restaurante",
+    name: "Vinho Latitud 33 Cabernet Sauvignon 750ml",
+    description: "Origem indicada no cardápio: Brasil.",
+    category: "Vinhos Tintos",
+    price_cents: 8000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 160,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-galiotto-suave",
+    store_id: "marlene-restaurante",
+    name: "Vinho Galiotto Suave",
+    description: "Origem: Brasil.",
+    category: "Vinhos Tintos",
+    price_cents: 5900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 161,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-porta-6",
+    store_id: "marlene-restaurante",
+    name: "Vinho Porta 6 750ml",
+    description: "Origem indicada no cardápio: Brasil.",
+    category: "Vinhos Tintos",
+    price_cents: 9000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 162,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-luiza-bosca-pinot",
+    store_id: "marlene-restaurante",
+    name: "Vinho Luiza Bosca Pinot Noir 750ml",
+    description: "Origem: Argentina.",
+    category: "Vinhos Tintos",
+    price_cents: 22400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 163,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-lyra-cabernet",
+    store_id: "marlene-restaurante",
+    name: "Vinho Lyra Cabernet 750ml",
+    description: "Origem: Chile.",
+    category: "Vinhos Tintos",
+    price_cents: 12800,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 164,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-casillero-375",
+    store_id: "marlene-restaurante",
+    name: "Vinho Casillero del Diablo 375ml",
+    description: "Origem: Chile.",
+    category: "Vinhos Tintos",
+    price_cents: 4800,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 165,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-reservado-merlot",
+    store_id: "marlene-restaurante",
+    name: "Vinho Reservado Merlot 750ml",
+    description: "Origem: Chile.",
+    category: "Vinhos Tintos",
+    price_cents: 4900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 166,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-tres-medallas-cabernet",
+    store_id: "marlene-restaurante",
+    name: "Vinho 3 Medallas Cabernet 750ml",
+    description: "Origem indicada no cardápio: Brasil.",
+    category: "Vinhos Tintos",
+    price_cents: 5500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 167,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-tarapaca-cabernet",
+    store_id: "marlene-restaurante",
+    name: "Vinho Tarapacá Cabernet 375ml",
+    description: "Origem: Chile.",
+    category: "Vinhos Tintos",
+    price_cents: 3900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 168,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-periquita-375",
+    store_id: "marlene-restaurante",
+    name: "Vinho Periquita 375ml",
+    description: "Origem: Portugal.",
+    category: "Vinhos Tintos",
+    price_cents: 6900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 169,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-vinho-120-pinot",
+    store_id: "marlene-restaurante",
+    name: "Vinho 120 Pinot Noir",
+    description: "Origem: Argentina.",
+    category: "Vinhos Tintos",
+    price_cents: 5500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 170,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-catena-zapata-malbec",
+    store_id: "marlene-restaurante",
+    name: "Vinho Catena Zapata Malbec",
+    description: "Vinho argentino, safra 2021, 750ml.",
+    category: "Vinhos Tintos",
+    price_cents: 69000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 171,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-angelica-zapata-malbec",
+    store_id: "marlene-restaurante",
+    name: "Vinho Angelica Zapata Malbec",
+    description: "Vinho argentino, safra 2019, 750ml.",
+    category: "Vinhos Tintos",
+    price_cents: 31500,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 172,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-dv-catena",
+    store_id: "marlene-restaurante",
+    name: "Vinho D.V. Catena 750ml",
+    description: "Vinho argentino, safra 2021, Malbec.",
+    category: "Vinhos Tintos",
+    price_cents: 24700,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 173,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+
+# VINHO BRANCO
+- {
+    id: "marlene-gatao-verde",
+    store_id: "marlene-restaurante",
+    name: "Vinho Verde Gatão 750ml",
+    description: "Origem: Portugal.",
+    category: "Vinho Branco",
+    price_cents: 6400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 174,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-casal-garcia-verde",
+    store_id: "marlene-restaurante",
+    name: "Vinho Verde Casal Garcia 750ml",
+    description: "Origem: Portugal.",
+    category: "Vinho Branco",
+    price_cents: 10000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 175,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-casal-garcia-sweet",
+    store_id: "marlene-restaurante",
+    name: "Vinho Sweet Casal Garcia 750ml",
+    description: "Origem: Portugal.",
+    category: "Vinho Branco",
+    price_cents: 10000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 176,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-gazela-verde",
+    store_id: "marlene-restaurante",
+    name: "Vinho Gazela Verde 750ml",
+    description: "Origem: Portugal.",
+    category: "Vinho Branco",
+    price_cents: 7950,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 177,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+
+# VINHO ROSÉ / ESPUMANTES
+- {
+    id: "marlene-periquita-rose",
+    store_id: "marlene-restaurante",
+    name: "Vinho Periquita Rosé 750ml",
+    description: "Origem: Portugal.",
+    category: "Vinho Rosé / Espumantes",
+    price_cents: 10600,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 178,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-casal-garcia-rose",
+    store_id: "marlene-restaurante",
+    name: "Vinho Casal Garcia 750ml",
+    description: "Origem: Portugal.",
+    category: "Vinho Rosé / Espumantes",
+    price_cents: 10000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 179,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-freixenet-rose",
+    store_id: "marlene-restaurante",
+    name: "Vinho Rosé Freixenet",
+    description: "Origem: Itália.",
+    category: "Vinho Rosé / Espumantes",
+    price_cents: 19900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 180,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-lunae-frisante",
+    store_id: "marlene-restaurante",
+    name: "Vinho Lunae Frisante 750ml",
+    description: "Origem: Brasil.",
+    category: "Vinho Rosé / Espumantes",
+    price_cents: 3900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 181,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-prosecco-salton",
+    store_id: "marlene-restaurante",
+    name: "Espumante Prosecco Salton 750ml",
+    description: "Origem: Brasil.",
+    category: "Vinho Rosé / Espumantes",
+    price_cents: 6000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 182,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-chandon-brut",
+    store_id: "marlene-restaurante",
+    name: "Chandon Brut 750ml",
+    description: "Origem indicada no cardápio: Brasil.",
+    category: "Vinho Rosé / Espumantes",
+    price_cents: 13000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 183,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-chandon-rose-187",
+    store_id: "marlene-restaurante",
+    name: "Chandon Rosé 187ml",
+    description: "Origem indicada no cardápio: Brasil.",
+    category: "Vinho Rosé / Espumantes",
+    price_cents: 6100,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 184,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-piscine-rose",
+    store_id: "marlene-restaurante",
+    name: "Vinho Rosé Piscine 750ml",
+    description: "Origem indicada no cardápio: Brasil.",
+    category: "Vinho Rosé / Espumantes",
+    price_cents: 14000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 185,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-casal-garcia-rose-375",
+    store_id: "marlene-restaurante",
+    name: "Vinho Rosé Casal Garcia 375ml",
+    description: "Origem: Portugal.",
+    category: "Vinho Rosé / Espumantes",
+    price_cents: 5900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 186,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-terra-nova-moscatel",
+    store_id: "marlene-restaurante",
+    name: "Espumante Terra Nova Moscatel Tropical 750ml",
+    description: "Origem indicada no cardápio: Portugal.",
+    category: "Vinho Rosé / Espumantes",
+    price_cents: 7400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 187,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-macaw-frisante",
+    store_id: "marlene-restaurante",
+    name: "Frisante Macaw 750ml",
+    description: "Origem indicada no cardápio: Portugal.",
+    category: "Vinho Rosé / Espumantes",
+    price_cents: 5800,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 188,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-chandon-rose-750",
+    store_id: "marlene-restaurante",
+    name: "Chandon Rosé 750ml",
+    description: "Origem indicada no cardápio: Brasil.",
+    category: "Vinho Rosé / Espumantes",
+    price_cents: 16400,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 189,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+
+# CONGELADOS
+- {
+    id: "marlene-bolinho-bacalhau-congelado",
+    store_id: "marlene-restaurante",
+    name: "Bolinho de Bacalhau Congelado",
+    description: "Produto congelado.",
+    category: "Congelados",
+    price_cents: 3900,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 190,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-file-traira-congelado",
+    store_id: "marlene-restaurante",
+    name: "Filé de Traíra 1kg Congelado",
+    description: "Produto congelado.",
+    category: "Congelados",
+    price_cents: 5000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 191,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
+- {
+    id: "marlene-file-tilapia-congelado",
+    store_id: "marlene-restaurante",
+    name: "Filé de Tilápia 1kg Congelado",
+    description: "Produto congelado.",
+    category: "Congelados",
+    price_cents: 5000,
+    promo_price_cents: null,
+    image: "",
+    available: true,
+    order: 192,
+    base_popularity: 0,
+    tags: [],
+    option_groups: [],
+  }
 ```
 
 ## promos
+
 ```yaml
 []
 ```
