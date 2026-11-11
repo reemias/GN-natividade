@@ -127,6 +127,7 @@ export default function Home() {
         </div>
       </section>
       <section>
+        <br />
         <Slide />
       </section>
       <section className={styles.content} id="explorar">

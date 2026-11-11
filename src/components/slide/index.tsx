@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import style from "./slide.module.css";
-import imagem1 from "../../img/Galeria.png";
+import imagem1 from "../../img/Galeria (1).png";
 import imagem2 from "../../img/Galeria.png";
-import imagem3 from "../../img/Galeria.png";
+import imagem3 from "../../img/Galeria (1).png";
 
 const imagens = [imagem1, imagem2, imagem3];
 

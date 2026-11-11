@@ -6,6 +6,7 @@ import type { Catalog } from './lib/catalog'
 import PWABadge from './PWABadge'
 import PWAInstallPrompt from './PWAInstallPrompt'
 import Router from './router'
+import LoadingScreen from './components/LoadingScreen'
 import './App.css'
 
 function App() {
@@ -65,7 +66,7 @@ function App() {
             <Router />
           </CartProvider>
         </CatalogProvider>
-      ) : <main className="app-status" role="status">Carregando a galeria…</main>}
+      ) : <LoadingScreen />}
       <PWABadge />
       <PWAInstallPrompt />
     </>
