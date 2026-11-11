@@ -61,8 +61,8 @@ whatsapp:
   order: 2
   base_popularity: 0
   whatsapp: "552238413138"
-  logo: ""
-  cover: ""
+  logo: "images/logoMarlene.png"
+  cover: "/images/LocalMarlene.png"
   location_image: ""
   geo:
     lat: -21.123456
