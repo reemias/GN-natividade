@@ -9,6 +9,7 @@ export function GalleryProvider({ children }: { children: ReactNode }) {
   const { config } = useCatalog()
   const history = useUserHistory()
   const [searchQuery, setSearchQuery] = useState('')
+  const [categoryId, setCategoryId] = useState('all')
   const [locating, setLocating] = useState(false)
   const [locationMessage, setLocationMessage] = useState('')
 
@@ -37,11 +38,13 @@ export function GalleryProvider({ children }: { children: ReactNode }) {
   const value = useMemo(() => ({
     searchQuery,
     setSearchQuery,
+    categoryId,
+    setCategoryId,
     locating,
     locationMessage,
     locationLabel: history.geo?.city ?? config.city,
     requestLocation,
-  }), [config.city, history.geo?.city, locating, locationMessage, requestLocation, searchQuery])
+  }), [categoryId, config.city, history.geo?.city, locating, locationMessage, requestLocation, searchQuery])
 
   return <GalleryContext.Provider value={value}>{children}</GalleryContext.Provider>
 }

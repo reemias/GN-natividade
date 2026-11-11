@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Store as StoreIcon } from "lucide-react";
 import { useCatalog } from "../../hooks/useCatalog";
@@ -34,8 +34,7 @@ const sections = [
 export default function Home() {
   const catalog = useCatalog();
   const feed = useRankedFeed(catalog);
-  const { searchQuery } = useGallery();
-  const [categoryId, setCategoryId] = useState("all");
+  const { searchQuery, categoryId, setCategoryId } = useGallery();
   const activePromos = useMemo(() => {
     const now = Date.now();
     return catalog.promos.filter(

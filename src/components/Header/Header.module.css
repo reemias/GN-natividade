@@ -129,9 +129,88 @@
   right: 0;
   width: min(360px, 88vw);
   height: 100%; /* 100% do backdrop = 100dvh */
+  padding: 1.5rem;
+  box-sizing: border-box;
   background: #fff;
   box-shadow: -8px 0 30px rgb(25 28 23 / 12%);
   overflow-y: auto; /* permite rolar o conteúdo do menu */
+}
+
+.drawerContent {
+  display: grid;
+  gap: 1rem;
+  padding-top: 3.25rem;
+}
+
+.drawerTitle {
+  margin: 0;
+  color: #252923;
+  font-size: 1.35rem;
+}
+
+.feedLink,
+.catalogLink {
+  display: flex;
+  min-height: 46px;
+  padding: 0.7rem 0.85rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+}
+
+.feedLink {
+  justify-content: flex-start;
+  background: #f5f2ec;
+  color: #42473f;
+}
+
+.openStoreCount {
+  display: flex;
+  margin: 0;
+  padding: 0.9rem;
+  align-items: center;
+  gap: 0.7rem;
+  border-radius: 12px;
+  background: #f2f7f1;
+  color: #286341;
+}
+
+.openStoreCount strong {
+  margin-right: 0.25rem;
+  font-size: 1.2rem;
+}
+
+.categoryLabel {
+  margin-bottom: -0.65rem;
+  color: #42473f;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.categorySelect {
+  width: 100%;
+  min-height: 46px;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #e8e5df;
+  border-radius: 10px;
+  background: #fff;
+  color: #252923;
+  font: inherit;
+}
+
+.catalogLink {
+  margin-top: 0.5rem;
+  background: #25d366;
+  color: #073b1e;
+}
+
+.catalogLink:hover {
+  background: #1fbd5b;
 }
 
 .closeMenu {

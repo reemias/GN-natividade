@@ -57,8 +57,8 @@ whatsapp:
   order: 1
   base_popularity: 150
   whatsapp: "5522992383985"
-  logo: ""
-  cover: ""
+  logo: "/images/logo-rock-burger.png"
+  cover: "/images/local-rock-burger.jpg"
   location_image: ""
   
   geo:

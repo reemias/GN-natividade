@@ -1,22 +1,37 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { Link } from "react-router-dom";
-import { Menu, MapPin, Search, ShoppingBag, X } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, Menu, MapPin, Search, ShoppingBag, Store, X } from "lucide-react";
 import { useCart } from "../../hooks/useCart";
+import { useCatalog } from "../../hooks/useCatalog";
 import { useGallery } from "../../hooks/useGallery";
+import { isOpenNow } from "../../lib/ranking";
 import styles from "./Header.module.css";
 
 export default function Header({ appName }: { appName: string }) {
   const { itemCount } = useCart();
+  const catalog = useCatalog();
+  const navigate = useNavigate();
   const {
     searchQuery,
     setSearchQuery,
+    categoryId,
+    setCategoryId,
     locating,
     locationMessage,
     locationLabel,
     requestLocation,
   } = useGallery();
   const [menuOpen, setMenuOpen] = useState(false);
+  const openStoreCount = catalog.stores.filter(
+    (store) => store.status === "active" && isOpenNow(store, new Date(), catalog.config.timezone),
+  ).length;
+
+  function selectCategory(nextCategoryId: string) {
+    setCategoryId(nextCategoryId);
+    setMenuOpen(false);
+    navigate("/");
+  }
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -57,6 +72,51 @@ export default function Header({ appName }: { appName: string }) {
           >
             <X size={22} aria-hidden="true" />
           </button>
+          <div className={styles.drawerContent}>
+            <h2 className={styles.drawerTitle}>Menu</h2>
+            <Link
+              className={styles.feedLink}
+              to="/"
+              onClick={() => setMenuOpen(false)}
+            >
+              <ArrowLeft size={18} aria-hidden="true" />
+              Voltar ao feed
+            </Link>
+            <p className={styles.openStoreCount} role="status">
+              <Store size={18} aria-hidden="true" />
+              <span>
+                <strong>{openStoreCount}</strong>
+                {openStoreCount === 1 ? " loja aberta agora" : " lojas abertas agora"}
+              </span>
+            </p>
+            <label className={styles.categoryLabel} htmlFor="menu-category">
+              Buscar por categoria
+            </label>
+            <select
+              className={styles.categorySelect}
+              id="menu-category"
+              value={categoryId}
+              onChange={(event) => selectCategory(event.target.value)}
+            >
+              <option value="all">Todas as categorias</option>
+              {[...catalog.categories]
+                .sort((a, b) => a.order - b.order)
+                .map((category) => (
+                  <option value={category.id} key={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+            </select>
+            <a
+              className={styles.catalogLink}
+              href={`https://wa.me/5582988873225?text=${encodeURIComponent("vim pelo catálogo e quero fazer parte")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+            >
+              Quero fazer parte do catálogo
+            </a>
+          </div>
         </aside>
       </div>,
       document.body,
