@@ -137,7 +137,25 @@
   font-weight: 400;
 }
 
-.checkout input,
+.checkout label.saveDetails {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: #62675f;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.saveDetails input {
+  width: 16px;
+  height: 16px;
+  margin: 0.1rem 0 0;
+  flex: 0 0 auto;
+  accent-color: #16834d;
+}
+
+.checkout input:not([type='checkbox']),
 .checkout textarea,
 .checkout select {
   width: 100%;

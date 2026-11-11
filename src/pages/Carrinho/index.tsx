@@ -1,9 +1,14 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Minus, Plus, Trash2 } from 'lucide-react'
 import { useCatalog } from '../../hooks/useCatalog'
 import { useCart } from '../../hooks/useCart'
 import { cartOptionKey } from '../../lib/cart'
+import {
+  readCustomerDetails,
+  removeCustomerDetails,
+  saveCustomerDetails,
+} from '../../lib/customerDetails'
 import { recordOrderIntent } from '../../lib/userHistory'
 import { buildWhatsAppUrl } from '../../lib/whatsapp'
 import { formatMoney, paymentLabel } from '../../lib/format'
@@ -12,10 +17,75 @@ import styles from './Carrinho.module.css'
 export default function Carrinho() {
   const catalog = useCatalog()
   const { cart, subtotalCents, removeItem, setQuantity, updateCheckout, clearCart } = useCart()
+  const [savedDetails] = useState(() => {
+    try {
+      return { details: readCustomerDetails(), error: '' }
+    } catch (caught) {
+      return {
+        details: null,
+        error: caught instanceof Error ? caught.message : 'Não foi possível carregar os dados salvos.',
+      }
+    }
+  })
+  const [saveDetails, setSaveDetails] = useState(savedDetails.details !== null)
+  const [detailsError, setDetailsError] = useState(savedDetails.error)
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
   const [whatsappUrl, setWhatsappUrl] = useState('')
+  const didRestoreSavedDetails = useRef(false)
   const store = catalog.stores.find(({ id }) => id === cart.storeId)
+
+  useEffect(() => {
+    if (!savedDetails.details || didRestoreSavedDetails.current) return
+    didRestoreSavedDetails.current = true
+    updateCheckout({
+      customerName: cart.customerName.trim()
+        ? cart.customerName
+        : savedDetails.details.customerName,
+      address: cart.address.trim()
+        ? cart.address
+        : savedDetails.details.address,
+    })
+  }, [cart.address, cart.customerName, savedDetails.details, updateCheckout])
+
+  function persistDetails(customerName: string, address: string) {
+    try {
+      if (!customerName.trim() && !address.trim()) {
+        removeCustomerDetails()
+      } else {
+        saveCustomerDetails({ customerName, address })
+      }
+      setDetailsError('')
+    } catch (caught) {
+      setDetailsError(caught instanceof Error ? caught.message : 'Não foi possível salvar os dados.')
+    }
+  }
+
+  function handleSaveDetailsChange(checked: boolean) {
+    if (!checked) {
+      try {
+        removeCustomerDetails()
+        setSaveDetails(false)
+        setDetailsError('')
+      } catch (caught) {
+        setDetailsError(caught instanceof Error ? caught.message : 'Não foi possível remover os dados salvos.')
+      }
+      return
+    }
+
+    setSaveDetails(true)
+    persistDetails(cart.customerName, cart.address)
+  }
+
+  function handleCustomerNameChange(customerName: string) {
+    updateCheckout({ customerName })
+    if (saveDetails) persistDetails(customerName, cart.address)
+  }
+
+  function handleAddressChange(address: string) {
+    updateCheckout({ address })
+    if (saveDetails) persistDetails(cart.customerName, address)
+  }
 
   if (cart.items.length === 0) {
     return (
@@ -160,13 +230,22 @@ export default function Carrinho() {
             </div>
           ) : <p className={styles.hint}>A loja ainda não configurou opções de entrega ou retirada.</p>}
           <label>Seu nome
-            <input autoComplete="name" value={cart.customerName} onChange={(event) => updateCheckout({ customerName: event.target.value })} required />
+            <input autoComplete="name" value={cart.customerName} onChange={(event) => handleCustomerNameChange(event.target.value)} required />
           </label>
           {fulfillmentMode === 'delivery' && deliveryEnabled && (
             <label>Endereço de entrega
-              <textarea autoComplete="street-address" value={cart.address} onChange={(event) => updateCheckout({ address: event.target.value })} required rows={3} />
+              <textarea autoComplete="street-address" value={cart.address} onChange={(event) => handleAddressChange(event.target.value)} required rows={3} />
             </label>
           )}
+          <label className={styles.saveDetails}>
+            <input
+              type="checkbox"
+              checked={saveDetails}
+              onChange={(event) => handleSaveDetailsChange(event.target.checked)}
+            />
+            <span>Salvar meu nome e endereço neste dispositivo</span>
+          </label>
+          {detailsError && <p className={styles.error} role="status">{detailsError}</p>}
           <label>Forma de pagamento
             <select value={cart.payment} onChange={(event) => updateCheckout({ payment: event.target.value })} required>
               <option value="">Selecione</option>

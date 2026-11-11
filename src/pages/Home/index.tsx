@@ -7,7 +7,7 @@ import { formatMoney } from "../../lib/format";
 import { useGallery } from "../../hooks/useGallery";
 import StoreCard from "../../components/StoreCard";
 import styles from "./Style.module.css";
-
+import Slide from "../../components/slide";
 const sections = [
   {
     key: "city",
@@ -126,7 +126,9 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      <section>
+        <Slide />
+      </section>
       <section className={styles.content} id="explorar">
         <div className={styles.sectionHeading}>
           <div>
