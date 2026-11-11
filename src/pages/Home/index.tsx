@@ -4,7 +4,6 @@ import {
   ArrowRight,
   MapPin,
   Newspaper,
-  Sparkles,
   Store as StoreIcon,
 } from "lucide-react";
 import { useCatalog } from "../../hooks/useCatalog";
@@ -113,7 +112,6 @@ export default function Home() {
     <main className={styles.main}>
       <section className={styles.hero} aria-labelledby="home-hero-title">
         <div className={styles.heroCopy}>
-          
           <h1 id="home-hero-title">
             Seu próximo favorito está <span>por aqui.</span>
           </h1>
