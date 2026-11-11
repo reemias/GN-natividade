@@ -97,10 +97,10 @@ export default function Home() {
         <Slide />
         <div className={styles.DebaixoSlide}>
           <div className={styles.DireitoNoticias}>
-            <button>NOTÍCIAS</button>
+            <Link to="/noticias">NOTÍCIAS</Link>
           </div>
           <div className={styles.EsquerdoLanches}>
-            <button>LANCHES</button>
+            <a href="#lanches">LANCHES</a>
           </div>
         </div>
       </section>
@@ -150,7 +150,7 @@ export default function Home() {
                 <span className={styles.eyebrow}>RESULTADOS</span>
                 <h2>Produtos encontrados</h2>
               </div>
-              <span className={styles.storeCount}>
+              <span id="lanches" className={styles.storeCount}>
                 {matchedProducts.length} produtos
               </span>
             </div>

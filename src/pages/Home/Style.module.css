@@ -1,174 +1,210 @@
-.main {
-  min-height: calc(100vh - 68px);
-}
-
-.main {
-  padding-inline: 7px;
-}
-
 /* ===========================
-   SECTION HERO (container pai)
+   TOKENS / VARIÁVEIS
    =========================== */
-.hero {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px; /* espaço entre slide e botões */
-  padding: 12px;
+.main {
+  --brand: #d34b32;
+  --brand-dark: #b83d27;
+  --ink: #252923;
+  --ink-soft: #53584f;
+  --muted: #74776f;
+  --line: #e8e5df;
+  --surface: #ffffff;
+  --surface-soft: #f5f2ec;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --space-1: 0.5rem;
+  --space-2: 0.75rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+
+  min-height: calc(100vh - 68px);
+  padding-inline: 7px;
+  color: var(--ink);
+  box-sizing: border-box;
+}
+
+.main *,
+.main *::before,
+.main *::after {
   box-sizing: border-box;
 }
 
 /* ===========================
-   ÁREA DOS BOTÕES (abaixo do slide)
+   HERO
    =========================== */
-.DebaixoSlide {
-  width: 100%;
+.hero {
   display: flex;
-  gap: 12px; /* espaço entre os dois botões */
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3) 0;
 }
 
-/* Cada lado ocupa metade */
+.DebaixoSlide {
+  display: flex;
+  gap: var(--space-2);
+  width: 100%;
+}
+
 .DireitoNoticias,
 .EsquerdoLanches {
-  flex: 1; /* 50% / 50% */
+  flex: 1;
   display: flex;
 }
 
 /* ===========================
-   BOTÕES
+   BOTÕES DO HERO
    =========================== */
 .DireitoNoticias button,
 .EsquerdoLanches button {
   width: 100%;
-  padding: 14px 12px;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-
+  min-height: 52px;
+  padding: 0.85rem 1rem;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   cursor: pointer;
-
-  color: #ffffff;
-  background-color: #1e1e1e;
-
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition:
     transform 0.15s ease,
-    background-color 0.2s ease;
+    filter 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 8%);
 }
 
-/* Cores diferentes para diferenciar */
 .DireitoNoticias button {
-  background-color: #e63946; /* vermelho — notícias */
+  color: #fff;
+  background: linear-gradient(135deg, #e63946, #c1121f);
 }
 
 .EsquerdoLanches button {
-  background-color: #f4a261; /* laranja — lanches */
+  color: #fff;
+  background: linear-gradient(135deg, #f4a261, #e76f51);
 }
 
-/* Feedback ao toque (mobile) */
 .DireitoNoticias button:active,
 .EsquerdoLanches button:active {
   transform: scale(0.97);
-  filter: brightness(0.9);
+  filter: brightness(0.95);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
 }
 
-/* Hover apenas em dispositivos com mouse */
 @media (hover: hover) {
-  .DireitoNoticias button:hover {
-    background-color: #c92f3c;
-  }
+  .DireitoNoticias button:hover,
   .EsquerdoLanches button:hover {
-    background-color: #e08c4a;
+    filter: brightness(1.06);
+    box-shadow: 0 6px 18px rgb(0 0 0 / 12%);
   }
 }
 
 /* ===========================
-   TELAS MAIORES (opcional)
+   TIPOGRAFIA COMUM
    =========================== */
-@media (min-width: 768px) {
-  .hero {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 24px;
-    gap: 16px;
-  }
-
-  .DebaixoSlide {
-    gap: 16px;
-  }
-
-  .DireitoNoticias button,
-  .EsquerdoLanches button {
-    height: auto;
-    padding: 18px;
-    font-size: 1.1rem;
-  }
-}
-
 .eyebrow {
-  color: #d34b32;
+  color: var(--brand);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
+/* ===========================
+   FILTROS / CATEGORIAS
+   =========================== */
 .filters {
   display: grid;
-  gap: 1rem;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
 }
 
 .categories {
   display: flex;
-  overflow-x: auto;
-  gap: 0.5rem;
+  gap: var(--space-1);
   padding-bottom: 0.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.categories::-webkit-scrollbar {
+  display: none;
 }
 
 .categories button {
   flex: 0 0 auto;
-  padding: 0.55rem 0.9rem;
-  border: 1px solid #e8e5df;
+  padding: 0.55rem 0.95rem;
+  border: 1px solid var(--line);
   border-radius: 999px;
-  background: #fff;
-  color: #53584f;
-  cursor: pointer;
+  background: var(--surface);
+  color: var(--ink-soft);
   font: inherit;
   font-size: 0.84rem;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.categories button:active {
+  transform: scale(0.97);
 }
 
 .categories button.selectedCategory {
-  border-color: #292e27;
-  background: #292e27;
+  border-color: var(--ink);
+  background: var(--ink);
   color: #fff;
 }
 
+@media (hover: hover) {
+  .categories button:hover:not(.selectedCategory) {
+    border-color: var(--ink-soft);
+    background: var(--surface-soft);
+  }
+}
+
+/* ===========================
+   SEÇÕES
+   =========================== */
 .promos,
 .repeatSection,
 .storeSection {
-  margin-top: 2.5rem;
+  margin-top: var(--space-5);
 }
 
+/* ===========================
+   PROMOÇÕES (banner grande)
+   =========================== */
 .promo {
   position: relative;
   display: flex;
+  align-items: end;
   min-height: 140px;
   overflow: hidden;
-  align-items: end;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   background: #f0dfc8;
   color: #fff;
   text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.promo:active {
+  transform: scale(0.99);
 }
 
 .promo + .promo {
-  margin-top: 0.75rem;
+  margin-top: var(--space-2);
 }
 
 .promo img {
   position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -185,14 +221,17 @@
   position: relative;
   z-index: 1;
   display: grid;
-  padding: 1rem;
   gap: 0.25rem;
+  padding: var(--space-3);
 }
 
 .promo small {
   opacity: 0.9;
 }
 
+/* ===========================
+   LISTA DE REPETIÇÃO (cards horizontais)
+   =========================== */
 .repeatList {
   display: grid;
   gap: 0.65rem;
@@ -200,86 +239,112 @@
 
 .repeatCard {
   display: flex;
-  min-width: 0;
-  padding: 0.65rem;
   align-items: center;
-  gap: 0.8rem;
-  border: 1px solid #e8e5df;
-  border-radius: 13px;
-  color: #252923;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--ink);
   text-decoration: none;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.repeatCard:active {
+  background: var(--surface-soft);
 }
 
 .repeatCard img {
+  flex-shrink: 0;
   width: 56px;
   height: 56px;
-  border-radius: 10px;
-  background: #f5f2ec;
+  border-radius: var(--radius-sm);
+  background: var(--surface-soft);
   object-fit: cover;
 }
 
 .repeatCard span {
   display: grid;
-  min-width: 0;
   flex: 1;
+  min-width: 0;
   gap: 0.2rem;
 }
 
 .repeatCard small {
   overflow: hidden;
-  color: #74776f;
+  color: var(--muted);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .repeatCard b {
+  flex-shrink: 0;
   font-size: 0.88rem;
 }
 
+@media (hover: hover) {
+  .repeatCard:hover {
+    border-color: var(--ink-soft);
+    background: var(--surface-soft);
+  }
+}
+
+/* ===========================
+   GRID DE LOJAS
+   =========================== */
 .storeGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
-  gap: 1rem;
+  gap: var(--space-3);
 }
 
+/* ===========================
+   "OUTRAS LOCALIDADES" (details)
+   =========================== */
 .outside {
-  margin-top: 2rem;
-  border-top: 1px solid #e8e5df;
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--line);
 }
 
 .outside summary {
   display: flex;
-  padding: 1rem 0;
   align-items: center;
   justify-content: space-between;
+  padding: var(--space-3) 0;
   color: #393e36;
   cursor: pointer;
   list-style-position: inside;
 }
 
 .outside summary span {
-  color: #74776f;
+  color: var(--muted);
   font-size: 0.82rem;
 }
 
+/* ===========================
+   ESTADO VAZIO
+   =========================== */
 .empty {
   display: grid;
+  justify-items: center;
   max-width: 480px;
   margin: 4rem auto 1rem;
-  justify-items: center;
-  color: #252923;
+  color: var(--ink);
   text-align: center;
 }
 
 .emptyIcon {
   display: grid;
+  place-items: center;
   width: 64px;
   height: 64px;
-  margin-bottom: 0.75rem;
-  place-items: center;
+  margin-bottom: var(--space-2);
   border-radius: 20px;
   background: #f2e9dc;
-  color: #d34b32;
+  color: var(--brand);
 }
 
 .empty h2 {
@@ -288,14 +353,19 @@
 }
 
 .empty p {
-  color: #74776f;
+  color: var(--muted);
+}
+
+/* ===========================
+   RESPONSIVO
+   =========================== */
+@media (max-width: 620px) {
+  .hero {
+    padding-top: var(--space-2);
+  }
 }
 
 @media (min-width: 700px) {
-  .main {
-    min-height: calc(100vh - 68px);
-    padding-inline: 7px; /* respiro lateral em todas as telas */
-  }
   .repeatList {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -303,7 +373,7 @@
   .promos {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.75rem;
+    gap: var(--space-2);
   }
 
   .promo + .promo {
@@ -311,15 +381,21 @@
   }
 }
 
-@media (max-width: 620px) {
+@media (min-width: 768px) {
   .hero {
-    min-height: 350px;
+    max-width: 900px;
+    margin: 0 auto;
+    gap: var(--space-3);
+    padding: var(--space-4) 0;
   }
 
-  .heroShape {
-    right: -120px;
-    width: 220px;
-    height: 220px;
-    opacity: 0.55;
+  .DebaixoSlide {
+    gap: var(--space-3);
+  }
+
+  .DireitoNoticias button,
+  .EsquerdoLanches button {
+    font-size: 1rem;
+    min-height: 56px;
   }
 }
