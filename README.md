@@ -10,7 +10,10 @@ Este app funciona como uma "galeria local" de negócios:
 
 - lista lojas ativas;
 - ordena o feed por proximidade, cidade, histórico e popularidade;
-- mostra produtos com opções extras e promoções;
+- mostra produtos com opções extras e promoções, serviços e veículos cadastrados;
+- envia pedidos de orçamento de serviços ao WhatsApp com os dados do cliente e do aparelho;
+- pode catalogar serviços com preço fixo, preço inicial ou orçamento;
+- pode anunciar veículos com dados de fabricação, estado e quilometragem;
 - mantém um carrinho de uma única loja por vez;
 - gera mensagem de pedido pronta para WhatsApp;
 - salva histórico do usuário no navegador para melhorar o ranking.
@@ -119,6 +122,8 @@ A mensagem é construída a partir do template em `config.whatsapp.message_templ
 
 Esse fluxo não é confirmação de venda: a pessoa precisa revisar e enviar a mensagem manualmente para a loja.
 
+Serviços sem preço usam um formulário próprio na página da loja, sem passar pelo carrinho: a pessoa seleciona um ou mais serviços, informa modelo do aparelho, defeito, nome e endereço, e a galeria abre o WhatsApp da loja com a solicitação pronta. Veículos aparecem como anúncios com especificações e link de consulta ao vendedor. Produtos continuam no carrinho e no fluxo de pedido existente.
+
 ## 4) Como o banco de dados funciona
 
 ### 4.1 Arquivo principal
@@ -131,9 +136,11 @@ Ele precisa seguir essa estrutura:
 - `## categories`
 - `## stores`
 - `## products`
+- `## services` (opcional para arquivos antigos)
+- `## vehicles` (opcional para arquivos antigos)
 - `## promos`
 
-Cada bloco deve conter um YAML válido. O script lê o primeiro bloco `yaml` de cada seção.
+Cada bloco deve conter um YAML válido. O script lê o primeiro bloco `yaml` de cada seção. `products` continua com o formato existente e atende itens de varejo, como cosméticos. Serviços e veículos ficam em coleções separadas para não forçar campos incompatíveis no cadastro atual. Quando as novas seções não existem, o gerador cria arrays vazios; lojas antigas sem `business_type` continuam válidas e recebem `food`.
 
 ### 4.2 Como editar
 
@@ -144,10 +151,60 @@ Exemplo de fluxo real:
 1. ajuste `config.city`, `config.geo.default_center`, timezone e ranking
 2. cadastre categorias
 3. cadastre lojas com endereço, horários, coordenas e formas de pagamento
-4. cadastre produtos com opções e promoções
-5. rode o build para validar
+4. cadastre produtos, serviços e veículos conforme o tipo de negócio
+5. cadastre promoções de produtos e rode o build para validar
 
-### 4.3 Rebuild do banco
+### 4.3 Exemplos de novos tipos de catálogo
+
+Informe `business_type` na loja: `food`, `service`, `retail`, `vehicle` ou `mixed`. Os cadastros abaixo são modelos; adicione-os às seções correspondentes de `data/db.md` e use IDs de loja/categoria existentes.
+
+Serviço (por exemplo, reparo de celular), na seção `services`:
+
+```yaml
+- id: "assistencia-troca-tela"
+  store_id: "assistencia-celular"
+  name: "Troca de tela"
+  description: "Substituição de tela após avaliação do aparelho."
+  category_id: "servicos"
+  price_type: "quote"
+  price_cents: null
+  duration_min: 90
+  service_mode: "in_store"
+  booking_required: true
+  image: ""
+  available: true
+  order: 1
+  tags: ["celular", "reparo", "tela"]
+```
+
+Para serviços com preço fixo ou inicial, use `price_type: "fixed"` ou `"from"` e informe `price_cents`. Para orçamento, use `"quote"` e `null`.
+
+Veículo, na seção `vehicles`:
+
+```yaml
+- id: "loja-auto-hatch-2021"
+  store_id: "loja-auto"
+  name: "Hatch compacto 2021"
+  description: "Veículo revisado, documentação em dia."
+  category_id: "veiculos"
+  make: "Marca"
+  model: "Modelo"
+  year: 2021
+  mileage_km: 45000
+  condition: "used"
+  fuel: "Flex"
+  transmission: "Manual"
+  price_cents: 6900000
+  negotiable: true
+  image: ""
+  available: true
+  order: 1
+  tags: ["hatch", "flex"]
+```
+
+Cosméticos entram na seção `products` como os outros produtos, usando uma categoria de produto como `"Cosméticos"` e os campos de preço, disponibilidade e imagem já existentes.
+
+### 4.4 Rebuild do banco
 
 Comandos úteis:
 
@@ -172,7 +229,7 @@ O script faz isso:
 
 Se algo estiver inválido, o build trava com erro explícito.
 
-### 4.4 O que o validador cobre
+### 4.5 O que o validador cobre
 
 O validador em `scripts/build-db.js` verifica, entre outras coisas:
 
@@ -183,6 +240,8 @@ O validador em `scripts/build-db.js` verifica, entre outras coisas:
 - horários válidos
 - geolocalização válida
 - campos de loja e produto obrigatórios
+- preço e duração de serviços, especificações e ano de veículos
+- vínculo de serviços, veículos e produtos com lojas/categorias válidas
 - promoções com data final maior que inicial
 - imagens existentes em `public/images/`
 - tamanho de imagem (warn se > 500 KB)

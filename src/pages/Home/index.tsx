@@ -1,13 +1,19 @@
 import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Newspaper, Store as StoreIcon } from "lucide-react";
+import {
+  ArrowRight,
+  CarFront,
+  Newspaper,
+  Store as StoreIcon,
+  Wrench,
+} from "lucide-react";
 import { useCatalog } from "../../hooks/useCatalog";
 import { useRankedFeed } from "../../hooks/useRankedFeed";
 import { formatMoney } from "../../lib/format";
 import { useGallery } from "../../hooks/useGallery";
 import StoreCard from "../../components/StoreCard";
 import styles from "./Style.module.css";
-import Slide from "../../components/slide";
+
 const sections = [
   {
     key: "city",
@@ -101,6 +107,50 @@ export default function Home() {
         .sort((a, b) => a.order - b.order)
     : [];
 
+  const matchedServices = hasSearch
+    ? (catalog.services ?? [])
+        .filter((service) => {
+          const store = catalog.stores.find(
+            (item) => item.id === service.store_id && item.status === "active",
+          );
+          const matchesCategory =
+            categoryId === "all" ||
+            store?.category_ids.includes(categoryId) ||
+            service.category_id === categoryId;
+          const serviceText =
+            `${service.name} ${service.description} ${service.tags.join(" ")}`.toLocaleLowerCase(
+              "pt-BR",
+            );
+
+          return (
+            service.available && matchesCategory && serviceText.includes(search)
+          );
+        })
+        .sort((a, b) => a.order - b.order)
+    : [];
+
+  const matchedVehicles = hasSearch
+    ? (catalog.vehicles ?? [])
+        .filter((vehicle) => {
+          const store = catalog.stores.find(
+            (item) => item.id === vehicle.store_id && item.status === "active",
+          );
+          const matchesCategory =
+            categoryId === "all" ||
+            store?.category_ids.includes(categoryId) ||
+            vehicle.category_id === categoryId;
+          const vehicleText =
+            `${vehicle.name} ${vehicle.description} ${vehicle.make} ${vehicle.model} ${vehicle.fuel} ${vehicle.transmission} ${vehicle.tags.join(" ")}`.toLocaleLowerCase(
+              "pt-BR",
+            );
+
+          return (
+            vehicle.available && matchesCategory && vehicleText.includes(search)
+          );
+        })
+        .sort((a, b) => a.order - b.order)
+    : [];
+
   const matchedStores = filterStores(Object.values(feed.buckets).flat());
 
   return (
@@ -126,10 +176,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section>
-        <br />
-        <Slide />
-      </section>
+
       <section className={styles.content} id="explorar">
         <div className={styles.sectionHeading}>
           <div>
@@ -210,6 +257,88 @@ export default function Home() {
                         product.promo_price_cents ?? product.price_cents,
                       )}
                     </b>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {hasSearch && matchedServices.length > 0 && (
+          <section className={styles.repeatSection}>
+            <div className={styles.sectionHeading}>
+              <div>
+                <span className={styles.eyebrow}>RESULTADOS</span>
+                <h2>Serviços encontrados</h2>
+              </div>
+              <span className={styles.storeCount}>
+                {matchedServices.length} serviços
+              </span>
+            </div>
+            <div className={styles.repeatList}>
+              {matchedServices.map((service) => {
+                const store = catalog.stores.find(
+                  ({ id }) => id === service.store_id,
+                );
+                if (!store) return null;
+
+                return (
+                  <Link
+                    to={`/loja/${store.id}`}
+                    className={styles.repeatCard}
+                    key={service.id}
+                  >
+                    <Wrench size={24} aria-hidden="true" />
+                    <span>
+                      <strong>{service.name}</strong>
+                      <small>{store.name} · orçamento pelo WhatsApp</small>
+                    </span>
+                    <b>Consultar</b>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {hasSearch && matchedVehicles.length > 0 && (
+          <section className={styles.repeatSection}>
+            <div className={styles.sectionHeading}>
+              <div>
+                <span className={styles.eyebrow}>RESULTADOS</span>
+                <h2>Veículos encontrados</h2>
+              </div>
+              <span className={styles.storeCount}>
+                {matchedVehicles.length} veículos
+              </span>
+            </div>
+            <div className={styles.repeatList}>
+              {matchedVehicles.map((vehicle) => {
+                const store = catalog.stores.find(
+                  ({ id }) => id === vehicle.store_id,
+                );
+                if (!store) return null;
+
+                return (
+                  <Link
+                    to={`/loja/${store.id}`}
+                    className={styles.repeatCard}
+                    key={vehicle.id}
+                  >
+                    {vehicle.image ? (
+                      <img src={vehicle.image} alt="" loading="lazy" />
+                    ) : (
+                      <CarFront size={28} aria-hidden="true" />
+                    )}
+                    <span>
+                      <strong>
+                        {vehicle.make} {vehicle.model}
+                      </strong>
+                      <small>
+                        {store.name} · {vehicle.year}
+                      </small>
+                    </span>
+                    <b>{formatMoney(vehicle.price_cents)}</b>
                   </Link>
                 );
               })}
@@ -321,27 +450,30 @@ export default function Home() {
           );
         })}
 
-        {matchedStores.length === 0 && matchedProducts.length === 0 && (
-          <div className={styles.empty}>
-            <span className={styles.emptyIcon}>
-              <StoreIcon size={28} />
-            </span>
-            <h2>
-              {catalog.stores.length === 0
-                ? "Estamos preparando a galeria"
-                : hasSearch
-                  ? "Nenhum resultado encontrado"
-                  : "Nenhuma loja encontrada"}
-            </h2>
-            <p>
-              {catalog.stores.length === 0
-                ? "Em breve, os comércios locais estarão aqui. A lista é atualizada conforme as lojas são cadastradas."
-                : hasSearch
-                  ? "Tente buscar por outro nome de loja ou produto."
-                  : "Tente escolher outra categoria."}
-            </p>
-          </div>
-        )}
+        {matchedStores.length === 0 &&
+          matchedProducts.length === 0 &&
+          matchedServices.length === 0 &&
+          matchedVehicles.length === 0 && (
+            <div className={styles.empty}>
+              <span className={styles.emptyIcon}>
+                <StoreIcon size={28} />
+              </span>
+              <h2>
+                {catalog.stores.length === 0
+                  ? "Estamos preparando a galeria"
+                  : hasSearch
+                    ? "Nenhum resultado encontrado"
+                    : "Nenhuma loja encontrada"}
+              </h2>
+              <p>
+                {catalog.stores.length === 0
+                  ? "Em breve, os comércios locais estarão aqui. A lista é atualizada conforme as lojas são cadastradas."
+                  : hasSearch
+                    ? "Tente buscar por outro nome de loja, produto, serviço ou veículo."
+                    : "Tente escolher outra categoria."}
+              </p>
+            </div>
+          )}
       </section>
     </main>
   );

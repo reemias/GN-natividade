@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Natividade Cell — Galeria Natividade</title>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d34b32"/>
+      <stop offset="1" stop-color="#9f3024"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff8ef"/>
+      <stop offset="1" stop-color="#f2dfc8"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#background)"/>
+  <circle cx="256" cy="236" r="178" fill="#ffffff" opacity=".08"/>
+  <rect x="163" y="72" width="186" height="302" rx="34" fill="#252923" stroke="#fff8ef" stroke-width="14"/>
+  <rect x="179" y="97" width="154" height="241" rx="18" fill="url(#screen)"/>
+  <rect x="226" y="82" width="60" height="6" rx="3" fill="#fff8ef"/>
+  <circle cx="256" cy="357" r="8" fill="#fff8ef"/>
+  <path d="m205 254 39-48 21 29 22-24 28 37-41 53-27-25-24 27-27-49 31-37"
+        fill="none" stroke="#d34b32" stroke-linecap="round" stroke-linejoin="round" stroke-width="15"/>
+  <circle cx="320" cy="205" r="33" fill="#ffcf77"/>
+  <path d="M309 192a18 18 0 0 0 23 23l-31 31-16-16 31-31a18 18 0 0 0-7-7Z"
+        fill="#252923" stroke="#252923" stroke-linejoin="round" stroke-width="8"/>
+  <rect x="94" y="385" width="324" height="72" rx="36" fill="#fff8ef"/>
+  <text x="256" y="418" fill="#252923" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="800" text-anchor="middle" letter-spacing="2">NATIVIDADE CELL</text>
+  <text x="256" y="442" fill="#9f3024" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" text-anchor="middle" letter-spacing="2">GALERIA NATIVIDADE</text>
+</svg>

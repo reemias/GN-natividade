@@ -39,6 +39,7 @@ export interface Store {
   id: string
   name: string
   description: string
+  business_type: 'food' | 'service' | 'retail' | 'vehicle' | 'mixed'
   category_ids: string[]
   status: 'active' | 'paused' | 'draft'
   order: number
@@ -99,6 +100,44 @@ export interface Product {
   option_groups: ProductOptionGroup[]
 }
 
+export interface Service {
+  id: string
+  store_id: string
+  name: string
+  description: string
+  category_id: string
+  price_type: 'fixed' | 'from' | 'quote'
+  price_cents: number | null
+  duration_min: number | null
+  service_mode: 'in_store' | 'on_site' | 'remote'
+  booking_required: boolean
+  image: string
+  available: boolean
+  order: number
+  tags: string[]
+}
+
+export interface Vehicle {
+  id: string
+  store_id: string
+  name: string
+  description: string
+  category_id: string
+  make: string
+  model: string
+  year: number
+  mileage_km: number
+  condition: 'new' | 'used'
+  fuel: string
+  transmission: string
+  price_cents: number
+  negotiable: boolean
+  image: string
+  available: boolean
+  order: number
+  tags: string[]
+}
+
 export interface Promo {
   id: string
   store_id: string
@@ -116,5 +155,7 @@ export interface Catalog {
   categories: Category[]
   stores: Store[]
   products: Product[]
+  services: Service[]
+  vehicles: Vehicle[]
   promos: Promo[]
 }

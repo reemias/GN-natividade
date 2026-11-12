@@ -10,6 +10,7 @@ interface StorePreview {
   description: string;
   cover: string;
   logo: string;
+  business_type: string;
   status: string;
   geo: { city: string; state: string };
 }
@@ -45,15 +46,21 @@ function renderStoreSharePage(
   baseUrl: string,
   origin: string,
 ) {
-  const status = open ? "Aberta agora" : "Fechada agora";
+  const isService = store.business_type === "service";
+  const status = isService
+    ? "Atendimento sob agendamento"
+    : open
+      ? "Aberta agora"
+      : "Fechada agora";
   const title = `${store.name} | ${status}`;
   const description = `${store.description} ${status}. ${store.geo.city}, ${store.geo.state}.`;
   const base = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
   const resolveUrl = (path: string) =>
     origin ? new URL(path, origin).href : path;
-  const image = resolveUrl(
-    `${base}${(store.cover || store.logo).replace(/^\/+/, "")}`,
-  );
+  const imagePath = store.cover || store.logo;
+  const image = imagePath
+    ? resolveUrl(`${base}${imagePath.replace(/^\/+/, "")}`)
+    : "";
   const slug = `compartilhar/${store.id}-${open ? "aberta" : "fechada"}.html`;
   const pageUrl = resolveUrl(`${base}${slug}`);
   const storeUrl = resolveUrl(`${base}loja/${store.id}`);
@@ -82,7 +89,7 @@ function renderStoreSharePage(
       img{display:block;width:100%;max-height:420px;object-fit:cover;border-radius:12px;background:#e8e4dc}
       h1{margin:20px 0 4px;font-size:2rem}
       p{margin:8px 0;color:#575c53}
-      .status{font-weight:700;color:${open ? "#176b47" : "#9a3928"}}
+      .status{font-weight:700;color:${isService || open ? "#176b47" : "#9a3928"}}
       a{display:inline-block;margin-top:18px;padding:12px 18px;border-radius:6px;background:#d34b32;color:#fff;text-decoration:none;font-weight:700}
     </style>
   </head>
@@ -93,7 +100,7 @@ function renderStoreSharePage(
       <p class="status">${status}</p>
       <p>${htmlEscape(store.description)}</p>
       <p>${htmlEscape(store.geo.city)}, ${htmlEscape(store.geo.state)}</p>
-      <a href="${htmlEscape(storeUrl)}">Ver cardápio</a>
+      <a href="${htmlEscape(storeUrl)}">${isService ? "Ver serviços" : "Ver cardápio"}</a>
     </main>
   </body>
 </html>`;

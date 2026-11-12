@@ -139,6 +139,9 @@ const storeSchema = z
     id: slug,
     name: z.string().min(1).max(60),
     description: z.string().min(1).max(200),
+    business_type: z
+      .enum(["food", "service", "retail", "vehicle", "mixed"])
+      .default("food"),
     category_ids: z.array(slug).min(1),
     status: z.enum(["active", "paused", "draft"]),
     order: z.number().int().positive(),
@@ -265,6 +268,74 @@ const productSchema = z
       "id de grupo duplicado",
     );
   });
+const serviceSchema = z
+  .object({
+    id: slug,
+    store_id: slug,
+    name: z.string().min(1).max(60),
+    description: z.string().min(1).max(200),
+    category_id: slug,
+    price_type: z.enum(["fixed", "from", "quote"]),
+    price_cents: cents.nullable(),
+    duration_min: z.number().int().positive().nullable(),
+    service_mode: z.enum(["in_store", "on_site", "remote"]),
+    booking_required: z.boolean(),
+    image: z.string(),
+    available: z.boolean(),
+    order: z.number().int().positive(),
+    tags: z.array(slug),
+  })
+  .strict()
+  .superRefine((service, context) => {
+    if (service.price_type === "quote" && service.price_cents !== null) {
+      context.addIssue({
+        code: "custom",
+        path: ["price_cents"],
+        message: "deve ser null quando price_type for quote",
+      });
+    }
+    if (
+      service.price_type !== "quote" &&
+      (service.price_cents === null || service.price_cents <= 0)
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["price_cents"],
+        message: "deve ser maior que zero quando o preço for fixo ou inicial",
+      });
+    }
+  });
+const vehicleSchema = z
+  .object({
+    id: slug,
+    store_id: slug,
+    name: z.string().min(1).max(60),
+    description: z.string().min(1).max(200),
+    category_id: slug,
+    make: z.string().min(1).max(40),
+    model: z.string().min(1).max(60),
+    year: z.number().int(),
+    mileage_km: z.number().int().nonnegative(),
+    condition: z.enum(["new", "used"]),
+    fuel: z.string().min(1).max(30),
+    transmission: z.string().min(1).max(30),
+    price_cents: z.number().int().positive(),
+    negotiable: z.boolean(),
+    image: z.string(),
+    available: z.boolean(),
+    order: z.number().int().positive(),
+    tags: z.array(slug),
+  })
+  .strict()
+  .superRefine((vehicle, context) => {
+    if (vehicle.year < 1900 || vehicle.year > new Date().getFullYear() + 1) {
+      context.addIssue({
+        code: "custom",
+        path: ["year"],
+        message: "deve ser um ano válido de veículo",
+      });
+    }
+  });
 const promoSchema = z
   .object({
     id: slug,
@@ -313,12 +384,13 @@ function addDuplicateIssue(items, field, context, message) {
 function parseSections(markdown) {
   const headings = [...markdown.matchAll(/^##\s+([a-z]+)\s*$/gm)];
   const required = ["config", "categories", "stores", "products", "promos"];
+  const supported = [...required, "services", "vehicles"];
   const sections = new Map();
 
   for (let index = 0; index < headings.length; index += 1) {
     const heading = headings[index];
     const name = heading[1];
-    if (!required.includes(name)) continue;
+    if (!supported.includes(name)) continue;
     const start = heading.index + heading[0].length;
     const end = headings[index + 1]?.index ?? markdown.length;
     const section = markdown.slice(start, end);
@@ -375,11 +447,13 @@ function validateCatalog(catalog) {
     categories: z.array(categorySchema).min(1).max(8),
     stores: z.array(storeSchema),
     products: z.array(productSchema),
+    services: z.array(serviceSchema),
+    vehicles: z.array(vehicleSchema),
     promos: z.array(promoSchema),
   };
 
   for (const [name, schema] of Object.entries(schemas)) {
-    const result = schema.safeParse(catalog[name]);
+    const result = schema.safeParse(catalog[name] ?? []);
     if (!result.success) {
       const issues = result.error.issues.map((issue) => {
         const path = issue.path.length ? `${issue.path.join(".")}: ` : "";
@@ -472,14 +546,14 @@ function validateCatalog(catalog) {
     "order de loja duplicado",
   );
   addDuplicateIssue(
-    parsed.products,
+    [...parsed.products, ...parsed.services, ...parsed.vehicles],
     "id",
     {
       addIssue: ({ path, message }) => {
-        throw new Error(`products.${path.join(".")}: ${message}`);
+        throw new Error(`itens.${path.join(".")}: ${message}`);
       },
     },
-    "id de produto duplicado",
+    "id de item duplicado",
   );
   addDuplicateIssue(
     parsed.promos,
@@ -497,6 +571,11 @@ function validateCatalog(catalog) {
   const productsById = new Map(
     parsed.products.map((product) => [product.id, product]),
   );
+  const listings = [
+    ["products", parsed.products],
+    ["services", parsed.services],
+    ["vehicles", parsed.vehicles],
+  ];
   const paymentMethods = new Set(parsed.config.payment_methods);
   const usedImagePaths = new Set();
 
@@ -518,21 +597,23 @@ function validateCatalog(catalog) {
           `stores.${store.id}: pagamento "${method}" não está em config.payment_methods`,
         );
     }
-    const storeProducts = parsed.products.filter(
-      (product) => product.store_id === store.id,
+    const storeListings = listings.flatMap(([, items]) =>
+      items.filter((item) => item.store_id === store.id),
     );
-    addDuplicateIssue(
-      storeProducts,
-      "order",
-      {
-        addIssue: ({ message }) => {
-          throw new Error(`products da loja ${store.id}: ${message}`);
+    for (const [type, items] of listings) {
+      addDuplicateIssue(
+        items.filter((item) => item.store_id === store.id),
+        "order",
+        {
+          addIssue: ({ message }) => {
+            throw new Error(`${type} da loja ${store.id}: ${message}`);
+          },
         },
-      },
-      "order de produto duplicado na loja",
-    );
-    if (store.status === "active" && storeProducts.length === 0) {
-      console.warn(`Aviso: loja ativa "${store.id}" ainda não tem produtos.`);
+        "ordem duplicada na loja",
+      );
+    }
+    if (store.status === "active" && storeListings.length === 0) {
+      console.warn(`Aviso: loja ativa "${store.id}" ainda não tem itens.`);
     }
     if (store.delivery.enabled && store.delivery.fee_cents === 0) {
       console.warn(
@@ -567,27 +648,35 @@ function validateCatalog(catalog) {
     }
   }
 
-  for (const product of parsed.products) {
-    const store = storesById.get(product.store_id);
-    if (!store || store.status !== "active") {
-      throw new Error(
-        `products.${product.id}: loja "${product.store_id}" não existe ou não está ativa`,
+  for (const [type, items] of listings) {
+    const categoriesRequired = type !== "products";
+    for (const item of items) {
+      const store = storesById.get(item.store_id);
+      if (!store || store.status !== "active") {
+        throw new Error(
+          `${type}.${item.id}: loja "${item.store_id}" não existe ou não está ativa`,
+        );
+      }
+      if (
+        categoriesRequired &&
+        !categoriesById.has(item.category_id)
+      ) {
+        throw new Error(
+          `${type}.${item.id}: categoria "${item.category_id}" não existe`,
+        );
+      }
+      const absolutePath = validateImagePath(
+        `${type}.${item.id}.image`,
+        item.image,
       );
+      if (absolutePath) {
+        usedImagePaths.add(item.image);
+        if (statSync(absolutePath).size > 500 * 1024)
+          console.warn(`Aviso: imagem acima de 500 KB: ${item.image}`);
+      }
     }
-    if (
-      parsed.products.length > 0 &&
-      parsed.products.every((product) => !product.available)
-    ) {
-      console.warn("Aviso: todos os produtos cadastrados estão indisponíveis.");
-    }
-    const absolutePath = validateImagePath(
-      `products.${product.id}.image`,
-      product.image,
-    );
-    if (absolutePath) {
-      usedImagePaths.add(product.image);
-      if (statSync(absolutePath).size > 500 * 1024)
-        console.warn(`Aviso: imagem acima de 500 KB: ${product.image}`);
+    if (items.length > 0 && items.every((item) => !item.available)) {
+      console.warn(`Aviso: todos os itens de ${type} estão indisponíveis.`);
     }
   }
 
@@ -619,6 +708,8 @@ function validateCatalog(catalog) {
       [store.logo, store.cover, store.location_image].filter(Boolean),
     ),
     ...parsed.products.map(({ image }) => image).filter(Boolean),
+    ...parsed.services.map(({ image }) => image).filter(Boolean),
+    ...parsed.vehicles.map(({ image }) => image).filter(Boolean),
     ...parsed.promos.map(({ image }) => image),
   ];
   for (const imagePath of allImagePaths) {
@@ -643,7 +734,7 @@ try {
   writeFileSync(temporaryPath, `${JSON.stringify(catalog, null, 2)}\n`, "utf8");
   renameSync(temporaryPath, outputPath);
   console.info(
-    `Catálogo validado: ${catalog.stores.length} loja(s), ${catalog.products.length} produto(s).`,
+    `Catálogo validado: ${catalog.stores.length} loja(s), ${catalog.products.length} produto(s), ${catalog.services.length} serviço(s), ${catalog.vehicles.length} veículo(s).`,
   );
 } catch (error) {
   console.error(error.message);

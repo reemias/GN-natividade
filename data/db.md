@@ -48,6 +48,9 @@ whatsapp:
 - { id: "doces", name: "Açaí & Doces", icon: "icecream", order: 3 }
 - { id: "bebidas", name: "Bebidas", icon: "cup", order: 4 }
 - { id: "restaurantes", name: "Restaurantes", icon: "store", order: 5 }
+- { id: "servicos", name: "Serviços", icon: "wrench", order: 6 }
+- { id: "veiculos", name: "Veículos", icon: "car", order: 7 }
+- { id: "cosmeticos", name: "Cosméticos", icon: "sparkles", order: 8 }
 ```
 
 ## stores
@@ -56,6 +59,7 @@ whatsapp:
 - id: "marlene-restaurante"
   name: "Marlene Restaurante"
   description: "Restaurante de comida brasileira, peixes, moquecas e carnes."
+  business_type: "food"
   category_ids: ["restaurantes"]
   status: "active"
   order: 2
@@ -98,6 +102,7 @@ whatsapp:
 - id: "rock-burger"
   name: "Rock Burger"
   description: "Hambúrgueres artesanais, porções e açaí. Comece com atitude!"
+  business_type: "food"
   category_ids: ["lanches", "porcoes", "doces", "bebidas"]
   status: "active"
   order: 1
@@ -142,6 +147,49 @@ whatsapp:
     eta_min: 20
 
   tags: ["hamburguer", "acai", "porcao", "salgadinho", "combo", "rock"]
+
+- id: "natividade-cell"
+  name: "Natividade Cell"
+  description: "Reparos de celular com orçamento e atendimento agendados pelo WhatsApp."
+  business_type: "service"
+  category_ids: ["servicos"]
+  status: "active"
+  order: 3
+  base_popularity: 0
+  whatsapp: "5582988873225"
+  logo: "/images/natividade-cell-logo.svg"
+  cover: "/images/natividade-cell-cover.svg"
+  location_image: ""
+  geo:
+    lat: -21.123456
+    lng: -41.654321
+    city: "Natividade"
+    state: "RJ"
+  address:
+    street: "Agendamento via WhatsApp"
+    number: "S/N"
+    neighborhood: "Natividade"
+    reference: "Endereço informado após contato"
+  hours:
+    mon: []
+    tue: []
+    wed: []
+    thu: []
+    fri: []
+    sat: []
+    sun: []
+  hours_exceptions: []
+  payment_methods: []
+  delivery:
+    enabled: false
+    fee_cents: 0
+    min_order_cents: 0
+    eta_min: 0
+    radius_km: 0
+  pickup:
+    enabled: false
+    eta_min: 1
+  tags: ["celular", "reparo", "assistencia-tecnica", "orcamento"]
 ```
 
 ## products
@@ -4833,6 +4881,76 @@ whatsapp:
     tags: [],
     option_groups: [],
   }
+```
+
+## services
+
+```yaml
+- id: "natividade-cell-aplicacao-pelicula"
+  store_id: "natividade-cell"
+  name: "Aplicação de película"
+  description: "Aplicação de película protetora. Informe o modelo do aparelho para consultar disponibilidade e orçamento."
+  category_id: "servicos"
+  price_type: "quote"
+  price_cents: null
+  duration_min: null
+  service_mode: "in_store"
+  booking_required: true
+  image: ""
+  available: true
+  order: 1
+  tags: ["celular", "pelicula", "protecao"]
+
+- id: "natividade-cell-troca-display"
+  store_id: "natividade-cell"
+  name: "Troca de display"
+  description: "Substituição de display mediante avaliação do aparelho e consulta de peça."
+  category_id: "servicos"
+  price_type: "quote"
+  price_cents: null
+  duration_min: null
+  service_mode: "in_store"
+  booking_required: true
+  image: ""
+  available: true
+  order: 2
+  tags: ["celular", "display", "tela"]
+
+- id: "natividade-cell-restauracao-carcaca"
+  store_id: "natividade-cell"
+  name: "Restauração de carcaça"
+  description: "Avaliação e restauração da carcaça do aparelho."
+  category_id: "servicos"
+  price_type: "quote"
+  price_cents: null
+  duration_min: null
+  service_mode: "in_store"
+  booking_required: true
+  image: ""
+  available: true
+  order: 3
+  tags: ["celular", "carcaca", "restauracao"]
+
+- id: "natividade-cell-troca-perifericos"
+  store_id: "natividade-cell"
+  name: "Troca de periféricos"
+  description: "Avaliação para substituição de componentes e periféricos do aparelho."
+  category_id: "servicos"
+  price_type: "quote"
+  price_cents: null
+  duration_min: null
+  service_mode: "in_store"
+  booking_required: true
+  image: ""
+  available: true
+  order: 4
+  tags: ["celular", "perifericos", "reparo"]
+```
+
+## vehicles
+
+```yaml
+[]
 ```
 
 ## promos

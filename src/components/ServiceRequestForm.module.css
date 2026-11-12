@@ -1,0 +1,133 @@
+.form {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.services {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.services legend {
+  margin-bottom: 0.75rem;
+  color: #252923;
+  font-weight: 750;
+}
+
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 0.65rem;
+}
+
+.serviceChoice {
+  display: flex;
+  min-height: 76px;
+  padding: 0.8rem;
+  align-items: flex-start;
+  gap: 0.65rem;
+  border: 1px solid #e8e5df;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.serviceChoice:has(input:checked) {
+  border-color: #176b47;
+  background: #f0f7f2;
+}
+
+.serviceChoice input {
+  width: 18px;
+  height: 18px;
+  margin-top: 0.1rem;
+  accent-color: #176b47;
+}
+
+.serviceChoice span {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.serviceChoice strong {
+  color: #252923;
+}
+
+.serviceChoice small {
+  color: #74776f;
+  line-height: 1.45;
+}
+
+.fields {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.fields label {
+  display: grid;
+  gap: 0.4rem;
+  color: #3e443b;
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.fields input,
+.fields textarea {
+  width: 100%;
+  padding: 0.75rem 0.8rem;
+  border: 1px solid #dcd9d2;
+  border-radius: 9px;
+  background: #fff;
+  color: #252923;
+  font: inherit;
+  font-weight: 400;
+}
+
+.fields input:focus,
+.fields textarea:focus {
+  border-color: #176b47;
+  outline: 2px solid rgb(23 107 71 / 16%);
+}
+
+.fields textarea {
+  resize: vertical;
+}
+
+.submit {
+  display: inline-flex;
+  min-height: 48px;
+  padding: 0.75rem 1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border: 0;
+  border-radius: 10px;
+  background: #176b47;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 750;
+}
+
+.submit:hover {
+  background: #10583a;
+}
+
+.error {
+  margin: 0;
+  color: #a32920;
+}
+
+.confirmation {
+  margin: 0;
+  color: #3e443b;
+  font-size: 0.9rem;
+}
+
+.confirmation a {
+  color: #176b47;
+  font-weight: 700;
+}

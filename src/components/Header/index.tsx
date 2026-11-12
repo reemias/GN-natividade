@@ -140,8 +140,8 @@ export default function Header({ appName }: { appName: string }) {
               type="search"
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="Buscar loja ou produto"
-              aria-label="Buscar loja ou produto"
+              placeholder="Buscar loja, produto, serviço ou veículo"
+              aria-label="Buscar loja, produto, serviço ou veículo"
             />
           </label>
           <button

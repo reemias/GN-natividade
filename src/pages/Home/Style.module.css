@@ -414,6 +414,12 @@
   object-fit: cover;
 }
 
+.repeatCard > svg {
+  flex-shrink: 0;
+  margin-inline: 0.75rem;
+  color: var(--brand);
+}
+
 .repeatCard span {
   display: grid;
   flex: 1;
