@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, MessageCircle } from "lucide-react";
 
 import { useCatalog } from "../../hooks/useCatalog";
 import { useCart } from "../../hooks/useCart";
@@ -80,6 +80,11 @@ export default function DetalhesLoja() {
     );
   }
 
+  const previewPath = `${import.meta.env.BASE_URL}compartilhar/${store.id}-${isOpen ? "aberta" : "fechada"}.html`;
+  const shareUrl = new URL(previewPath, window.location.origin).toString();
+  const shareMessage = `${store.name} · ${isOpen ? "Aberta agora" : "Fechada agora"}\n${store.description}\n${shareUrl}`;
+  const whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(shareMessage)}`;
+
   return (
     <main className={styles.main}>
       <Link to="/" className={styles.back}>
@@ -97,6 +102,16 @@ export default function DetalhesLoja() {
           <p>{store.description}</p>
         </div>
       </div>
+
+      <a
+        className={styles.shareButton}
+        href={whatsappShareUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <MessageCircle size={18} aria-hidden="true" />
+        Compartilhar no WhatsApp
+      </a>
 
       <div className={styles.badges}>
         <span className={styles.badge}>

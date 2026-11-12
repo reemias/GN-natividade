@@ -106,6 +106,24 @@
   font-size: 0.88rem;
 }
 
+.shareButton {
+  display: inline-flex;
+  min-height: 42px;
+  margin-bottom: 0.75rem;
+  padding: 0.55rem 0.85rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 6px;
+  background: #176b47;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.shareButton:hover {
+  background: #10583a;
+}
+
 .addButton {
   width: 100%;
   padding: 0.9rem;

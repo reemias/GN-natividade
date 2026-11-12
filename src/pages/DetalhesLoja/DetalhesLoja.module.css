@@ -67,6 +67,23 @@
   margin: 1rem 0;
 }
 
+.shareButton {
+  display: inline-flex;
+  min-height: 42px;
+  padding: 0.55rem 0.85rem;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 6px;
+  background: #176b47;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.shareButton:hover {
+  background: #10583a;
+}
+
 .badge {
   padding: 0.4rem 0.65rem;
   border-radius: 999px;
@@ -106,7 +123,7 @@
   font-size: 0.84rem;
 }
 
-.categoryFilters button[aria-pressed='true'] {
+.categoryFilters button[aria-pressed="true"] {
   border-color: #292e27;
   background: #292e27;
   color: #fff;

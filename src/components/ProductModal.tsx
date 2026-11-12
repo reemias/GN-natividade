@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
-import { X } from 'lucide-react'
+import { MessageCircle, X } from 'lucide-react'
 import type { Product, Store } from '../lib/catalog'
 import { formatMoney } from '../lib/format'
+import { isOpenNow } from '../lib/ranking'
+import { useCatalog } from '../hooks/useCatalog'
 import { useCart } from '../hooks/useCart'
 import type { SelectedOption } from '../lib/cart'
 import styles from './ProductModal.module.css'
@@ -15,6 +17,7 @@ export default function ProductModal({
   store: Store
   onClose: () => void
 }) {
+  const catalog = useCatalog()
   const { addItem } = useCart()
   const [selected, setSelected] = useState<Record<string, string[]>>({})
   const [error, setError] = useState('')
@@ -56,6 +59,11 @@ export default function ProductModal({
     })
   })
   const unitCents = basePrice + chosenOptions.reduce((sum, option) => sum + option.priceDeltaCents, 0)
+  const isStoreOpen = isOpenNow(store, new Date(), catalog.config.timezone)
+  const previewPath = `${import.meta.env.BASE_URL}compartilhar/${store.id}-${isStoreOpen ? 'aberta' : 'fechada'}.html`
+  const storeUrl = new URL(previewPath, window.location.origin).toString()
+  const productShareText = `${product.name} · ${formatMoney(unitCents)}${chosenOptions.length ? `\n${chosenOptions.map((option) => option.optionName).join(', ')}` : ''}\n${store.name} · ${isStoreOpen ? 'Aberta agora' : 'Fechada agora'}\n${storeUrl}`
+  const productShareUrl = `https://wa.me/?text=${encodeURIComponent(productShareText)}`
 
   function handleAdd() {
     for (const group of product.option_groups) {
@@ -117,6 +125,10 @@ export default function ProductModal({
             )
           })}
           {error && <p className={styles.error} role="alert">{error}</p>}
+          <a className={styles.shareButton} href={productShareUrl} target="_blank" rel="noopener noreferrer">
+            <MessageCircle size={18} aria-hidden="true" />
+            Compartilhar produto
+          </a>
           <button className={styles.addButton} type="button" onClick={handleAdd}>
             Adicionar · {formatMoney(unitCents)}
           </button>

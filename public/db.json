@@ -4,7 +4,12 @@
     "app_name": "Galeria de Natividade",
     "city": "Natividade",
     "timezone": "America/Sao_Paulo",
-    "payment_methods": ["pix", "cash", "debit", "credit"],
+    "payment_methods": [
+      "pix",
+      "cash",
+      "debit",
+      "credit"
+    ],
     "geo": {
       "default_center": {
         "lat": -21.123456,
@@ -63,7 +68,9 @@
       "id": "marlene-restaurante",
       "name": "Marlene Restaurante",
       "description": "Restaurante de comida brasileira, peixes, moquecas e carnes.",
-      "category_ids": ["restaurantes"],
+      "category_ids": [
+        "restaurantes"
+      ],
       "status": "active",
       "order": 2,
       "base_popularity": 0,
@@ -148,7 +155,12 @@
         ]
       },
       "hours_exceptions": [],
-      "payment_methods": ["pix", "cash", "debit", "credit"],
+      "payment_methods": [
+        "pix",
+        "cash",
+        "debit",
+        "credit"
+      ],
       "delivery": {
         "enabled": true,
         "fee_cents": 0,
@@ -172,7 +184,12 @@
       "id": "rock-burger",
       "name": "Rock Burger",
       "description": "Hambúrgueres artesanais, porções e açaí. Comece com atitude!",
-      "category_ids": ["lanches", "porcoes", "doces", "bebidas"],
+      "category_ids": [
+        "lanches",
+        "porcoes",
+        "doces",
+        "bebidas"
+      ],
       "status": "active",
       "order": 1,
       "base_popularity": 150,
@@ -237,7 +254,12 @@
         ]
       },
       "hours_exceptions": [],
-      "payment_methods": ["pix", "cash", "debit", "credit"],
+      "payment_methods": [
+        "pix",
+        "cash",
+        "debit",
+        "credit"
+      ],
       "delivery": {
         "enabled": true,
         "fee_cents": 200,
@@ -249,7 +271,14 @@
         "enabled": true,
         "eta_min": 20
       },
-      "tags": ["hamburguer", "acai", "porcao", "salgadinho", "combo", "rock"]
+      "tags": [
+        "hamburguer",
+        "acai",
+        "porcao",
+        "salgadinho",
+        "combo",
+        "rock"
+      ]
     }
   ],
   "products": [
@@ -265,7 +294,10 @@
       "available": true,
       "order": 1,
       "base_popularity": 10,
-      "tags": ["frito", "congelado"],
+      "tags": [
+        "frito",
+        "congelado"
+      ],
       "option_groups": [
         {
           "id": "preparo",
@@ -339,7 +371,10 @@
       "available": true,
       "order": 2,
       "base_popularity": 5,
-      "tags": ["frito", "congelado"],
+      "tags": [
+        "frito",
+        "congelado"
+      ],
       "option_groups": [
         {
           "id": "preparo",
@@ -2536,7 +2571,9 @@
       "available": true,
       "order": 80,
       "base_popularity": 10,
-      "tags": ["combo"],
+      "tags": [
+        "combo"
+      ],
       "option_groups": []
     },
     {
@@ -2551,7 +2588,9 @@
       "available": true,
       "order": 81,
       "base_popularity": 15,
-      "tags": ["combo"],
+      "tags": [
+        "combo"
+      ],
       "option_groups": []
     },
     {
@@ -2566,7 +2605,9 @@
       "available": true,
       "order": 82,
       "base_popularity": 5,
-      "tags": ["combo"],
+      "tags": [
+        "combo"
+      ],
       "option_groups": [
         {
           "id": "sabor-refri",
@@ -2611,7 +2652,9 @@
       "available": true,
       "order": 83,
       "base_popularity": 8,
-      "tags": ["combo"],
+      "tags": [
+        "combo"
+      ],
       "option_groups": [
         {
           "id": "sabor-refri",
@@ -2656,7 +2699,9 @@
       "available": true,
       "order": 84,
       "base_popularity": 3,
-      "tags": ["combo"],
+      "tags": [
+        "combo"
+      ],
       "option_groups": [
         {
           "id": "sabor-refri",
@@ -2701,7 +2746,9 @@
       "available": true,
       "order": 85,
       "base_popularity": 12,
-      "tags": ["combo"],
+      "tags": [
+        "combo"
+      ],
       "option_groups": [
         {
           "id": "sabor-refri",
@@ -2746,7 +2793,9 @@
       "available": true,
       "order": 86,
       "base_popularity": 4,
-      "tags": ["combo"],
+      "tags": [
+        "combo"
+      ],
       "option_groups": [
         {
           "id": "sabor-refri",
