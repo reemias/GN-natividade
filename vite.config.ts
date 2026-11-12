@@ -61,8 +61,17 @@ function renderStoreSharePage(
   const image = imagePath
     ? resolveUrl(`${base}${imagePath.replace(/^\/+/, "")}`)
     : "";
+  const imageExtension = imagePath.split(".").pop()?.toLowerCase();
+  const imageType =
+    imageExtension === "jpg" || imageExtension === "jpeg"
+      ? "image/jpeg"
+      : imageExtension === "svg"
+        ? "image/svg+xml"
+        : imageExtension
+          ? `image/${imageExtension}`
+          : "";
   const slug = `compartilhar/${store.id}-${open ? "aberta" : "fechada"}.html`;
-  const pageUrl = resolveUrl(`${base}${slug}`);
+  const pageUrl = resolveUrl(`${base}${slug}?preview=2`);
   const storeUrl = resolveUrl(`${base}loja/${store.id}`);
 
   return `<!doctype html>
@@ -77,6 +86,7 @@ function renderStoreSharePage(
     <meta property="og:title" content="${htmlEscape(title)}" />
     <meta property="og:description" content="${htmlEscape(description)}" />
     <meta property="og:image" content="${htmlEscape(image)}" />
+    ${imageType ? `<meta property="og:image:type" content="${htmlEscape(imageType)}" />` : ""}
     <meta property="og:image:alt" content="Capa de ${htmlEscape(store.name)}" />
     <meta property="og:url" content="${htmlEscape(pageUrl)}" />
     <meta name="twitter:card" content="summary_large_image" />

@@ -158,7 +158,7 @@ whatsapp:
   base_popularity: 0
   whatsapp: "5582988873225"
   logo: "/images/natividade-cell-logo.svg"
-  cover: "/images/natividade-cell-cover.svg"
+  cover: "/images/natividade-cell-cover.png"
   location_image: ""
   geo:
     lat: -21.123456
