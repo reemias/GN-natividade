@@ -72,7 +72,7 @@ function renderStoreSharePage(
           ? `image/${imageExtension}`
           : "";
   const slug = `compartilhar/${store.id}-${open ? "aberta" : "fechada"}.html`;
-  const pageUrl = resolveUrl(`${base}${slug}?preview=3`);
+  const pageUrl = resolveUrl(`${base}${slug}`);
   const storeUrl = resolveUrl(`${base}loja/${store.id}`);
   const redirectUrl = JSON.stringify(storeUrl).replace(/</g, "\\u003c");
 
