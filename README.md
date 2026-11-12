@@ -36,6 +36,7 @@ Estrutura relevante:
 - `data/db.md`: fonte do catálogo em Markdown
 - `scripts/build-db.js`: valida e gera `public/db.json`
 - `public/db.json`: JSON final consumido pela aplicação
+- `public/images/*-share.jpg`: imagens horizontais 1200×630 para prévias de compartilhamento
 - `src/lib`: regras de ranking, carrinho, histórico, geolocalização e WhatsApp
 - `src/context`: providers de catálogo, carrinho e galeria
 - `src/pages`: Home, loja, carrinho
@@ -121,6 +122,10 @@ No `Carrinho`, ao confirmar:
 A mensagem é construída a partir do template em `config.whatsapp.message_template`, definido em `data/db.md`.
 
 Esse fluxo não é confirmação de venda: a pessoa precisa revisar e enviar a mensagem manualmente para a loja.
+
+### Prévia de compartilhamento das lojas
+
+Cada loja pode definir `share_image` na seção `stores` de `data/db.md`. Use uma imagem JPEG horizontal de 1200×630 para os metadados Open Graph; o gerador usa essa imagem no preview do WhatsApp e preserva `cover` para a página da loja. O link inclui uma versão de preview para renovar o cache dos aplicativos de mensagem quando a arte ou os metadados mudarem.
 
 Serviços sem preço usam um formulário próprio na página da loja, sem passar pelo carrinho: a pessoa seleciona um ou mais serviços, informa modelo do aparelho, defeito, nome e endereço, e a galeria abre o WhatsApp da loja com a solicitação pronta. Veículos aparecem como anúncios com especificações e link de consulta ao vendedor. Produtos continuam no carrinho e no fluxo de pedido existente.
 

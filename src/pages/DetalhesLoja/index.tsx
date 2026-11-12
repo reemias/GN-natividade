@@ -101,7 +101,7 @@ export default function DetalhesLoja() {
     );
   }
 
-  const previewPath = `${import.meta.env.BASE_URL}compartilhar/${store.id}-${isOpen ? "aberta" : "fechada"}.html?preview=2`;
+  const previewPath = `${import.meta.env.BASE_URL}compartilhar/${store.id}-${isOpen ? "aberta" : "fechada"}.html?preview=3`;
   const shareUrl = new URL(previewPath, window.location.origin).toString();
   const storeStatus =
     store.business_type === "service"

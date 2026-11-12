@@ -47,6 +47,7 @@ export interface Store {
   whatsapp: string
   logo: string
   cover: string
+  share_image?: string
   location_image?: string
   geo: { lat: number; lng: number; city: string; state: string }
   address: { street: string; number: string; neighborhood: string; reference?: string }

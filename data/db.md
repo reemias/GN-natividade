@@ -67,6 +67,7 @@ whatsapp:
   whatsapp: "552238413138"
   logo: "/images/logoMarlene.png"
   cover: "/images/LocalMarlene.png"
+  share_image: "/images/marlene-restaurante-share.jpg"
   location_image: ""
   geo:
     lat: -21.123456
@@ -110,6 +111,7 @@ whatsapp:
   whatsapp: "5522992383985"
   logo: "/images/logo-rock-burger.png"
   cover: "/images/local-rock-burger.jpg"
+  share_image: "/images/rock-burger-share.jpg"
   location_image: ""
 
   geo:
@@ -159,6 +161,7 @@ whatsapp:
   whatsapp: "5582988873225"
   logo: "/images/natividade-cell-logo.svg"
   cover: "/images/natividade-cell-cover.png"
+  share_image: "/images/natividade-cell-share.jpg"
   location_image: ""
   geo:
     lat: -21.123456

@@ -149,6 +149,13 @@ const storeSchema = z
     whatsapp: z.string().regex(/^\d{12,13}$/),
     logo: z.string(),
     cover: z.string(),
+    share_image: z
+      .string()
+      .regex(
+        /^\/images\/[A-Za-z0-9/-]+\.(?:jpe?g|png)$/i,
+        "use uma imagem PNG ou JPEG para compartilhamento",
+      )
+      .optional(),
     location_image: z.string().optional(),
     geo: geoPoint
       .extend({
@@ -623,6 +630,7 @@ function validateCatalog(catalog) {
     for (const [key, required] of [
       ["logo", true],
       ["cover", true],
+      ["share_image", false],
       ["location_image", false],
     ]) {
       const imagePath = store[key];
@@ -705,7 +713,7 @@ function validateCatalog(catalog) {
   const repeatedImages = new Set();
   const allImagePaths = [
     ...parsed.stores.flatMap((store) =>
-      [store.logo, store.cover, store.location_image].filter(Boolean),
+      [store.logo, store.cover, store.share_image, store.location_image].filter(Boolean),
     ),
     ...parsed.products.map(({ image }) => image).filter(Boolean),
     ...parsed.services.map(({ image }) => image).filter(Boolean),

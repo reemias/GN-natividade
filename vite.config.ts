@@ -10,6 +10,7 @@ interface StorePreview {
   description: string;
   cover: string;
   logo: string;
+  share_image?: string;
   business_type: string;
   status: string;
   geo: { city: string; state: string };
@@ -57,7 +58,7 @@ function renderStoreSharePage(
   const base = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
   const resolveUrl = (path: string) =>
     origin ? new URL(path, origin).href : path;
-  const imagePath = store.cover || store.logo;
+  const imagePath = store.share_image || store.cover || store.logo;
   const image = imagePath
     ? resolveUrl(`${base}${imagePath.replace(/^\/+/, "")}`)
     : "";
@@ -71,7 +72,7 @@ function renderStoreSharePage(
           ? `image/${imageExtension}`
           : "";
   const slug = `compartilhar/${store.id}-${open ? "aberta" : "fechada"}.html`;
-  const pageUrl = resolveUrl(`${base}${slug}?preview=2`);
+  const pageUrl = resolveUrl(`${base}${slug}?preview=3`);
   const storeUrl = resolveUrl(`${base}loja/${store.id}`);
   const redirectUrl = JSON.stringify(storeUrl).replace(/</g, "\\u003c");
 
@@ -88,6 +89,8 @@ function renderStoreSharePage(
     <meta property="og:description" content="${htmlEscape(description)}" />
     <meta property="og:image" content="${htmlEscape(image)}" />
     ${imageType ? `<meta property="og:image:type" content="${htmlEscape(imageType)}" />` : ""}
+    ${store.share_image ? '<meta property="og:image:width" content="1200" />' : ""}
+    ${store.share_image ? '<meta property="og:image:height" content="630" />' : ""}
     <meta property="og:image:alt" content="Capa de ${htmlEscape(store.name)}" />
     <meta property="og:url" content="${htmlEscape(pageUrl)}" />
     <meta name="twitter:card" content="summary_large_image" />
