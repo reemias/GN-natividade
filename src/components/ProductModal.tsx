@@ -60,7 +60,7 @@ export default function ProductModal({
   })
   const unitCents = basePrice + chosenOptions.reduce((sum, option) => sum + option.priceDeltaCents, 0)
   const isStoreOpen = isOpenNow(store, new Date(), catalog.config.timezone)
-  const previewPath = `${import.meta.env.BASE_URL}compartilhar/${store.id}-${isStoreOpen ? 'aberta' : 'fechada'}.html?preview=3`
+  const previewPath = `${import.meta.env.BASE_URL}compartilhar/${store.id}-${isStoreOpen ? 'aberta' : 'fechada'}.html`
   const storeUrl = new URL(previewPath, window.location.origin).toString()
   const productShareText = `${product.name} · ${formatMoney(unitCents)}${chosenOptions.length ? `\n${chosenOptions.map((option) => option.optionName).join(', ')}` : ''}\n${store.name} · ${isStoreOpen ? 'Aberta agora' : 'Fechada agora'}\n${storeUrl}`
   const productShareUrl = `https://wa.me/?text=${encodeURIComponent(productShareText)}`
