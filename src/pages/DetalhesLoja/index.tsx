@@ -98,6 +98,8 @@ export default function DetalhesLoja() {
       <div className={styles.storeHeader}>
         {store.logo && <img className={styles.logo} src={store.logo} alt="" />}
         <div className={styles.heading}>
+          <br />
+          <br />
           <h1>{store.name}</h1>
           <p>{store.description}</p>
         </div>
