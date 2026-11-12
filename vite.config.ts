@@ -73,6 +73,7 @@ function renderStoreSharePage(
   const slug = `compartilhar/${store.id}-${open ? "aberta" : "fechada"}.html`;
   const pageUrl = resolveUrl(`${base}${slug}?preview=2`);
   const storeUrl = resolveUrl(`${base}loja/${store.id}`);
+  const redirectUrl = JSON.stringify(storeUrl).replace(/</g, "\\u003c");
 
   return `<!doctype html>
 <html lang="pt-BR">
@@ -112,6 +113,7 @@ function renderStoreSharePage(
       <p>${htmlEscape(store.geo.city)}, ${htmlEscape(store.geo.state)}</p>
       <a href="${htmlEscape(storeUrl)}">${isService ? "Ver serviços" : "Ver cardápio"}</a>
     </main>
+    <script>window.location.replace(${redirectUrl});</script>
   </body>
 </html>`;
 }

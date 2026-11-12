@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/loja/:storeId",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/carrinho",
+      "destination": "/index.html"
+    }
+  ]
+}
