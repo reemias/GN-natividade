@@ -23,7 +23,10 @@ export default function NewsArticlePage() {
   const embed = article.video ? videoEmbedUrl(article.video) : null
 
   return <main className={styles.articlePage}>
-    <Link className={styles.backLink} to="/noticias"><ArrowLeft size={17} aria-hidden="true" /> Todas as notícias</Link>
+    <nav className={styles.articleNav} aria-label="Navegação da notícia">
+      <Link className={styles.galleryLink} to="/"><ArrowLeft size={17} aria-hidden="true" /> Voltar à galeria</Link>
+      <Link className={styles.backLink} to="/noticias"><ArrowLeft size={17} aria-hidden="true" /> Todas as notícias</Link>
+    </nav>
     <article>
       <header className={styles.articleHeader}>
         <span className={styles.category}>{article.category}</span>
