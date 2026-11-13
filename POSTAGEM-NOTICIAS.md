@@ -8,7 +8,7 @@ Este guia explica como adicionar uma matéria ao jornal da Galeria Natividade. O
 
 1. Crie um arquivo `.md` em `src/content/news/`.
 2. Preencha os metadados entre os blocos `---` e escreva o texto abaixo deles.
-3. Adicione a capa e, se desejar, uma foto complementar em `public/images/`.
+3. Adicione a capa e, se desejar, uma foto complementar em `public/imagensNoticias/`.
 4. Confira a matéria no feed e na página de detalhes.
 5. Envie as alterações pelo GitHub ou publique uma nova versão do projeto.
 
@@ -33,8 +33,8 @@ excerpt: A feira local passa a receber produtores em uma área reorganizada no c
 category: Cidade
 author: Redação Natividade
 date: 2026-11-13
-cover: /images/feira-capa.jpg
-image: /images/feira-detalhe.jpg
+cover: /imagensNoticias/feira-capa.jpg
+image: /imagensNoticias/feira-detalhe.jpg
 video:
 ---
 
@@ -54,13 +54,13 @@ O `---` deve aparecer sozinho no início e depois dos metadados. Use uma proprie
 
 ## 3. Preparar as imagens
 
-Coloque as imagens em `public/images/` e use no Markdown o caminho público, começando com `/images/`:
+Coloque as imagens em `public/imagensNoticias/` e use no Markdown o caminho público, começando com `/imagensNoticias/`:
 
 - `cover` é obrigatória e aparece no cartão do feed e no topo da matéria.
 - `image` é opcional e aparece como foto complementar depois do texto.
 - Se `image` estiver vazia, a matéria não mostra uma segunda foto.
 
-Confira se o nome e a extensão no Markdown correspondem exatamente ao arquivo adicionado, incluindo maiúsculas e minúsculas. Não use o caminho `public/` no valor do campo: para um arquivo em `public/images/feira-capa.jpg`, escreva `/images/feira-capa.jpg`.
+Confira se o nome e a extensão no Markdown correspondem exatamente ao arquivo adicionado, incluindo maiúsculas e minúsculas. Não use o caminho `public/` no valor do campo: para um arquivo em `public/imagensNoticias/feira-capa.jpg`, escreva `/imagensNoticias/feira-capa.jpg`.
 
 ## 4. Campos disponíveis
 
@@ -71,7 +71,7 @@ Confira se o nome e a extensão no Markdown correspondem exatamente ao arquivo a
 | `category` | Não | Editoria, por exemplo `Cidade` ou `Esportes`. O padrão é `Notícias`. |
 | `author` | Não | Nome da autoria. O padrão é `Redação`. |
 | `date` | Sim | Data no formato `AAAA-MM-DD`, por exemplo `2026-11-13`. |
-| `cover` | Sim | Caminho da capa, como `/images/feira-capa.jpg`. |
+| `cover` | Sim | Caminho da capa, como `/imagensNoticias/feira-capa.jpg`. |
 | `image` | Não | Caminho da foto complementar. |
 | `video` | Não | URL do vídeo no YouTube ou Vimeo; deixe vazio para não exibir vídeo. |
 
@@ -99,7 +99,7 @@ Antes de enviar a matéria, confira:
 - [ ] O nome do arquivo é único e forma uma URL legível.
 - [ ] `title`, `date` e `cover` estão preenchidos.
 - [ ] A data está em `AAAA-MM-DD`.
-- [ ] A capa e a foto opcional foram adicionadas a `public/images/` e seus caminhos estão corretos.
+- [ ] A capa e a foto opcional foram adicionadas a `public/imagensNoticias/` e seus caminhos estão corretos.
 - [ ] O texto está revisado e os parágrafos/intertítulos estão separados corretamente.
 - [ ] O vídeo, se houver, usa uma URL do YouTube ou Vimeo.
 - [ ] O feed `/noticias` e a URL `/noticias/<nome-do-arquivo>` mostram o conteúdo esperado.

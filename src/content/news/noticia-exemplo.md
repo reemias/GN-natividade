@@ -4,8 +4,8 @@ excerpt: Comerciantes e moradores celebram a reorganização da feira, que agora
 category: Cidade
 author: Redação Natividade
 date: 2026-11-12
-cover: /images/news-cover.png
-image: /images/news-market.png
+cover: /imagensNoticias/news-cover.png
+image: /imagensNoticias/news-market.png
 video:
 ---
 

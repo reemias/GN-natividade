@@ -358,6 +358,101 @@
         "assistencia-tecnica",
         "orcamento"
       ]
+    },
+    {
+      "id": "acai-da-bibi",
+      "name": "Açaí da Bibi",
+      "description": "Açaí, marmitas e sorvetes com entrega e retirada em Natividade.",
+      "business_type": "food",
+      "category_ids": [
+        "doces"
+      ],
+      "status": "active",
+      "order": 4,
+      "base_popularity": 0,
+      "whatsapp": "5522981229529",
+      "logo": "",
+      "cover": "",
+      "geo": {
+        "lat": -21.123456,
+        "lng": -41.654321,
+        "city": "Natividade",
+        "state": "RJ"
+      },
+      "address": {
+        "street": "Delivery via WhatsApp",
+        "number": "S/N",
+        "neighborhood": "Natividade",
+        "reference": "Natividade-RJ"
+      },
+      "hours": {
+        "mon": [
+          {
+            "open": "12:00",
+            "close": "23:59"
+          }
+        ],
+        "tue": [
+          {
+            "open": "12:00",
+            "close": "23:59"
+          }
+        ],
+        "wed": [
+          {
+            "open": "12:00",
+            "close": "23:59"
+          }
+        ],
+        "thu": [
+          {
+            "open": "12:00",
+            "close": "23:59"
+          }
+        ],
+        "fri": [
+          {
+            "open": "12:00",
+            "close": "23:59"
+          }
+        ],
+        "sat": [
+          {
+            "open": "12:00",
+            "close": "23:59"
+          }
+        ],
+        "sun": [
+          {
+            "open": "12:00",
+            "close": "23:59"
+          }
+        ]
+      },
+      "hours_exceptions": [],
+      "payment_methods": [
+        "pix",
+        "cash",
+        "debit",
+        "credit"
+      ],
+      "delivery": {
+        "enabled": true,
+        "fee_cents": 0,
+        "min_order_cents": 0,
+        "eta_min": 30,
+        "radius_km": 5
+      },
+      "pickup": {
+        "enabled": true,
+        "eta_min": 15
+      },
+      "tags": [
+        "acai",
+        "sorvete",
+        "marmita",
+        "doces"
+      ]
     }
   ],
   "products": [
@@ -6061,6 +6156,1035 @@
       "base_popularity": 0,
       "tags": [],
       "option_groups": []
+    },
+    {
+      "id": "acai-bibi-copo-200ml",
+      "store_id": "acai-da-bibi",
+      "name": "Açaí no Copo 200ml",
+      "description": "Açaí puro no copo de 200ml. Escolha seus complementos grátis.",
+      "category": "Açaí no Copo",
+      "price_cents": 800,
+      "promo_price_cents": null,
+      "image": "",
+      "available": true,
+      "order": 1,
+      "base_popularity": 20,
+      "tags": [
+        "acai"
+      ],
+      "option_groups": [
+        {
+          "id": "complementos",
+          "name": "Complementos Grátis (Escolha até 3)",
+          "required": false,
+          "min": 0,
+          "max": 3,
+          "options": [
+            {
+              "id": "leite-po",
+              "name": "Leite em pó",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "pacoca",
+              "name": "Paçoca",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "amendoim",
+              "name": "Amendoim",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "granulado",
+              "name": "Granulado preto",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocobol",
+              "name": "Chocobol",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "flocos",
+              "name": "Flocos de arroz",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "sucrilhos",
+              "name": "Sucrilhos de milho",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "caldas",
+          "name": "Caldas Grátis (Escolha 1)",
+          "required": false,
+          "min": 0,
+          "max": 1,
+          "options": [
+            {
+              "id": "limao",
+              "name": "Limão",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "banana",
+              "name": "Banana caramelizada",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "morango",
+              "name": "Morango",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocolate",
+              "name": "Chocolate",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "menta",
+              "name": "Menta",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "adicionais-pagos",
+          "name": "Adicionais Pagos",
+          "required": false,
+          "min": 0,
+          "max": 2,
+          "options": [
+            {
+              "id": "confete",
+              "name": "Confete (R$ 3,00)",
+              "price_delta_cents": 300
+            },
+            {
+              "id": "jujuba",
+              "name": "Jujuba (R$ 2,00)",
+              "price_delta_cents": 200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acai-bibi-copo-300ml",
+      "store_id": "acai-da-bibi",
+      "name": "Açaí no Copo 300ml",
+      "description": "Açaí puro no copo de 300ml. Escolha seus complementos grátis.",
+      "category": "Açaí no Copo",
+      "price_cents": 1000,
+      "promo_price_cents": null,
+      "image": "",
+      "available": true,
+      "order": 2,
+      "base_popularity": 35,
+      "tags": [
+        "acai"
+      ],
+      "option_groups": [
+        {
+          "id": "complementos",
+          "name": "Complementos Grátis (Escolha até 3)",
+          "required": false,
+          "min": 0,
+          "max": 3,
+          "options": [
+            {
+              "id": "leite-po",
+              "name": "Leite em pó",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "pacoca",
+              "name": "Paçoca",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "amendoim",
+              "name": "Amendoim",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "granulado",
+              "name": "Granulado preto",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocobol",
+              "name": "Chocobol",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "flocos",
+              "name": "Flocos de arroz",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "sucrilhos",
+              "name": "Sucrilhos de milho",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "caldas",
+          "name": "Caldas Grátis (Escolha 1)",
+          "required": false,
+          "min": 0,
+          "max": 1,
+          "options": [
+            {
+              "id": "limao",
+              "name": "Limão",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "banana",
+              "name": "Banana caramelizada",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "morango",
+              "name": "Morango",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocolate",
+              "name": "Chocolate",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "menta",
+              "name": "Menta",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "adicionais-pagos",
+          "name": "Adicionais Pagos",
+          "required": false,
+          "min": 0,
+          "max": 2,
+          "options": [
+            {
+              "id": "confete",
+              "name": "Confete (R$ 3,00)",
+              "price_delta_cents": 300
+            },
+            {
+              "id": "jujuba",
+              "name": "Jujuba (R$ 2,00)",
+              "price_delta_cents": 200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acai-bibi-copo-400ml",
+      "store_id": "acai-da-bibi",
+      "name": "Açaí no Copo 400ml",
+      "description": "Açaí puro no copo de 400ml. Escolha seus complementos grátis.",
+      "category": "Açaí no Copo",
+      "price_cents": 1300,
+      "promo_price_cents": null,
+      "image": "",
+      "available": true,
+      "order": 3,
+      "base_popularity": 25,
+      "tags": [
+        "acai"
+      ],
+      "option_groups": [
+        {
+          "id": "complementos",
+          "name": "Complementos Grátis (Escolha até 3)",
+          "required": false,
+          "min": 0,
+          "max": 3,
+          "options": [
+            {
+              "id": "leite-po",
+              "name": "Leite em pó",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "pacoca",
+              "name": "Paçoca",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "amendoim",
+              "name": "Amendoim",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "granulado",
+              "name": "Granulado preto",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocobol",
+              "name": "Chocobol",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "flocos",
+              "name": "Flocos de arroz",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "sucrilhos",
+              "name": "Sucrilhos de milho",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "caldas",
+          "name": "Caldas Grátis (Escolha 1)",
+          "required": false,
+          "min": 0,
+          "max": 1,
+          "options": [
+            {
+              "id": "limao",
+              "name": "Limão",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "banana",
+              "name": "Banana caramelizada",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "morango",
+              "name": "Morango",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocolate",
+              "name": "Chocolate",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "menta",
+              "name": "Menta",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "adicionais-pagos",
+          "name": "Adicionais Pagos",
+          "required": false,
+          "min": 0,
+          "max": 2,
+          "options": [
+            {
+              "id": "confete",
+              "name": "Confete (R$ 3,00)",
+              "price_delta_cents": 300
+            },
+            {
+              "id": "jujuba",
+              "name": "Jujuba (R$ 2,00)",
+              "price_delta_cents": 200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acai-bibi-copo-500ml",
+      "store_id": "acai-da-bibi",
+      "name": "Açaí no Copo 500ml",
+      "description": "Açaí puro no copo de 500ml. Escolha seus complementos grátis.",
+      "category": "Açaí no Copo",
+      "price_cents": 1600,
+      "promo_price_cents": null,
+      "image": "",
+      "available": true,
+      "order": 4,
+      "base_popularity": 40,
+      "tags": [
+        "acai"
+      ],
+      "option_groups": [
+        {
+          "id": "complementos",
+          "name": "Complementos Grátis (Escolha até 3)",
+          "required": false,
+          "min": 0,
+          "max": 3,
+          "options": [
+            {
+              "id": "leite-po",
+              "name": "Leite em pó",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "pacoca",
+              "name": "Paçoca",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "amendoim",
+              "name": "Amendoim",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "granulado",
+              "name": "Granulado preto",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocobol",
+              "name": "Chocobol",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "flocos",
+              "name": "Flocos de arroz",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "sucrilhos",
+              "name": "Sucrilhos de milho",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "caldas",
+          "name": "Caldas Grátis (Escolha 1)",
+          "required": false,
+          "min": 0,
+          "max": 1,
+          "options": [
+            {
+              "id": "limao",
+              "name": "Limão",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "banana",
+              "name": "Banana caramelizada",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "morango",
+              "name": "Morango",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocolate",
+              "name": "Chocolate",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "menta",
+              "name": "Menta",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "adicionais-pagos",
+          "name": "Adicionais Pagos",
+          "required": false,
+          "min": 0,
+          "max": 2,
+          "options": [
+            {
+              "id": "confete",
+              "name": "Confete (R$ 3,00)",
+              "price_delta_cents": 300
+            },
+            {
+              "id": "jujuba",
+              "name": "Jujuba (R$ 2,00)",
+              "price_delta_cents": 200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acai-bibi-copo-700ml",
+      "store_id": "acai-da-bibi",
+      "name": "Açaí no Copo 700ml",
+      "description": "Açaí puro no copo de 700ml. Escolha seus complementos grátis.",
+      "category": "Açaí no Copo",
+      "price_cents": 2300,
+      "promo_price_cents": null,
+      "image": "",
+      "available": true,
+      "order": 5,
+      "base_popularity": 15,
+      "tags": [
+        "acai"
+      ],
+      "option_groups": [
+        {
+          "id": "complementos",
+          "name": "Complementos Grátis (Escolha até 3)",
+          "required": false,
+          "min": 0,
+          "max": 3,
+          "options": [
+            {
+              "id": "leite-po",
+              "name": "Leite em pó",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "pacoca",
+              "name": "Paçoca",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "amendoim",
+              "name": "Amendoim",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "granulado",
+              "name": "Granulado preto",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocobol",
+              "name": "Chocobol",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "flocos",
+              "name": "Flocos de arroz",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "sucrilhos",
+              "name": "Sucrilhos de milho",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "caldas",
+          "name": "Caldas Grátis (Escolha 1)",
+          "required": false,
+          "min": 0,
+          "max": 1,
+          "options": [
+            {
+              "id": "limao",
+              "name": "Limão",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "banana",
+              "name": "Banana caramelizada",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "morango",
+              "name": "Morango",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocolate",
+              "name": "Chocolate",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "menta",
+              "name": "Menta",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "adicionais-pagos",
+          "name": "Adicionais Pagos",
+          "required": false,
+          "min": 0,
+          "max": 2,
+          "options": [
+            {
+              "id": "confete",
+              "name": "Confete (R$ 3,00)",
+              "price_delta_cents": 300
+            },
+            {
+              "id": "jujuba",
+              "name": "Jujuba (R$ 2,00)",
+              "price_delta_cents": 200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acai-bibi-copo-1l",
+      "store_id": "acai-da-bibi",
+      "name": "Açaí no Copo 1 Litro",
+      "description": "Açaí puro no copo de 1 Litro. Escolha seus complementos grátis.",
+      "category": "Açaí no Copo",
+      "price_cents": 3300,
+      "promo_price_cents": null,
+      "image": "",
+      "available": true,
+      "order": 6,
+      "base_popularity": 10,
+      "tags": [
+        "acai"
+      ],
+      "option_groups": [
+        {
+          "id": "complementos",
+          "name": "Complementos Grátis (Escolha até 3)",
+          "required": false,
+          "min": 0,
+          "max": 3,
+          "options": [
+            {
+              "id": "leite-po",
+              "name": "Leite em pó",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "pacoca",
+              "name": "Paçoca",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "amendoim",
+              "name": "Amendoim",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "granulado",
+              "name": "Granulado preto",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocobol",
+              "name": "Chocobol",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "flocos",
+              "name": "Flocos de arroz",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "sucrilhos",
+              "name": "Sucrilhos de milho",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "caldas",
+          "name": "Caldas Grátis (Escolha 1)",
+          "required": false,
+          "min": 0,
+          "max": 1,
+          "options": [
+            {
+              "id": "limao",
+              "name": "Limão",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "banana",
+              "name": "Banana caramelizada",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "morango",
+              "name": "Morango",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocolate",
+              "name": "Chocolate",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "menta",
+              "name": "Menta",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "adicionais-pagos",
+          "name": "Adicionais Pagos",
+          "required": false,
+          "min": 0,
+          "max": 2,
+          "options": [
+            {
+              "id": "confete",
+              "name": "Confete (R$ 3,00)",
+              "price_delta_cents": 300
+            },
+            {
+              "id": "jujuba",
+              "name": "Jujuba (R$ 2,00)",
+              "price_delta_cents": 200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acai-bibi-marmita-p",
+      "store_id": "acai-da-bibi",
+      "name": "Marmita de Açaí P",
+      "description": "Marmita de açaí tamanho P. Escolha seus complementos grátis.",
+      "category": "Marmitas de Açaí",
+      "price_cents": 1500,
+      "promo_price_cents": null,
+      "image": "",
+      "available": true,
+      "order": 10,
+      "base_popularity": 30,
+      "tags": [
+        "acai",
+        "marmita"
+      ],
+      "option_groups": [
+        {
+          "id": "complementos",
+          "name": "Complementos Grátis (Escolha até 3)",
+          "required": false,
+          "min": 0,
+          "max": 3,
+          "options": [
+            {
+              "id": "leite-po",
+              "name": "Leite em pó",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "pacoca",
+              "name": "Paçoca",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "amendoim",
+              "name": "Amendoim",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "granulado",
+              "name": "Granulado preto",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocobol",
+              "name": "Chocobol",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "flocos",
+              "name": "Flocos de arroz",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "sucrilhos",
+              "name": "Sucrilhos de milho",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "caldas",
+          "name": "Caldas Grátis (Escolha 1)",
+          "required": false,
+          "min": 0,
+          "max": 1,
+          "options": [
+            {
+              "id": "limao",
+              "name": "Limão",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "banana",
+              "name": "Banana caramelizada",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "morango",
+              "name": "Morango",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocolate",
+              "name": "Chocolate",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "menta",
+              "name": "Menta",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "adicionais-pagos",
+          "name": "Adicionais Pagos",
+          "required": false,
+          "min": 0,
+          "max": 2,
+          "options": [
+            {
+              "id": "confete",
+              "name": "Confete (R$ 3,00)",
+              "price_delta_cents": 300
+            },
+            {
+              "id": "jujuba",
+              "name": "Jujuba (R$ 2,00)",
+              "price_delta_cents": 200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acai-bibi-marmita-m",
+      "store_id": "acai-da-bibi",
+      "name": "Marmita de Açaí M",
+      "description": "Marmita de açaí tamanho M. Escolha seus complementos grátis.",
+      "category": "Marmitas de Açaí",
+      "price_cents": 2500,
+      "promo_price_cents": null,
+      "image": "",
+      "available": true,
+      "order": 11,
+      "base_popularity": 45,
+      "tags": [
+        "acai",
+        "marmita"
+      ],
+      "option_groups": [
+        {
+          "id": "complementos",
+          "name": "Complementos Grátis (Escolha até 3)",
+          "required": false,
+          "min": 0,
+          "max": 3,
+          "options": [
+            {
+              "id": "leite-po",
+              "name": "Leite em pó",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "pacoca",
+              "name": "Paçoca",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "amendoim",
+              "name": "Amendoim",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "granulado",
+              "name": "Granulado preto",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocobol",
+              "name": "Chocobol",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "flocos",
+              "name": "Flocos de arroz",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "sucrilhos",
+              "name": "Sucrilhos de milho",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "caldas",
+          "name": "Caldas Grátis (Escolha 1)",
+          "required": false,
+          "min": 0,
+          "max": 1,
+          "options": [
+            {
+              "id": "limao",
+              "name": "Limão",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "banana",
+              "name": "Banana caramelizada",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "morango",
+              "name": "Morango",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocolate",
+              "name": "Chocolate",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "menta",
+              "name": "Menta",
+              "price_delta_cents": 0
+            }
+          ]
+        },
+        {
+          "id": "adicionais-pagos",
+          "name": "Adicionais Pagos",
+          "required": false,
+          "min": 0,
+          "max": 2,
+          "options": [
+            {
+              "id": "confete",
+              "name": "Confete (R$ 3,00)",
+              "price_delta_cents": 300
+            },
+            {
+              "id": "jujuba",
+              "name": "Jujuba (R$ 2,00)",
+              "price_delta_cents": 200
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acai-bibi-sorvete-1l",
+      "store_id": "acai-da-bibi",
+      "name": "Sorvete de 1 Litro",
+      "description": "Muito sabor em cada colher! Escolha o sabor do seu pote de 1 Litro.",
+      "category": "Sorvetes",
+      "price_cents": 2000,
+      "promo_price_cents": null,
+      "image": "",
+      "available": true,
+      "order": 20,
+      "base_popularity": 50,
+      "tags": [
+        "sorvete"
+      ],
+      "option_groups": [
+        {
+          "id": "sabores-sorvete",
+          "name": "Escolha o Sabor",
+          "required": true,
+          "min": 1,
+          "max": 1,
+          "options": [
+            {
+              "id": "bis-branco",
+              "name": "Bis branco",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "abacaxi-vinho",
+              "name": "Abacaxi ao vinho",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "palha-italiana",
+              "name": "Palha italiana",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "maca-verde",
+              "name": "Maçã verde",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "morango",
+              "name": "Morango",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "leite-condensado",
+              "name": "Leite condensado",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocolate-suico",
+              "name": "Chocolate suíço",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "ninho-trufado",
+              "name": "Ninho trufado",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "ninho-morango",
+              "name": "Ninho com morango",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "chocolate",
+              "name": "Chocolate",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "pave",
+              "name": "Pavê",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "maracuja",
+              "name": "Maracujá",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "passas-rum",
+              "name": "Passas ao rum",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "abacaxi",
+              "name": "Abacaxi",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "graviola",
+              "name": "Graviola",
+              "price_delta_cents": 0
+            },
+            {
+              "id": "grego",
+              "name": "Grego",
+              "price_delta_cents": 0
+            }
+          ]
+        }
+      ]
     }
   ],
   "services": [

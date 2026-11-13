@@ -5,7 +5,7 @@ O fluxo de notícias é independente do catálogo da Galeria e não usa backend.
 ## Como publicar uma matéria
 
 1. Crie `src/content/news/meu-assunto.md` usando o modelo abaixo. O nome do arquivo vira a URL (`/noticias/meu-assunto`).
-2. Coloque as imagens em `public/images/` e informe seus caminhos públicos começando com `/images/`.
+2. Coloque as imagens em `public/imagensNoticias/` e informe seus caminhos públicos começando com `/imagensNoticias/`.
 3. Para vídeo, informe uma URL de incorporação (YouTube/Vimeo) no campo `video`. Deixe vazio para não exibir vídeo.
 4. Faça o commit/publicação do projeto. Não há atualização de conteúdo sem publicar uma nova versão.
 
@@ -18,8 +18,8 @@ excerpt: Resumo curto para o feed e compartilhamento.
 category: Cidade
 author: Redação
 date: 2026-11-13
-cover: /images/capa-noticia.jpg
-image: /images/foto-noticia.jpg
+cover: /imagensNoticias/capa-noticia.jpg
+image: /imagensNoticias/foto-noticia.jpg
 video:
 ---
 

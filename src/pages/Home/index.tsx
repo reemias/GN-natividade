@@ -13,7 +13,7 @@ import { formatMoney } from "../../lib/format";
 import { useGallery } from "../../hooks/useGallery";
 import StoreCard from "../../components/StoreCard";
 import styles from "./Style.module.css";
-
+import slideNoticias from "../../components/slideNoticias";
 const sections = [
   {
     key: "city",
@@ -156,25 +156,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <section className={styles.hero} aria-labelledby="home-hero-title">
-        <div className={styles.heroCopy}>
-          <h1 id="home-hero-title">
-            Seu próximo favorito está <span>por aqui.</span>
-          </h1>
-          <p>
-            Explore sabores, serviços e lojas incríveis da sua região. Valorize
-            quem faz parte da sua comunidade.
-          </p>
-          <div className={styles.heroActions}>
-            <a className={styles.primaryAction} href="#explorar">
-              Explorar lojas
-              <ArrowRight size={18} aria-hidden="true" />
-            </a>
-            <Link className={styles.secondaryAction} to="/noticias">
-              <Newspaper size={17} aria-hidden="true" />
-              NOTÍCIAS
-            </Link>
-          </div>
-        </div>
+        <slideNoticias />
       </section>
 
       <section className={styles.content} id="explorar">
