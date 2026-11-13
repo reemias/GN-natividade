@@ -1,8 +1,10 @@
 # Galeria Natividade
 
-Aplicação web em React + TypeScript + Vite para catálogo de comércios locais, com ranking por localização, histórico de pedidos e fluxo de compra via WhatsApp. A base de dados não é dinâmica: ela fica em um arquivo Markdown, é validada em build e convertida para `public/db.json`.
+Aplicação web em React + TypeScript + Vite com dois fluxos de conteúdo: a galeria de comércios locais, com ranking por localização e pedidos via WhatsApp, e um jornal com feed e páginas de notícias. O catálogo da galeria fica em `data/db.md`, é validado no build e convertido para `public/db.json`; as notícias são arquivos Markdown independentes, carregados pelo frontend sem backend.
 
 O projeto está em formato de MVP funcional, mas ainda depende de dados reais da cidade e de ajustes finais de UX, conteúdo e branding.
+
+Para publicar uma matéria, consulte o [guia passo a passo de postagem de notícias](./POSTAGEM-NOTICIAS.md).
 
 ## 1) O que é este projeto
 
@@ -33,8 +35,11 @@ Tecnologias principais:
 
 Estrutura relevante:
 
-- `data/db.md`: fonte do catálogo em Markdown
+- `data/db.md`: fonte do catálogo da galeria em Markdown
 - `scripts/build-db.js`: valida e gera `public/db.json`
+- `src/content/news/*.md`: fonte das matérias do jornal; cada arquivo gera uma notícia no feed e uma página de detalhes
+- `data/noticias/bd.md`: campos e modelo editorial de notícia
+- `POSTAGEM-NOTICIAS.md`: passo a passo para criar, revisar e publicar uma matéria
 - `public/db.json`: JSON final consumido pela aplicação
 - `public/images/*-share.jpg`: imagens horizontais 1200×630 para prévias de compartilhamento
 - `src/lib`: regras de ranking, carrinho, histórico, geolocalização e WhatsApp
@@ -55,6 +60,12 @@ Fluxo:
 4. `CatalogProvider` distribui o catálogo para toda a app
 
 O app também tenta atualizar o catálogo em segundo plano ao ganhar foco ou a cada 30 minutos. Se falhar, continua com a versão já em memória.
+
+### Notícias editoriais
+
+O jornal é um fluxo separado do catálogo: não usa `data/db.md`, `public/db.json`, API ou banco de dados. Cada arquivo `src/content/news/*.md` é importado pelo Vite, e o nome do arquivo define o endereço da matéria. O feed fica em `/noticias` e cada detalhe em `/noticias/<nome-do-arquivo>`. O `Header` e o roteador principal são compartilhados com o restante da aplicação.
+
+Para cadastrar uma notícia, adicione um arquivo Markdown e as imagens em `public/images/`. A capa é obrigatória; fotografia complementar e vídeo são opcionais. O frontend lê o conteúdo durante o build, então uma nova publicação é feita junto com uma nova versão do projeto. O guia completo, incluindo o modelo de arquivo e a lista de campos, está em [POSTAGEM-NOTICIAS.md](./POSTAGEM-NOTICIAS.md).
 
 ### 3.2 Como a home funciona
 
@@ -320,6 +331,7 @@ O projeto já possui base funcional para o MVP:
 - histórico local do usuário em `localStorage`
 - geolocalização com fallback para cidade configurada
 - PWA com cache e instalação
+- feed de notícias e páginas de detalhes abastecidos por arquivos Markdown, sem backend
 
 ## 8) O que ainda falta para terminar
 
