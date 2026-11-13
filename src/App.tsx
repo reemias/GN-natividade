@@ -6,7 +6,6 @@ import type { Catalog } from './lib/catalog'
 import PWABadge from './PWABadge'
 import PWAInstallPrompt from './PWAInstallPrompt'
 import Router from './router'
-import NewsRouter from './pages/Noticias/NewsRouter'
 import LoadingScreen from './components/LoadingScreen'
 import './App.css'
 
@@ -15,10 +14,7 @@ function App() {
   const [error, setError] = useState('')
   const [refreshError, setRefreshError] = useState('')
 
-  const isNewsRoute = window.location.pathname.startsWith('/noticias')
-
   useEffect(() => {
-    if (isNewsRoute) return
     let active = true
     loadCatalog()
       .then((loadedCatalog) => {
@@ -30,7 +26,7 @@ function App() {
     return () => {
       active = false
     }
-  }, [isNewsRoute])
+  }, [])
 
   const checkCatalog = useCallback(async () => {
     if (!navigator.onLine) return
@@ -54,8 +50,6 @@ function App() {
       window.removeEventListener('focus', checkCatalog)
     }
   }, [catalog, checkCatalog])
-
-  if (isNewsRoute) return <NewsRouter />
 
   return (
     <>

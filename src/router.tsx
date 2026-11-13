@@ -6,6 +6,9 @@ import Home from './pages/Home'
 import DetalhesLoja from './pages/DetalhesLoja'
 import Carrinho from './pages/Carrinho'
 import { GalleryProvider } from './context/GalleryProvider'
+import NewsRouter from './pages/Noticias/NewsRouter'
+import NewsFeed from './pages/Noticias/Feed'
+import NewsArticlePage from './pages/Noticias/Article'
 
 function Layout() {
   const { config } = useCatalog()
@@ -16,6 +19,10 @@ function Layout() {
         <Route path="/" element={<Home />} />
         <Route path="/loja/:storeId" element={<DetalhesLoja />} />
         <Route path="/carrinho" element={<Carrinho />} />
+        <Route path="/noticias" element={<NewsRouter />}>
+          <Route index element={<NewsFeed />} />
+          <Route path=":slug" element={<NewsArticlePage />} />
+        </Route>
         <Route path="*" element={<main style={{ padding: '4rem 1rem', textAlign: 'center' }}>
           <h1>Página não encontrada</h1>
           <Link to="/">Voltar para a galeria</Link>

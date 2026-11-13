@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Search } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Search } from 'lucide-react'
 import { articles, formatNewsDate } from '../../content/news'
 import styles from './News.module.css'
 
@@ -19,6 +19,7 @@ export default function NewsFeed() {
   return (
     <main className={styles.page}>
       <section className={styles.masthead}>
+        <Link to="/" className={styles.galleryLink}><ArrowLeft size={16} aria-hidden="true" /> Voltar à galeria</Link>
         <div className={styles.kicker}>JORNAL LOCAL · NATIVIDADE, RJ</div>
         <h1>Notícias <span>daqui.</span></h1>
         <p>As histórias, as pessoas e os acontecimentos que movimentam a nossa cidade.</p>
