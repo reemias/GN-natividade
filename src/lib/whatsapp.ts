@@ -22,14 +22,15 @@ export function buildWhatsAppUrl({
     (total, item) => total + item.unitCents * item.qty,
     0,
   );
-  const items = cart.items
-    .map((item) => {
+  const items = [
+    "Eu vim pela Galeria Natividade",
+    ...cart.items.map((item) => {
       const options = item.options.length
         ? `\n  ${item.options.map((option) => `+ ${option.optionName}`).join("\n  ")}`
         : "";
       return `• ${item.qty}x ${item.name} — ${formatMoney(item.unitCents * item.qty)}${options}`;
-    })
-    .join("\n");
+    }),
+  ].join("\n");
   const replacements: Record<string, string> = {
     store_name: store.name,
     mode: cart.mode === "delivery" ? "Entrega" : "Retirada",
