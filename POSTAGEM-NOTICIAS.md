@@ -22,7 +22,7 @@ src/content/news/feira-de-produtores.md
 
 O nome do arquivo vira o endereço da matéria. No exemplo, a página será `/noticias/feira-de-produtores`. O feed fica em `/noticias`.
 
-Durante o build, o projeto também gera `/compartilhar/noticia-feira-de-produtores.html`. Essa página contém os metadados Open Graph e Twitter da matéria e encaminha visitantes para a URL do artigo. O botão **Compartilhar** usa esse endereço para que aplicativos de mensagem exibam a capa, o título e o resumo corretos.
+Durante o build, o projeto também gera `/compartilhar/noticia-feira-de-produtores.html`. Essa página contém os metadados Open Graph e Twitter da matéria e encaminha visitantes para a URL do artigo. O botão **Compartilhar** acrescenta à URL uma versão do build, para que uma publicação nova tenha uma chave de cache diferente nos aplicativos de mensagem.
 
 ## 2. Adicionar os metadados e o conteúdo
 

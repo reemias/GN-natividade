@@ -5,6 +5,9 @@ import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import { parse as parseYaml } from "yaml";
 
+const sharePreviewVersion =
+  process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) ?? Date.now().toString(36);
+
 interface StorePreview {
   id: string;
   name: string;
@@ -92,6 +95,7 @@ function renderStoreSharePage(
   open: boolean,
   baseUrl: string,
   origin: string,
+  previewVersion: string,
 ) {
   const isService = store.business_type === "service";
   const status = isService
@@ -104,9 +108,14 @@ function renderStoreSharePage(
   const base = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
   const resolveUrl = (path: string) =>
     origin ? new URL(path, origin).href : path;
+  const versionUrl = (path: string) => {
+    const url = new URL(path, origin || "https://gnnatividade.vercel.app");
+    url.searchParams.set("v", previewVersion);
+    return url.href;
+  };
   const imagePath = store.share_image || store.cover || store.logo;
   const image = imagePath
-    ? resolveUrl(`${base}${imagePath.replace(/^\/+/, "")}`)
+    ? versionUrl(`${base}${imagePath.replace(/^\/+/, "")}`)
     : "";
   const imageExtension = imagePath.split(".").pop()?.toLowerCase();
   const imageType =
@@ -118,7 +127,7 @@ function renderStoreSharePage(
           ? `image/${imageExtension}`
           : "";
   const slug = `compartilhar/${store.id}-${open ? "aberta" : "fechada"}.html`;
-  const pageUrl = resolveUrl(`${base}${slug}`);
+  const pageUrl = versionUrl(`${base}${slug}`);
   const storeUrl = resolveUrl(`${base}loja/${store.id}`);
   const redirectUrl = JSON.stringify(storeUrl).replace(/</g, "\\u003c");
 
@@ -134,6 +143,7 @@ function renderStoreSharePage(
     <meta property="og:title" content="${htmlEscape(title)}" />
     <meta property="og:description" content="${htmlEscape(description)}" />
     <meta property="og:image" content="${htmlEscape(image)}" />
+    <meta property="og:image:secure_url" content="${htmlEscape(image)}" />
     ${imageType ? `<meta property="og:image:type" content="${htmlEscape(imageType)}" />` : ""}
     ${store.share_image ? '<meta property="og:image:width" content="1200" />' : ""}
     ${store.share_image ? '<meta property="og:image:height" content="630" />' : ""}
@@ -171,11 +181,17 @@ function renderNewsSharePage(
   article: NewsPreview,
   baseUrl: string,
   origin: string,
+  previewVersion: string,
 ) {
   const base = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
   const resolveUrl = (path: string) =>
     origin ? new URL(path, origin).href : path;
-  const image = resolveUrl(
+  const versionUrl = (path: string) => {
+    const url = new URL(path, origin || "https://gnnatividade.vercel.app");
+    url.searchParams.set("v", previewVersion);
+    return url.href;
+  };
+  const image = versionUrl(
     `${base}${article.cover.replace(/^\/+/, "")}`,
   );
   const imageExtension = article.cover.split(".").pop()?.toLowerCase();
@@ -186,7 +202,7 @@ function renderNewsSharePage(
         ? `image/${imageExtension}`
         : "";
   const previewPath = `compartilhar/noticia-${article.slug}.html`;
-  const pageUrl = resolveUrl(`${base}${previewPath}`);
+  const pageUrl = versionUrl(`${base}${previewPath}`);
   const articleUrl = resolveUrl(`${base}noticias/${article.slug}`);
   const redirectUrl = JSON.stringify(articleUrl).replace(/</g, "\\u003c");
 
@@ -202,6 +218,7 @@ function renderNewsSharePage(
     <meta property="og:title" content="${htmlEscape(article.title)}" />
     <meta property="og:description" content="${htmlEscape(article.description)}" />
     <meta property="og:image" content="${htmlEscape(image)}" />
+    <meta property="og:image:secure_url" content="${htmlEscape(image)}" />
     ${imageType ? `<meta property="og:image:type" content="${htmlEscape(imageType)}" />` : ""}
     <meta property="og:image:alt" content="Capa: ${htmlEscape(article.title)}" />
     <meta property="og:url" content="${htmlEscape(pageUrl)}" />
@@ -246,7 +263,9 @@ const sharePagesPlugin: Plugin = {
         const origin = `http://${request.headers.host ?? "localhost"}`;
         response.statusCode = 200;
         response.setHeader("Content-Type", "text/html; charset=utf-8");
-        response.end(renderNewsSharePage(article, "/", origin));
+        response.end(
+          renderNewsSharePage(article, "/", origin, sharePreviewVersion),
+        );
         return;
       }
 
@@ -262,7 +281,13 @@ const sharePagesPlugin: Plugin = {
       response.statusCode = 200;
       response.setHeader("Content-Type", "text/html; charset=utf-8");
       response.end(
-        renderStoreSharePage(store, match[2] === "aberta", "/", origin),
+        renderStoreSharePage(
+          store,
+          match[2] === "aberta",
+          "/",
+          origin,
+          sharePreviewVersion,
+        ),
       );
     });
   },
@@ -290,6 +315,7 @@ const sharePagesPlugin: Plugin = {
             open,
             "/",
             configuredOrigin ?? "",
+            sharePreviewVersion,
           ),
         });
       }
@@ -299,7 +325,12 @@ const sharePagesPlugin: Plugin = {
       this.emitFile({
         type: "asset",
         fileName: `compartilhar/noticia-${article.slug}.html`,
-        source: renderNewsSharePage(article, "/", configuredOrigin ?? ""),
+        source: renderNewsSharePage(
+          article,
+          "/",
+          configuredOrigin ?? "",
+          sharePreviewVersion,
+        ),
       });
     }
   },
@@ -307,6 +338,10 @@ const sharePagesPlugin: Plugin = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    "import.meta.env.VITE_SHARE_PREVIEW_VERSION":
+      JSON.stringify(sharePreviewVersion),
+  },
   plugins: [
     react(),
     sharePagesPlugin,

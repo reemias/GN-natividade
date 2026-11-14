@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { MessageCircle, X } from 'lucide-react'
 import type { Product, Store } from '../lib/catalog'
 import { formatMoney } from '../lib/format'
+import { getSharePreviewUrl } from '../lib/sharePreview'
 import { isOpenNow } from '../lib/ranking'
 import { useCatalog } from '../hooks/useCatalog'
 import { useCart } from '../hooks/useCart'
@@ -60,8 +61,7 @@ export default function ProductModal({
   })
   const unitCents = basePrice + chosenOptions.reduce((sum, option) => sum + option.priceDeltaCents, 0)
   const isStoreOpen = isOpenNow(store, new Date(), catalog.config.timezone)
-  const previewPath = `${import.meta.env.BASE_URL}compartilhar/${store.id}-${isStoreOpen ? 'aberta' : 'fechada'}.html`
-  const storeUrl = new URL(previewPath, window.location.origin).toString()
+  const storeUrl = getSharePreviewUrl(`${store.id}-${isStoreOpen ? 'aberta' : 'fechada'}.html`)
   const productShareText = `${product.name} · ${formatMoney(unitCents)}${chosenOptions.length ? `\n${chosenOptions.map((option) => option.optionName).join(', ')}` : ''}\n${store.name} · ${isStoreOpen ? 'Aberta agora' : 'Fechada agora'}\n${storeUrl}`
   const productShareUrl = `https://wa.me/?text=${encodeURIComponent(productShareText)}`
 

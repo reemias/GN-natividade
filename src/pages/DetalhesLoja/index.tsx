@@ -11,6 +11,7 @@ import { useScrollToTop } from "../../hooks/useScrollToTop";
 import ProductModal from "../../components/ProductModal";
 import ServiceRequestForm from "../../components/ServiceRequestForm";
 import { formatMoney } from "../../lib/format";
+import { getSharePreviewUrl } from "../../lib/sharePreview";
 import { isOpenNow, scoreProduct, scoreStore } from "../../lib/ranking";
 import type { Product, Vehicle } from "../../lib/catalog";
 
@@ -101,8 +102,9 @@ export default function DetalhesLoja() {
     );
   }
 
-  const previewPath = `${import.meta.env.BASE_URL}compartilhar/${store.id}-${isOpen ? "aberta" : "fechada"}.html`;
-  const shareUrl = new URL(previewPath, window.location.origin).toString();
+  const shareUrl = getSharePreviewUrl(
+    `${store.id}-${isOpen ? "aberta" : "fechada"}.html`,
+  );
   const storeStatus =
     store.business_type === "service"
       ? "Atendimento sob agendamento"

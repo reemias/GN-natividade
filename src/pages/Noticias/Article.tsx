@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowUpRight, Volume2, Square } from "lucide-react";
 import { articles, formatNewsDate, renderMarkdown } from "../../content/news";
+import { getSharePreviewUrl } from "../../lib/sharePreview";
 import styles from "./News.module.css";
 
 function videoEmbedUrl(value: string) {
@@ -50,10 +51,9 @@ export default function NewsArticlePage() {
       </main>
     );
   const embed = article.video ? videoEmbedUrl(article.video) : null;
-  const sharePreviewUrl = new URL(
-    `${import.meta.env.BASE_URL}compartilhar/noticia-${article.slug}.html`,
-    window.location.origin,
-  ).toString();
+  const sharePreviewUrl = getSharePreviewUrl(
+    `noticia-${article.slug}.html`,
+  );
 
   // Extrai texto simples do conteúdo Markdown (remove formatação)
   const extractPlainText = (md: string) => {
