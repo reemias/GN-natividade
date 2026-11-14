@@ -6,6 +6,8 @@ O projeto está em formato de MVP funcional, mas ainda depende de dados reais da
 
 Para publicar uma matéria, consulte o [guia passo a passo de postagem de notícias](./POSTAGEM-NOTICIAS.md).
 
+Para entender a navegação entre as páginas por gestos, consulte o [guia técnico de navegação por gestos](./NAVEGACAO-GESTOS.md).
+
 ## 1) O que é este projeto
 
 Este app funciona como uma "galeria local" de negócios:
@@ -40,11 +42,13 @@ Estrutura relevante:
 - `src/content/news/*.md`: fonte das matérias do jornal; cada arquivo gera uma notícia no feed e uma página de detalhes
 - `data/noticias/bd.md`: campos e modelo editorial de notícia
 - `POSTAGEM-NOTICIAS.md`: passo a passo para criar, revisar e publicar uma matéria
+- `NAVEGACAO-GESTOS.md`: funcionamento técnico dos gestos entre as páginas
 - `public/db.json`: JSON final consumido pela aplicação
 - `public/images/*-share.jpg`: imagens horizontais 1200×630 para prévias de compartilhamento
 - `src/lib`: regras de ranking, carrinho, histórico, geolocalização e WhatsApp
 - `src/context`: providers de catálogo, carrinho e galeria
-- `src/pages`: Home, loja, carrinho
+- `src/hooks/useSwipe.ts`: reconhecimento de gestos horizontais por toque
+- `src/pages`: Home, loja, carrinho e jornal
 
 ## 3) Como a aplicação funciona
 
@@ -65,7 +69,11 @@ O app também tenta atualizar o catálogo em segundo plano ao ganhar foco ou a c
 
 O jornal é um fluxo separado do catálogo: não usa `data/db.md`, `public/db.json`, API ou banco de dados. Cada arquivo `src/content/news/*.md` é importado pelo Vite, e o nome do arquivo define o endereço da matéria. O feed fica em `/noticias` e cada detalhe em `/noticias/<nome-do-arquivo>`. O `Header` e o roteador principal são compartilhados com o restante da aplicação.
 
-Para cadastrar uma notícia, adicione um arquivo Markdown e as imagens em `public/images/`. A capa é obrigatória; fotografia complementar e vídeo são opcionais. O frontend lê o conteúdo durante o build, então uma nova publicação é feita junto com uma nova versão do projeto. O guia completo, incluindo o modelo de arquivo e a lista de campos, está em [POSTAGEM-NOTICIAS.md](./POSTAGEM-NOTICIAS.md).
+Para cadastrar uma notícia, adicione um arquivo Markdown e as imagens em `public/imagensNoticias/`. A capa é obrigatória; fotografia complementar e vídeo são opcionais. O frontend lê o conteúdo durante o build, então uma nova publicação é feita junto com uma nova versão do projeto. O guia completo, incluindo o modelo de arquivo e a lista de campos, está em [POSTAGEM-NOTICIAS.md](./POSTAGEM-NOTICIAS.md).
+
+### Navegação por gestos
+
+No artigo do jornal, no feed de lojas e nos detalhes da loja, deslizar horizontalmente também navega entre os fluxos principais. No artigo, deslizar para a esquerda abre o feed de notícias e para a direita abre o feed de lojas. No feed de lojas, esquerda abre notícias e direita abre o carrinho. Nos detalhes da loja, esquerda volta ao feed de lojas e direita abre o carrinho. O gesto não substitui os links e controles da interface. As rotas e os critérios técnicos estão documentados em [NAVEGACAO-GESTOS.md](./NAVEGACAO-GESTOS.md).
 
 ### 3.2 Como a home funciona
 
@@ -292,6 +300,10 @@ npm run lint
 
 Observação: PWA, geolocalização e service worker funcionam melhor em ambiente HTTPS real ou `localhost`.
 
+### PWA e cache
+
+O service worker é configurado em `vite.config.ts`. O Workbox precache inclui os recursos estáticos definidos em `globPatterns` e aceita arquivos de até 3 MiB, limite ajustado para incluir imagens maiores do catálogo. Imagens e catálogo também usam regras de cache em tempo de execução; alterações nessa configuração devem considerar o tamanho do download inicial e o uso offline.
+
 ## 6) Lógica interna em poucas camadas
 
 ### Camada de dados
@@ -332,6 +344,7 @@ O projeto já possui base funcional para o MVP:
 - geolocalização com fallback para cidade configurada
 - PWA com cache e instalação
 - feed de notícias e páginas de detalhes abastecidos por arquivos Markdown, sem backend
+- navegação por gestos de toque entre notícias, feed de lojas, detalhes da loja e carrinho
 
 ## 8) O que ainda falta para terminar
 
@@ -383,6 +396,7 @@ Em resumo:
 - WhatsApp com pedido montado
 - histórico local do usuário
 - PWA básico com cache e instalação
+- navegação por gestos nos fluxos principais da aplicação
 
 ### Desejável / pendente
 

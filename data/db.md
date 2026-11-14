@@ -203,8 +203,8 @@ whatsapp:
   order: 4
   base_popularity: 0
   whatsapp: "5522981229529"
-  logo: ""
-  cover: ""
+  logo: "/images/LogoBibi.png"
+  cover: "/images/localAcaiBibi.png"
   geo:
     lat: -21.123456
     lng: -41.654321
