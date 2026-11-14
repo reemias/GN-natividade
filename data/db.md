@@ -205,6 +205,7 @@ whatsapp:
   whatsapp: "5522981229529"
   logo: "/images/LogoBibi.png"
   cover: "/images/localAcaiBibi.png"
+  share_image: "/images/acai-da-bibi-share.jpg"
   geo:
     lat: -21.123456
     lng: -41.654321
