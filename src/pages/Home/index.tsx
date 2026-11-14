@@ -1,19 +1,13 @@
 import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  CarFront,
-  Newspaper,
-  Store as StoreIcon,
-  Wrench,
-} from "lucide-react";
+import { CarFront, Store as StoreIcon, Wrench } from "lucide-react";
 import { useCatalog } from "../../hooks/useCatalog";
 import { useRankedFeed } from "../../hooks/useRankedFeed";
 import { formatMoney } from "../../lib/format";
 import { useGallery } from "../../hooks/useGallery";
 import StoreCard from "../../components/StoreCard";
 import styles from "./Style.module.css";
-import slideNoticias from "../../components/slideNoticias";
+import SlideNoticias from "../../components/slideNoticias";
 const sections = [
   {
     key: "city",
@@ -156,7 +150,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <section className={styles.hero} aria-labelledby="home-hero-title">
-        <slideNoticias />
+        <SlideNoticias />
       </section>
 
       <section className={styles.content} id="explorar">
