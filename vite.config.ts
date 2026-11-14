@@ -5,9 +5,6 @@ import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import { parse as parseYaml } from "yaml";
 
-const sharePreviewVersion =
-  process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) ?? Date.now().toString(36);
-
 interface StorePreview {
   id: string;
   name: string;
@@ -95,7 +92,6 @@ function renderStoreSharePage(
   open: boolean,
   baseUrl: string,
   origin: string,
-  previewVersion: string,
 ) {
   const isService = store.business_type === "service";
   const status = isService
@@ -108,14 +104,9 @@ function renderStoreSharePage(
   const base = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
   const resolveUrl = (path: string) =>
     origin ? new URL(path, origin).href : path;
-  const versionUrl = (path: string) => {
-    const url = new URL(path, origin || "https://gnnatividade.vercel.app");
-    url.searchParams.set("v", previewVersion);
-    return url.href;
-  };
   const imagePath = store.share_image || store.cover || store.logo;
   const image = imagePath
-    ? versionUrl(`${base}${imagePath.replace(/^\/+/, "")}`)
+    ? resolveUrl(`${base}${imagePath.replace(/^\/+/, "")}`)
     : "";
   const imageExtension = imagePath.split(".").pop()?.toLowerCase();
   const imageType =
@@ -127,7 +118,7 @@ function renderStoreSharePage(
           ? `image/${imageExtension}`
           : "";
   const slug = `compartilhar/${store.id}-${open ? "aberta" : "fechada"}.html`;
-  const pageUrl = versionUrl(`${base}${slug}`);
+  const pageUrl = resolveUrl(`${base}${slug}`);
   const storeUrl = resolveUrl(`${base}loja/${store.id}`);
   const redirectUrl = JSON.stringify(storeUrl).replace(/</g, "\\u003c");
 
@@ -181,17 +172,11 @@ function renderNewsSharePage(
   article: NewsPreview,
   baseUrl: string,
   origin: string,
-  previewVersion: string,
 ) {
   const base = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
   const resolveUrl = (path: string) =>
     origin ? new URL(path, origin).href : path;
-  const versionUrl = (path: string) => {
-    const url = new URL(path, origin || "https://gnnatividade.vercel.app");
-    url.searchParams.set("v", previewVersion);
-    return url.href;
-  };
-  const image = versionUrl(
+  const image = resolveUrl(
     `${base}${article.cover.replace(/^\/+/, "")}`,
   );
   const imageExtension = article.cover.split(".").pop()?.toLowerCase();
@@ -202,7 +187,7 @@ function renderNewsSharePage(
         ? `image/${imageExtension}`
         : "";
   const previewPath = `compartilhar/noticia-${article.slug}.html`;
-  const pageUrl = versionUrl(`${base}${previewPath}`);
+  const pageUrl = resolveUrl(`${base}${previewPath}`);
   const articleUrl = resolveUrl(`${base}noticias/${article.slug}`);
   const redirectUrl = JSON.stringify(articleUrl).replace(/</g, "\\u003c");
 
@@ -263,9 +248,7 @@ const sharePagesPlugin: Plugin = {
         const origin = `http://${request.headers.host ?? "localhost"}`;
         response.statusCode = 200;
         response.setHeader("Content-Type", "text/html; charset=utf-8");
-        response.end(
-          renderNewsSharePage(article, "/", origin, sharePreviewVersion),
-        );
+        response.end(renderNewsSharePage(article, "/", origin));
         return;
       }
 
@@ -286,7 +269,6 @@ const sharePagesPlugin: Plugin = {
           match[2] === "aberta",
           "/",
           origin,
-          sharePreviewVersion,
         ),
       );
     });
@@ -315,7 +297,6 @@ const sharePagesPlugin: Plugin = {
             open,
             "/",
             configuredOrigin ?? "",
-            sharePreviewVersion,
           ),
         });
       }
@@ -329,7 +310,6 @@ const sharePagesPlugin: Plugin = {
           article,
           "/",
           configuredOrigin ?? "",
-          sharePreviewVersion,
         ),
       });
     }
@@ -338,10 +318,6 @@ const sharePagesPlugin: Plugin = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  define: {
-    "import.meta.env.VITE_SHARE_PREVIEW_VERSION":
-      JSON.stringify(sharePreviewVersion),
-  },
   plugins: [
     react(),
     sharePagesPlugin,

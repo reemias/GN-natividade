@@ -73,7 +73,7 @@ O jornal é um fluxo separado do catálogo: não usa `data/db.md`, `public/db.js
 
 Para cadastrar uma notícia, adicione um arquivo Markdown e as imagens em `public/imagensNoticias/`. A capa é obrigatória; fotografia complementar e vídeo são opcionais. O frontend lê o conteúdo durante o build, então uma nova publicação é feita junto com uma nova versão do projeto. O guia completo, incluindo o modelo de arquivo e a lista de campos, está em [POSTAGEM-NOTICIAS.md](./POSTAGEM-NOTICIAS.md).
 
-Cada matéria também gera uma página de preview social em `/compartilhar/noticia-<slug>.html`, com metadados Open Graph e Twitter montados a partir do título, resumo, autoria e capa. O botão de compartilhamento usa esse endereço com uma versão do build na query string para renovar o cache dos aplicativos de mensagem; quando uma pessoa abre a página, ela é encaminhada ao artigo.
+Cada matéria também gera uma página de preview social em `/compartilhar/noticia-<slug>.html`, com metadados Open Graph e Twitter montados a partir do título, resumo, autoria e capa. O botão de compartilhamento usa esse endereço sem parâmetros de consulta; quando uma pessoa abre a página, ela é encaminhada ao artigo.
 
 ### Navegação por gestos
 
@@ -148,7 +148,7 @@ Esse fluxo não é confirmação de venda: a pessoa precisa revisar e enviar a m
 
 ### Prévia de compartilhamento das lojas
 
-Cada loja pode definir `share_image` na seção `stores` de `data/db.md`. Use uma imagem JPEG horizontal de 1200×630 para os metadados Open Graph; o gerador usa essa imagem no preview do WhatsApp e preserva `cover` para a página da loja. As URLs compartilhadas e as imagens recebem a versão do build, criando uma nova chave de cache quando uma nova versão do projeto é publicada.
+Cada loja pode definir `share_image` na seção `stores` de `data/db.md`. Use uma imagem JPEG horizontal de 1200×630 para os metadados Open Graph; o gerador usa essa imagem no preview do WhatsApp e preserva `cover` para a página da loja. As URLs compartilhadas não recebem parâmetros de consulta, para que o arquivo HTML estático da prévia seja acessado diretamente.
 
 As matérias do jornal também têm previews próprios, gerados a partir dos campos Markdown `title`, `excerpt`, `author` e `cover`. Consulte [POSTAGEM-NOTICIAS.md](./POSTAGEM-NOTICIAS.md) para detalhes do endereço e do fluxo de compartilhamento.
 
