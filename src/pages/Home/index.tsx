@@ -149,7 +149,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <section className={styles.hero} aria-labelledby="home-hero-title">
+      <section saria-labelledby="home-hero-title">
         <SlideNoticias />
       </section>
 

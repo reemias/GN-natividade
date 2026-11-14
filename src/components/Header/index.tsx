@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Menu, MapPin, Newspaper, Search, ShoppingBag, Store, X } from "lucide-react";
+import {
+  ArrowLeft,
+  Menu,
+  MapPin,
+  Search,
+  ShoppingBag,
+  Store,
+  X,
+} from "lucide-react";
 import { useCart } from "../../hooks/useCart";
 import { useCatalog } from "../../hooks/useCatalog";
 import { useGallery } from "../../hooks/useGallery";
@@ -24,7 +32,9 @@ export default function Header({ appName }: { appName: string }) {
   } = useGallery();
   const [menuOpen, setMenuOpen] = useState(false);
   const openStoreCount = catalog.stores.filter(
-    (store) => store.status === "active" && isOpenNow(store, new Date(), catalog.config.timezone),
+    (store) =>
+      store.status === "active" &&
+      isOpenNow(store, new Date(), catalog.config.timezone),
   ).length;
 
   function selectCategory(nextCategoryId: string) {
@@ -86,7 +96,9 @@ export default function Header({ appName }: { appName: string }) {
               <Store size={18} aria-hidden="true" />
               <span>
                 <strong>{openStoreCount}</strong>
-                {openStoreCount === 1 ? " loja aberta agora" : " lojas abertas agora"}
+                {openStoreCount === 1
+                  ? " loja aberta agora"
+                  : " lojas abertas agora"}
               </span>
             </p>
             <label className={styles.categoryLabel} htmlFor="menu-category">
@@ -153,10 +165,7 @@ export default function Header({ appName }: { appName: string }) {
             <MapPin size={18} aria-hidden="true" />
             <span>{locating ? "Localizando…" : locationLabel}</span>
           </button>
-          <Link className={styles.cartLink} to="/noticias" aria-label="Abrir notícias">
-            <Newspaper size={20} aria-hidden="true" />
-            <span>Notícias</span>
-          </Link>
+
           <Link
             className={styles.cartLink}
             to="/carrinho"
