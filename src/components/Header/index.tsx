@@ -3,8 +3,10 @@ import { createPortal } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
+  ExternalLink,
   Menu,
   MapPin,
+  Newspaper,
   Search,
   ShoppingBag,
   Store,
@@ -14,7 +16,16 @@ import { useCart } from "../../hooks/useCart";
 import { useCatalog } from "../../hooks/useCatalog";
 import { useGallery } from "../../hooks/useGallery";
 import { isOpenNow } from "../../lib/ranking";
+import { articles, formatNewsDate } from "../../content/news";
 import styles from "./Header.module.css";
+
+const whatsappGroups = [
+  {
+    id: "fala-natividade",
+    name: "Fala Natividade",
+    url: "https://chat.whatsapp.com/Ckoh4cj7x354GHr4SlxWWS?s=sw&p=a&iam=2",
+  },
+];
 
 export default function Header({ appName }: { appName: string }) {
   const { itemCount } = useCart();
@@ -36,6 +47,7 @@ export default function Header({ appName }: { appName: string }) {
       store.status === "active" &&
       isOpenNow(store, new Date(), catalog.config.timezone),
   ).length;
+  const latestArticle = articles[0];
 
   function selectCategory(nextCategoryId: string) {
     setCategoryId(nextCategoryId);
@@ -101,6 +113,62 @@ export default function Header({ appName }: { appName: string }) {
                   : " lojas abertas agora"}
               </span>
             </p>
+            {latestArticle && (
+              <section
+                className={styles.drawerSection}
+                aria-labelledby="latest-news-heading"
+              >
+                <h3
+                  className={styles.drawerSectionTitle}
+                  id="latest-news-heading"
+                >
+                  Última notícia
+                </h3>
+                <Link
+                  className={styles.latestNewsLink}
+                  to={`/noticias/${latestArticle.slug}`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <Newspaper size={19} aria-hidden="true" />
+                  <span>
+                    <strong>{latestArticle.title}</strong>
+                    <small>
+                      {formatNewsDate(latestArticle.date, {
+                        day: "2-digit",
+                        month: "short",
+                      })}
+                    </small>
+                  </span>
+                </Link>
+              </section>
+            )}
+            <section
+              className={styles.drawerSection}
+              aria-labelledby="whatsapp-groups-heading"
+            >
+              <h3
+                className={styles.drawerSectionTitle}
+                id="whatsapp-groups-heading"
+              >
+                Grupos de WhatsApp de Natividade
+              </h3>
+              <ul className={styles.whatsappGroups}>
+                {whatsappGroups.map((group) => (
+                  <li key={group.id}>
+                    <a
+                      className={styles.whatsappGroupLink}
+                      href={group.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      <span>{group.name}</span>
+                      <ExternalLink size={16} aria-hidden="true" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
             <label className={styles.categoryLabel} htmlFor="menu-category">
               Buscar por categoria
             </label>

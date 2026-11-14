@@ -21,6 +21,7 @@ Este app funciona como uma "galeria local" de negócios:
 - mantém um carrinho de uma única loja por vez;
 - gera mensagem de pedido pronta para WhatsApp;
 - salva histórico do usuário no navegador para melhorar o ranking.
+- oferece acesso pelo menu lateral à notícia mais recente e aos grupos de WhatsApp de Natividade.
 
 Ele foi pensado para funcionar sem backend e sem banco de dados em produção. Em vez disso, o conteúdo é editado em `data/db.md` e gerado em JSON no build.
 
@@ -48,6 +49,7 @@ Estrutura relevante:
 - `src/lib`: regras de ranking, carrinho, histórico, geolocalização e WhatsApp
 - `src/context`: providers de catálogo, carrinho e galeria
 - `src/hooks/useSwipe.ts`: reconhecimento de gestos horizontais por toque
+- `src/components/Header/index.tsx`: menu lateral, incluindo a última notícia e a lista configurável de grupos de WhatsApp
 - `src/pages`: Home, loja, carrinho e jornal
 
 ## 3) Como a aplicação funciona
@@ -70,6 +72,8 @@ O app também tenta atualizar o catálogo em segundo plano ao ganhar foco ou a c
 O jornal é um fluxo separado do catálogo: não usa `data/db.md`, `public/db.json`, API ou banco de dados. Cada arquivo `src/content/news/*.md` é importado pelo Vite, e o nome do arquivo define o endereço da matéria. O feed fica em `/noticias` e cada detalhe em `/noticias/<nome-do-arquivo>`. O `Header` e o roteador principal são compartilhados com o restante da aplicação.
 
 Para cadastrar uma notícia, adicione um arquivo Markdown e as imagens em `public/imagensNoticias/`. A capa é obrigatória; fotografia complementar e vídeo são opcionais. O frontend lê o conteúdo durante o build, então uma nova publicação é feita junto com uma nova versão do projeto. O guia completo, incluindo o modelo de arquivo e a lista de campos, está em [POSTAGEM-NOTICIAS.md](./POSTAGEM-NOTICIAS.md).
+
+Cada matéria também gera uma página de preview social em `/compartilhar/noticia-<slug>.html`, com metadados Open Graph e Twitter montados a partir do título, resumo, autoria e capa. O botão de compartilhamento usa esse endereço; quando uma pessoa abre a página, ela é encaminhada ao artigo.
 
 ### Navegação por gestos
 
@@ -145,6 +149,8 @@ Esse fluxo não é confirmação de venda: a pessoa precisa revisar e enviar a m
 ### Prévia de compartilhamento das lojas
 
 Cada loja pode definir `share_image` na seção `stores` de `data/db.md`. Use uma imagem JPEG horizontal de 1200×630 para os metadados Open Graph; o gerador usa essa imagem no preview do WhatsApp e preserva `cover` para a página da loja. O link inclui uma versão de preview para renovar o cache dos aplicativos de mensagem quando a arte ou os metadados mudarem.
+
+As matérias do jornal também têm previews próprios, gerados a partir dos campos Markdown `title`, `excerpt`, `author` e `cover`. Consulte [POSTAGEM-NOTICIAS.md](./POSTAGEM-NOTICIAS.md) para detalhes do endereço e do fluxo de compartilhamento.
 
 Serviços sem preço usam um formulário próprio na página da loja, sem passar pelo carrinho: a pessoa seleciona um ou mais serviços, informa modelo do aparelho, defeito, nome e endereço, e a galeria abre o WhatsApp da loja com a solicitação pronta. Veículos aparecem como anúncios com especificações e link de consulta ao vendedor. Produtos continuam no carrinho e no fluxo de pedido existente.
 
@@ -345,6 +351,7 @@ O projeto já possui base funcional para o MVP:
 - PWA com cache e instalação
 - feed de notícias e páginas de detalhes abastecidos por arquivos Markdown, sem backend
 - navegação por gestos de toque entre notícias, feed de lojas, detalhes da loja e carrinho
+- acesso à notícia mais recente e aos grupos de WhatsApp pelo menu lateral
 
 ## 8) O que ainda falta para terminar
 

@@ -9,7 +9,7 @@ Este guia explica como adicionar uma matéria ao jornal da Galeria Natividade. O
 1. Crie um arquivo `.md` em `src/content/news/`.
 2. Preencha os metadados entre os blocos `---` e escreva o texto abaixo deles.
 3. Adicione a capa e, se desejar, uma foto complementar em `public/imagensNoticias/`.
-4. Confira a matéria no feed e na página de detalhes.
+4. Confira a matéria no feed, na página de detalhes e no preview de compartilhamento.
 5. Envie as alterações pelo GitHub ou publique uma nova versão do projeto.
 
 ## 1. Criar o arquivo da matéria
@@ -21,6 +21,8 @@ src/content/news/feira-de-produtores.md
 ```
 
 O nome do arquivo vira o endereço da matéria. No exemplo, a página será `/noticias/feira-de-produtores`. O feed fica em `/noticias`.
+
+Durante o build, o projeto também gera `/compartilhar/noticia-feira-de-produtores.html`. Essa página contém os metadados Open Graph e Twitter da matéria e encaminha visitantes para a URL do artigo. O botão **Compartilhar** usa esse endereço para que aplicativos de mensagem exibam a capa, o título e o resumo corretos.
 
 ## 2. Adicionar os metadados e o conteúdo
 
@@ -103,6 +105,7 @@ Antes de enviar a matéria, confira:
 - [ ] O texto está revisado e os parágrafos/intertítulos estão separados corretamente.
 - [ ] O vídeo, se houver, usa uma URL do YouTube ou Vimeo.
 - [ ] O feed `/noticias` e a URL `/noticias/<nome-do-arquivo>` mostram o conteúdo esperado.
+- [ ] O preview `/compartilhar/noticia-<nome-do-arquivo>.html` mostra os metadados e a capa esperados.
 
 Inclua o arquivo `.md` e as imagens usadas na mesma alteração do projeto. Ao enviar ou mesclar essa alteração no GitHub, uma nova versão do frontend precisa ser publicada para que a notícia apareça no site. Não é necessário executar `npm run db:build`: esse comando gera o catálogo de lojas e não participa do fluxo editorial.
 

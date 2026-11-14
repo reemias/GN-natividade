@@ -1,8 +1,9 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { VitePWA } from "vite-plugin-pwa";
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
+import { parse as parseYaml } from "yaml";
 
 interface StorePreview {
   id: string;
@@ -24,9 +25,54 @@ interface CatalogManifestConfig {
   stores: StorePreview[];
 }
 
+interface NewsPreview {
+  slug: string;
+  title: string;
+  description: string;
+  cover: string;
+  author: string;
+}
+
 const catalog = JSON.parse(
   readFileSync(resolve(import.meta.dirname, "public", "db.json"), "utf8"),
 ) as CatalogManifestConfig;
+
+const newsDirectory = resolve(import.meta.dirname, "src", "content", "news");
+const newsArticles = readdirSync(newsDirectory)
+  .filter((fileName) => fileName.endsWith(".md"))
+  .map((fileName) => {
+    const source = readFileSync(resolve(newsDirectory, fileName), "utf8");
+    const match = source.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+    if (!match) throw new Error(`Frontmatter inválido em ${fileName}`);
+
+    const metadata: unknown = parseYaml(match[1]);
+    if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
+      throw new Error(`Metadados inválidos em ${fileName}`);
+    }
+
+    const fields = metadata as Record<string, unknown>;
+    const { title, date, cover } = fields;
+    if (
+      typeof title !== "string" ||
+      !title ||
+      typeof date !== "string" ||
+      !date ||
+      typeof cover !== "string" ||
+      !cover
+    ) {
+      return null;
+    }
+
+    return {
+      slug: fileName.replace(/\.md$/, ""),
+      title,
+      description:
+        typeof fields.excerpt === "string" ? fields.excerpt : title,
+      cover,
+      author: typeof fields.author === "string" ? fields.author : "Redação",
+    };
+  })
+  .filter((article): article is NewsPreview => article !== null);
 
 const htmlEscape = (value: string) =>
   value.replace(
@@ -121,10 +167,89 @@ function renderStoreSharePage(
 </html>`;
 }
 
+function renderNewsSharePage(
+  article: NewsPreview,
+  baseUrl: string,
+  origin: string,
+) {
+  const base = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
+  const resolveUrl = (path: string) =>
+    origin ? new URL(path, origin).href : path;
+  const image = resolveUrl(
+    `${base}${article.cover.replace(/^\/+/, "")}`,
+  );
+  const imageExtension = article.cover.split(".").pop()?.toLowerCase();
+  const imageType =
+    imageExtension === "jpg" || imageExtension === "jpeg"
+      ? "image/jpeg"
+      : imageExtension
+        ? `image/${imageExtension}`
+        : "";
+  const previewPath = `compartilhar/noticia-${article.slug}.html`;
+  const pageUrl = resolveUrl(`${base}${previewPath}`);
+  const articleUrl = resolveUrl(`${base}noticias/${article.slug}`);
+  const redirectUrl = JSON.stringify(articleUrl).replace(/</g, "\\u003c");
+
+  return `<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${htmlEscape(article.title)} — Jornal Natividade</title>
+    <meta name="description" content="${htmlEscape(article.description)}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content="${htmlEscape(article.title)}" />
+    <meta property="og:description" content="${htmlEscape(article.description)}" />
+    <meta property="og:image" content="${htmlEscape(image)}" />
+    ${imageType ? `<meta property="og:image:type" content="${htmlEscape(imageType)}" />` : ""}
+    <meta property="og:image:alt" content="Capa: ${htmlEscape(article.title)}" />
+    <meta property="og:url" content="${htmlEscape(pageUrl)}" />
+    <meta property="article:author" content="${htmlEscape(article.author)}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${htmlEscape(article.title)}" />
+    <meta name="twitter:description" content="${htmlEscape(article.description)}" />
+    <meta name="twitter:image" content="${htmlEscape(image)}" />
+    <style>
+      body{margin:0;background:#f6f3ed;color:#242820;font:16px/1.5 system-ui,sans-serif}
+      main{max-width:760px;margin:32px auto;padding:0 20px}
+      img{display:block;width:100%;max-height:420px;object-fit:cover;border-radius:12px;background:#e8e4dc}
+      h1{margin:20px 0 4px;font-size:2rem}
+      p{margin:8px 0;color:#575c53}
+      a{display:inline-block;margin-top:18px;padding:12px 18px;border-radius:6px;background:#d34b32;color:#fff;text-decoration:none;font-weight:700}
+    </style>
+  </head>
+  <body>
+    <main>
+      <img src="${htmlEscape(image)}" alt="Capa: ${htmlEscape(article.title)}" />
+      <h1>${htmlEscape(article.title)}</h1>
+      <p>${htmlEscape(article.description)}</p>
+      <p>Por ${htmlEscape(article.author)}</p>
+      <a href="${htmlEscape(articleUrl)}">Ler notícia</a>
+    </main>
+    <script>window.location.replace(${redirectUrl});</script>
+  </body>
+</html>`;
+}
+
 const sharePagesPlugin: Plugin = {
-  name: "store-share-pages",
+  name: "share-preview-pages",
   configureServer(server) {
     server.middlewares.use((request, response, next) => {
+      const newsMatch = request.url?.match(
+        /^\/compartilhar\/noticia-([^/]+)\.html(?:\?.*)?$/,
+      );
+      if (newsMatch) {
+        const article = newsArticles.find(({ slug }) => slug === newsMatch[1]);
+        if (!article) return next();
+
+        const origin = `http://${request.headers.host ?? "localhost"}`;
+        response.statusCode = 200;
+        response.setHeader("Content-Type", "text/html; charset=utf-8");
+        response.end(renderNewsSharePage(article, "/", origin));
+        return;
+      }
+
       const match = request.url?.match(
         /^\/compartilhar\/([^/]+)-(aberta|fechada)\.html(?:\?.*)?$/,
       );
@@ -168,6 +293,14 @@ const sharePagesPlugin: Plugin = {
           ),
         });
       }
+    }
+
+    for (const article of newsArticles) {
+      this.emitFile({
+        type: "asset",
+        fileName: `compartilhar/noticia-${article.slug}.html`,
+        source: renderNewsSharePage(article, "/", configuredOrigin ?? ""),
+      });
     }
   },
 };

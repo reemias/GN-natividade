@@ -169,6 +169,83 @@
   color: #42473f;
 }
 
+.drawerSection {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.drawerSectionTitle {
+  margin: 0;
+  color: #42473f;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.latestNewsLink,
+.whatsappGroupLink {
+  display: flex;
+  min-width: 0;
+  padding: 0.75rem;
+  align-items: flex-start;
+  gap: 0.65rem;
+  border: 1px solid #e8e5df;
+  border-radius: 12px;
+  color: #30362e;
+  text-decoration: none;
+}
+
+.latestNewsLink {
+  background: #fff8ef;
+}
+
+.latestNewsLink > span {
+  display: grid;
+  min-width: 0;
+  gap: 0.3rem;
+}
+
+.latestNewsLink strong {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.latestNewsLink small {
+  color: #70756d;
+  font-size: 0.75rem;
+}
+
+.whatsappGroups {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.whatsappGroupLink {
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  background: #e9f8ef;
+  color: #075e32;
+  font-weight: 700;
+}
+
+.latestNewsLink:hover,
+.whatsappGroupLink:hover {
+  border-color: #c9cfc5;
+}
+
+.latestNewsLink:focus-visible,
+.whatsappGroupLink:focus-visible {
+  outline: 3px solid #d34b32;
+  outline-offset: 2px;
+}
+
 .openStoreCount {
   display: flex;
   margin: 0;

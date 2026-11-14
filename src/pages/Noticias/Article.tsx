@@ -50,6 +50,10 @@ export default function NewsArticlePage() {
       </main>
     );
   const embed = article.video ? videoEmbedUrl(article.video) : null;
+  const sharePreviewUrl = new URL(
+    `${import.meta.env.BASE_URL}compartilhar/noticia-${article.slug}.html`,
+    window.location.origin,
+  ).toString();
 
   // Extrai texto simples do conteúdo Markdown (remove formatação)
   const extractPlainText = (md: string) => {
@@ -95,14 +99,6 @@ export default function NewsArticlePage() {
 
   return (
     <main className={styles.articlePage}>
-      <nav className={styles.articleNav} aria-label="Navegação da notícia">
-        <Link className={styles.galleryLink} to="/">
-          <ArrowLeft size={17} aria-hidden="true" /> Voltar à galeria
-        </Link>
-        <Link className={styles.backLink} to="/noticias">
-          <ArrowLeft size={17} aria-hidden="true" /> Todas as notícias
-        </Link>
-      </nav>
       <article>
         <header className={styles.articleHeader}>
           <span className={styles.category}>{article.category}</span>
@@ -161,7 +157,7 @@ export default function NewsArticlePage() {
               onClick={() =>
                 void navigator.share?.({
                   title: article.title,
-                  url: window.location.href,
+                  url: sharePreviewUrl,
                 })
               }
             >
@@ -170,6 +166,15 @@ export default function NewsArticlePage() {
           </div>
         </footer>
       </article>
+      <br />
+      <nav className={styles.articleNav} aria-label="Navegação da notícia">
+        <Link className={styles.galleryLink} to="/">
+          <ArrowLeft size={17} aria-hidden="true" /> Voltar à galeria
+        </Link>
+        <Link className={styles.backLink} to="/noticias">
+          <ArrowLeft size={17} aria-hidden="true" /> Todas as notícias
+        </Link>
+      </nav>
     </main>
   );
 }

@@ -34,5 +34,8 @@ export function useSwipe(config: SwipeConfig) {
     touchStart.current = null;
   };
 
-  return { handleTouchStart, handleTouchEnd };
+  return {
+    onTouchStart: handleTouchStart,
+    onTouchEnd: handleTouchEnd,
+  };
 }
